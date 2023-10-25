@@ -1,0 +1,61 @@
+# 
+# SEP.libs.defs
+#
+
+
+
+SEPLIB:=-lsep
+SEPLIBF:=@SEPLIBF@
+SEPLIBF90:=-lsepf90 -lsep ${F90LIBS}
+SEPLIB2DF90:=-lsep2df90 -lsep3df90 -lsep3d -lsepf90 -lsep ${F90LIBS}
+SEPLIB3D:=-lsep3d -lsep
+SEPLIB3DF:=@SEPLIB3DF@
+SEPLIB3DF90:=-lsep3df90 -lsep3d -lsepf90 -lsep ${F90LIBS}
+SUPERSET:=-lsuperset -lsep3d -lsep
+SUPERSETF:=@SUPERSETF@
+SUPERSETF90:=-lsupersetf90 -lsuperset -lsep3df90 -lsep3d -lsepf90 -lsep ${F90LIBS}
+VPLOT:=-lvplot
+VPLOTF:=@VPLOTF@
+VPLOTF90:=-lvplotf90 -lvplot 
+GLPLOT:=-lglplot
+GEEF90:=-lsepgeef90 
+GEELIB:=-lsepgeef90 -lsep2df90 -lsep3df90 -lsep3d -lsepf90 -lsep ${F90LIBS}
+SEPMATH:=-lsepmath
+SEPMATHF:=@SEPMATHF@
+SEPMATHF90:=-lsepmathf90
+SEPAUX:=-lsepaux
+SEPAUXF:=@SEPAUXF@
+SEPAUXF90:=-lsepauxf90 -lsepaux
+SEPFFT:=-lsepfft -lsepfftf90 -lsepfft ${SEPMATH}
+SEPFFTF:=@SEPFFTF@
+SEPFFTF90:=-lsepfftf90 -lsepfft -lsepfftf90 -lsepfft -lsepauxf90 -lsepaux
+SEPCONVERT:=-lsepconvert
+SEPCONVERTF:=@SEPCONVERTF@
+SEPCONVERTF90:=-lsepconvertf90 -lsepconvert
+SEPVECTOR:=-lsepvector
+SEPVECTORF:=@SEPVECTORF@
+SEPVECTORF90:=-lsepvectorf90 -lsepvector
+SEPFILTER:=-lsepfilter
+SEPTRAVEL:=-lseptravel -lsepaux
+SEPTRAVELF:=@SEPTRAVELF@
+SEPTRAVELF90:=-lseptravelf90 -lseptravel
+SEPVELANF:=@SEPVELANF@
+SEPVELANF90:=-lsepvelanf90 
+SEPIMAGEF:=@SEPIMAGEF@
+SEPFILTERF:=-lsepfilterf90 -lsepvectorf90 -lsepvector
+SEPANISO:=@SEPANISOF@
+SUSEPLIB:=@SUSEPLIB@
+BEILIB90 := -lbei90 ${GEELIB}
+BEILIB=-lbei
+
+#WHEN ADDED TO SEPlib need to be defined in configure.in
+TDFLIB := -ltdf
+BEILIB := -lbei
+PVILIB := -lpvi
+GEMLIBF := -lgem
+TDFLIBF := -ltdf
+BEILIBF := -lbei
+PVILIBF := -lpvi
+
+
+

@@ -1,0 +1,149 @@
+/* Include file sep.startup to replace main() call. This file sets up 
+ *
+ * <stdio.h>
+ * <math.h>
+ * pi
+ * main(argc,argv,envp)
+ * file descriptors infd, outfd, and headfd
+ * associated streams instream, outstream, and headstream
+ * self-documentation call that will work with cc -DSOURCE=filename
+ * 	option or compilation with CC command
+ * complex and FILE_DESCR typedefs and declarations for seplib fcts.
+ *
+ * modified 3/26/83  S. Levin - added check for NOHEADER to fake out
+ *   			input().
+ * modified 4/1/83 S. Levin & Shuki - added MIN and MAX definitions.
+ *		      Added ifndef checks to make sure these weren't
+ *		      predefined. Changed complex and FILE_DESCR to
+ *		      reduce potential conflict.
+ * modified 4/4/83 S. Levin - separated extern declarations and
+ *		      typedefs into separate <seplib.h> include file.
+ * modified 11/30/83 S. Levin - (void)'ed freopen() call
+ * modified 1/20/84  S. Levin - Allow forcing of instream, outstream,
+ *   			and/or headstream via IN, OUT, and HEAD defines.
+ *			This permits programs which have no output, e.g.
+ *			plotting programs, to avoid creating zero length
+ *			output scratch files.
+ * modified 5/15/84  S. Levin - fixed handling of OUT and HEAD defines.
+ * 	    5/15/84  J. Dellinger - made HEAD, OUT, IN, NOHEADER defines
+ *			overrideable. Much old code deleted.
+ * modified 7/25/84  J. Dellinger - when using the NOHEADER define
+ *			the program would often inappropriately self
+ *			document. Put in special test for this.
+ *			Added "derail=y" as shorthand for
+ *			in=stdin, out=stdout, head=/dev/tty, noheader=y
+ *			"derail=Y" throws the header away instead.
+ *			Also added DERAIL define to default this.
+ *			Added NODOC define to allow programs that don't
+ *			worry about self documenting.
+ * modified 1/31/86  S. Levin - compatibility with new fast getpar.
+ * modified 6/30/86  S. Levin - more compatibility with new fast getpar.
+ * modified 12/4/86  J. Dellinger - updated to new standardized -lvplot names
+ * modified 9/11/89  S. Levin - switched to new initpar() getpar initialization
+ * modified 11/14/90 S. Cole - added externs for xargv and xargc.
+ * modified     1994 D. Nichols - Now called sepxargv, sepxargc
+ * modified  8/17/94 D. Nichols - Make derail put header to stderr not tty.
+ * modified  8/17/94 D. Nichols - Don't turn  FILE* buffering off.
+ * modified  9/02/94 D. Nichols - Make infd -1 if instream is invalid.
+ *
+ *	 copyright (c) 1991 Stanford University
+ *  
+ */
+
+#include <unistd.h>
+#include <string.h>
+#include <seplib.h>
+
+
+char **xenvp;
+#ifdef IN
+static char newin[256] = "in=";
+#endif
+#ifdef OUT
+static char newout[256] = "out=";
+#endif
+#ifdef HEAD
+static char newhead[256] = "head=";
+#endif
+
+FILE_DESCR infd, outfd, headfd /* , segyfd */ ;
+FILE *instream, *outstream, *headstream /* , *segystream */ ;
+
+extern int sepxargc;
+extern char **sepxargv;
+ 
+int main(argc,argv,envp)
+int argc; char **argv, **envp;
+{
+
+
+char derailed[10];
+
+
+initpar(argc,argv);
+xenvp=envp;
+#ifdef DERAIL
+derailed[0] = 'y';
+#else
+derailed[0] = '\0';
+#endif
+getch("derail","s",derailed);  /* Look to see if they want derailing */
+
+if (derailed[0] == 'y' || derailed[0] == 'Y')  /* Turn on derailing */
+	{
+	 getch_add_string("in=stdin");
+	 getch_add_string("out=stdout");
+	 getch_add_string("noheader=y");
+	 if (derailed[0] == 'y')
+		getch_add_string("head=stderr");
+		else
+		getch_add_string("head=/dev/null");
+	}
+
+#ifdef IN
+if(!getch("in","s",newin))
+	getch_add_string(strcat(newin,IN));
+#endif
+#ifdef OUT
+if(!getch("out","s",newout))
+	getch_add_string(strcat(newout,OUT));
+#endif
+#ifdef NOHEADER
+getch_add_string("noheader=y");
+#endif
+#ifdef HEAD
+if(!getch("head","s",newhead))
+	getch_add_string(strcat(newhead,HEAD));
+#endif
+
+  if((int) snftEkd ) {  /* used to shut off complaint that pi was unused! */
+/* Check to see if the program is one that has noheader=y,
+ * So we shouldn't expect standard input to be redirected.
+ * Then, if standard out is redirected, this must mean that
+ * we shouldn't self-document.
+ */
+#ifdef MY_SEP_DOC
+MY_SEP_DOC
+#endif
+#ifndef NODOC
+  if( !( noheader() && redout() ) )
+	  doc(SOURCE);
+#endif
+	}
+
+  headstream = sep_head();
+  headfd = fileno(headstream);
+  instream = input();
+  if( instream == 0 ){
+     infd = -1;
+  }else{
+     infd = fileno(instream);
+  }
+  if(instream == stdin) /* rebuffer input data stream */
+	instream = fdopen(dup(fileno(stdin)),"r");
+  outstream = output();
+  outfd = fileno(outstream);
+/* Commented out for now, don't think vplot should be forced to be linking
+  vp_filep(outstream);  tell plotting routines where to stick it */
+  (void)signal(SIGALRM,SIG_IGN);/*set default to ignore "late" getpar signals*/
+

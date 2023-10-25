@@ -1,0 +1,27 @@
+/* 
+ *
+ * seplib main program which sets up semi-inifinite external declarations
+ * and calls input, output, doc, etc. and then user's program MAIN()
+ *
+ * so program looks like
+ *
+ *    #include <sep.main>
+ *    MAIN()
+ *	{
+ *	 INSERT GEOPHYSICS HERE
+ *	}
+ *
+ * Author   S. Levin     8/9/83
+ *
+ * copyright (c) 1991 Stanford University
+ *
+ */
+#include <sep.startup>
+MAIN();
+#include <sep.wrapup>
+
+#ifdef SUN
+/* dummy MAIN_ to bypass sun linker problems */
+MAIN_(){}
+#endif
+

@@ -1,0 +1,17 @@
+/* include file sep.wrapup, companion to sep.startup, to gracefully
+ * terminate the main program initiated in that file.
+ */
+switch (hcount(0))
+   {
+    case 0:
+       fprintf(stderr,
+	"WARNING: Output header not closed before end of program %s\n\n",argv[0]);
+       hclose();
+       break;
+   case 1:
+       break;
+   default:
+       seperr("ERROR: Multiple closure of output header in program %s\n\n",argv[0]);
+       break;
+   }
+return(0);}

@@ -1,0 +1,63 @@
+#
+#SEP.generic.defs
+#
+# Contains some generic definitions for unix commands
+# directory locations, and type of compiling
+
+
+# As a default we are compiling in single processor mode
+SINGLE =yes
+DEBUG = no
+
+#THIS FILE CONTAINS DEFINITIONS FOR SOME STANDARD UNIX 
+#COMMANDS LIKE MV, CP, ETC and FOR SOME OF THE BASE DIRECTORIES
+
+
+#FIRST WILL SET A GOOD GUESS FOR ALL OF THE COMMANDS
+AWK          =  gawk -W compat
+CSH          =  /bin/csh
+CP           =  /bin/cp
+AWK          =  gawk -W compat
+INSTALL      =  /usr/bin/install -c -m 775
+LEX          =  @LEX@
+LEXLIB       =  @LEXLIB@
+LN           =  ln -s
+MAKE         =  gmake
+MKDIR        =  /bin/mkdir
+MV           =  /bin/mv
+PERL         =  /usr/bin/perl
+RM           =  /bin/rm
+SH           =  /bin/sh
+TOUCH        =  /bin/touch
+
+
+#NEXT SOME DIRECTORIES
+
+#First  SEP location
+
+prefix=/scratch/rsb/speed/SEP-7.0.4
+exec_prefix=${prefix}
+
+ifndef SEP
+	SEP = /scratch/rsb/speed/SEP-7.0.4
+endif
+
+ifndef SEPBINDIR
+	SEPBINDIR =${exec_prefix}/bin
+endif
+
+ifndef SEPINCDIR
+	SEPINCDIR =${prefix}/include
+endif
+
+ifndef SEPLIBDIR
+	SEPLIBDIR = ${exec_prefix}/lib
+endif
+
+#Next general compile directories
+BINDIR = .
+SRCDIR =.
+OBJDIR = .
+LIBDIR = .
+
+FULLSRC = $(strip $(shell ${SEPBINDIR}/fullpath ${SRCDIR}))
