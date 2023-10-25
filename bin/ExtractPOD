@@ -1,0 +1,66 @@
+#!/usr/bin/perl
+#$
+#$=head1 NAME
+#$
+#$ExtractPOD - Extract POD documentation from source code
+#$
+#$=head1 SYNOPSIS
+#$
+#$ExtractPOD < code.c > code.pod
+#$
+#$=head1 DESCRIPTION
+#$
+#$Extract POD documentation from source code.
+#$
+#$Code begins with 
+#$
+#$C          -  /*$
+#$
+#$              =head1 NAME
+#$
+#$F90        - !!$
+#$
+#$             !!$=head1 NAME
+#$
+#$Ratfor(90) - #$
+#$Perl/CSH
+#$             #$=head1 NAME
+#$
+#$
+#$
+#$Ends with
+#$
+#$C                          - =cut
+#$
+#$F90                        - !!=cut
+#$
+#$ratfor(90)/csh/perl        - #$=cut
+#$
+#$=head1 CATEGORY
+#$
+#$B<tools>
+#$
+#$=cut
+$start=0;
+$buffer="";
+while ($line=<>) {
+ if ($start == 0 && $line=~/^\s*\=head1\s+NAME/) {
+  	$start = 2;
+    $comment="";
+  }
+  elsif ($start == 0 && $line=~/^(.*)\=head1 NAME/) {
+     $test=$1;
+     $comment = quotemeta $1;
+     if($test =~/^!/ || $test =~ /^#/){ $start = 1; $look=0; }
+  }
+  if($start==1){ $line=~s/$comment//;}
+	if($line=~/^\s*$/){ $line="\n";}
+  if($line=~/^=head1\s+(\S.+\S)\s*$/){ $line="=head1 $1\n\n";}
+  if($line=~/^=cut/){ $start=-1;}
+  if($start >0 ) {$buffer.=$line;}
+
+}
+
+if($start!=0){ print STDOUT "$buffer  \n"; }
+else{  print STDERR "die $0: no POD found\n";}
+exit (0);

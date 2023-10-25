@@ -1,0 +1,50 @@
+#!/bin/csh -f
+#$
+#$=head1 NAME
+#$
+#$vp_SideBySideIso -  cat many vplot files side by side
+#$
+#$=head1 SYNOPSIS
+#$
+#$vp_SideBySideIso file1 [file2 file3 ...]  > all.v
+#$
+#$=head1 DESCRIPTION
+#$
+#$cat many vplot files side by side, fill screen with isotropic stretch
+#$
+#$=head1 SEE ALSO:
+#$
+#$L<vp_OverUnderAniso>
+#$
+#$L<vp_OverUnderIso>
+#$
+#$L<vp_SideBySideAniso>
+#$
+#$L<vp_SideBySideIso>
+#$
+#$L<vp_Unrotate>
+#$
+#$L<vp_Overlay>
+#$
+#$L<vp_Movie>
+#$
+#$=head1 CATEGORY
+#$
+#$B<graphics/vplot/util/shells>
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=cut
+if ($#argv < 1)  then
+	head -25 $0 |more
+	exit
+else
+# loop over command line
+   set m = " "
+   foreach i ($argv[1-$#argv])
+           set m = ($m $i)
+      end
+   vppen $m size=r vpstyle=n gridnum=$#argv,1 
+endif

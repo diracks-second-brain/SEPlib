@@ -1,0 +1,45 @@
+#!/bin/csh -f
+#$
+#$=head1 NAME
+#$
+#$vp_Unrotate  - unrotate old style plots 
+#$
+#$=head1 SYNOPSIS
+#$
+#$vp_Unrotate file1 > out.v
+#$
+#$=head1 DESCRIPTION
+#$
+#$unrotate old style plots 
+#$
+#$=head1 SEE ALSO:
+#$
+#$L<vp_OverUnderAniso>
+#$
+#$L<vp_OverUnderIso>
+#$
+#$L<vp_SideBySideAniso>
+#$
+#$L<vp_SideBySideIso>
+#$
+#$L<vp_Unrotate>
+#$
+#$L<vp_Overlay>
+#$
+#$L<vp_Movie>
+#$
+#$=head1 CATEGORY
+#$
+#$B<graphics/vplot/util/shells>
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=cut
+if ($#argv < 1)  then
+	head -25 $0 |more
+	exit
+else
+   vppen $1 size=r vpstyle=n gridnum=1,1 
+endif

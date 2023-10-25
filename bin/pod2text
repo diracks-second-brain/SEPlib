@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+
+use Pod::Text;
+
+if(@ARGV) {
+	pod2text($ARGV[0]);
+} else {
+	pod2text("<&STDIN");
+}
+

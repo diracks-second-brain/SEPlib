@@ -1,0 +1,67 @@
+#!/bin/csh -f
+#$
+#$=head1 NAME
+#$
+#$Tube - Alias for screen display program
+#$
+#$=head1 SYNOPSIS
+#$
+#$<file.v |Tube
+#$
+#$=head1 DESCRIPTION
+#$
+#$Display vplot file
+#$
+#$=head1 SEE ALSO
+#$
+#$L<xtpen>,L<tube>
+#$
+#$
+#$=head1 CATEGORY
+#$
+#$B<graphics/vplot/util/shells>
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=cut
+#
+# Keywords: graphics vplot tty
+#
+	if($TERM =~ xterm) then
+	Sxtpen $*
+	exit
+	else if($TERM =~ aixterm ) then
+	Sxtpen $*
+	exit
+	else if($TERM =~ gigi*) then
+	Gigipen $* 
+	exit
+	else if($TERM =~ envision220*) then
+	Envipen $* 
+	exit
+	else if($TERM =~ envision*) then
+	Envipen wstype=envi215 $* 
+	exit
+	else if($TERM =~ tek4105*) then
+	Ctekpen $*
+	exit
+	else if($TERM =~ grif* || $TERM == tek4014 || $TERM =~ vt* ) then
+	Tekpen $*
+	exit
+	else if($TERM =~ suntool) then
+	Sunpen  $*
+	exit
+	else if($?DISPLAY) then
+	Sxtpen $*
+	exit
+	else if($TERM =~ sun) then
+	Sunpen  $*
+	exit
+	else if($TERM =~ sun-cmd) then
+	Sunpen $*
+	exit
+	else
+	echo "Tube: No Graphics available on that device\!\!"
+	endif

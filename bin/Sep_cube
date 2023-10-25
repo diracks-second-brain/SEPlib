@@ -1,0 +1,392 @@
+#!/usr/bin/env python
+import sys,re,os,string
+import commands
+import array
+import os
+
+#link suffixes to file type
+sufixes={"H" : "SEP", "T" :"SEP", "h": "SEP", "t": "SEP", "RSF": "SEP", "HH": "SEP",
+      "rsf":"SEP","SU":"SU","su":"SU", "SEGY": "SEGY", "SGY": "SEGY",
+       "segy": "SEGY", "sgy":"SEGY", "sp": "SEISPAK","SP": "SEISPAK"}
+
+
+myt=["SEP","SEGY","SEISPAK","SU"]
+
+sepbin="/scratch/rsb/speed/SEP-7.0.4/bin"
+debug=0
+
+binary="%s/qt_cube"%sepbin
+if os.environ.has_key("QTCUBE"): binary=os.environ["QTCUBE"]
+
+
+
+
+basic_com="qt_cube file1 file2 [nviews=] [grid params] [io params] [data size params] [view params]\n\n"
+basics=  "  qt_cube operates on the principal of several views (nview=) of one or more datasets.\n"
+basics+= "   You use the GRID parameters to describe the space that the data exist within.\n"
+basics+= "   The DATA parameters describe the dimensions of the data (for non-SEP datasets).\n"
+basics+= "   the IO parameters describe how the program stores the data internally. The VIEW\n"
+basics+= "   parameters describe the initial stae of each view\n\n"
+grid="GRID PARAMETERS\n Grid in which qt_cube operates must be specified either through [ng_1= ng_2= ng_3=]\n"
+grid+="  or is grabbed from the first data file\n\n"
+data="DATA PARAMETERS\n   The size and sampling of the input data sets is specified through [nx_1 ox_1 dx_1 ...]\n"
+data+="  SEP datasets this information is read from the history file.\n"
+data+="  All datasets must exist in the same space and interpolated to the defined grid\n\n"
+io="IO PARAMETERS\n   A dataset can be stored internally in several formats.\n"
+io+="   They can be read in and stored as floats or bypes (storex=IN_FLOAT storex=IN_BYTE).\n"
+io+="   They can be treated as an out of core dataset where the first three axes in the \n"
+io+="   current view order are read in and store (storex=OUT_FLOAT storex=OUT_BYTE).\n"
+io+="   Or you can specify that the data exists only in a subset of the defined grid space,\n"
+io+="   for example displaying a finely sampled migrated cube and angle gathers (PART_BYTE/PART_FLOAT)\n\n"
+view="VIEW PARAMTERS\n  Each view can arrange the data axes in a different order.\n"
+view+="   You specify that order using orderX=1,3,2 (for example)\n"
+view+="   You can define the current location within the grid using position=10,30,...\n"
+view+="   You can specify the colortable of a current view colortable, background color \n"
+view+="   overlay color, etc.  I am getting tired of writing\n";
+view+="    You can define the size of the view size='1024x768' \n"
+view+="    You can set the font_size=sz, seminar=1 gives you some good defaults\n";
+
+
+def err(m=""):
+  """Quit with an error first printing out the string m"""
+  self_doc();
+  if  debug==0:
+    msg( m)
+    sys.exit(-1)
+  else:
+    raise error,m
+
+def msg(strng):
+  """Print out a message to the screen, do a flush to guarantee immediate action"""
+  lines=strng.split('\n')
+  for line in lines:
+    print  "     %s"%line 
+  sys.stdout.flush()
+ 
+class error(Exception):
+   """A class for handling errors"""
+   def __init__(self, value):
+     self.value = value
+   def __str__(self):
+     lines=self.value.split('\n')
+     msg( "\n")
+     for line in lines:
+       msg("     %s"%line)
+     return repr()
+     
+def parse_args(args):
+  eqs={}
+  aout=[]
+  eqs["basic_sep_io"]="0"
+  eq=re.compile("^(.+)=(.+)$")
+  for arg in args:
+    a=eq.search(arg)
+    if a:
+       eqs[a.group(1)]=a.group(2)
+    else:
+       aout.append(arg)
+  return eqs,aout   
+def find_files(args,eqs):
+  """Find files and there type"""
+  sufR=re.compile(".+\.(\S+)$")
+  count=0;
+  for arg in args:   
+      if not os.path.exists(arg):
+       err("%s is not a file. Expecting all arguments not of form a=b to be files to display"%arg)
+      fnd=sufR.search(arg)
+      if not fnd:
+        if not eqs.has_key("type%d"%count):
+          err("Couldn't find suffix for %s must specify type%d=X where X must be either:%s"%(
+            arg,count,string.join(myt,",")))
+        else:
+          for suf,typ in sufixes.items():
+            if typ==eqs["type%d"%count]:
+              aa="aaa.%s"%typ
+              fnd=sufR.search(aa);
+      for suf,typ in sufixes.items():
+        if fnd.group(1) == suf:
+          eqs["type%d"%count]=typ
+      if not eqs.has_key("type%d"%count):
+          err("Don't recognize suffix for %s must specify type%d=X where X must be either:%s"%(
+            arg,count,string.join(myt,",")))
+      if not eqs.has_key("store%d"%count):
+        eqs["store%d"%count]="IN_BYTE"
+      if eqs["type%d"%count]=="SEP":
+        if not pars_exist("g",eqs):
+          get_sep_params(arg,eqs,"g")
+      elif eqs["type%d"%count]=="SEISPAK":
+        get_seispak_params(arg,eqs,count)
+        if not pars_exist("g",eqs):
+          eqs=copy_pars(eqs,"0","g");
+      elif eqs["type%d"%count]=="SEGY":
+        get_segy_params(arg,eqs,count,3600)
+        if not pars_exist("g",eqs):
+          eqs=copy_pars(eqs,"0","g");
+      elif eqs["type%d"%count]=="SU":
+        get_segy_params(arg,eqs,count,0)
+        if not pars_exist("g",eqs):
+          eqs=copy_pars(eqs,"0","g");
+      elif eqs["type%d"%count]=="SEISPAK":
+        get_seispak_params(arg,eqs,count)
+        if not pars_exist("g",eqs):
+          eqs=copy_pars(eqs,"0","g");
+      else:
+        if pars_exist("g",eqs): 
+          eqs=copy_pars(eqs,"g",str(count))
+        else:
+          if count==0 and pars_exist("0",eqs):
+            eqs=copy_pars(eqs,"0","g")
+          else:
+            err("Must specify data size")
+        
+      eqs["data%d"%count]=arg
+      count+=1
+  eqs["ndata"]=count
+  return count,eqs      
+def get_sep_params(file,par,o):
+ for i in range(8):
+   stat1,out1=commands.getstatusoutput("%s/Get parform=no <%s n%d"%(sepbin,file,i+1))
+   stat2,out2=commands.getstatusoutput("%s/Get parform=no <%s o%d"%(sepbin,file,i+1))
+   stat3,out3=commands.getstatusoutput("%s/Get parform=no <%s d%d"%(sepbin,file,i+1))
+   stat4,out4=commands.getstatusoutput("%s/Get parform=no <%s label%d"%(sepbin,file,i+1))
+   if stat1:
+     err("Trouble reading parameters from %s"%file)
+   if len(out1)==0:out1="1"
+   if len(out2)==0:out2="0"
+   if len(out3)==0:out3="1"
+   if len(out4)==0:out4=" "
+   if not par.has_key("n%s_%d"%(o,i+1)): par["n%s_%d"%(o,i+1)]=out1
+   if not par.has_key("o%s_%d"%(o,i+1)): par["o%s_%d"%(o,i+1)]=out2
+   if not par.has_key("d%s_%d"%(o,i+1)): par["d%s_%d"%(o,i+1)]=out3
+   if not par.has_key("label%s_%d"%(o,i+1)): par["label%s_%d"%(o,i+1)]=out4
+ return par
+def get_seispak_params(file,par,o):
+  f=open(file,"rb");
+  array_i=array.array("i");
+  array_i.fromfile(f,13)
+  f.seek(0,0)
+  array_f=array.array("f");
+  array_f.fromfile(f,13)
+  if array_i[11]==4:
+    par["type%s"%o]="SEISPAKF"
+  elif array_i[11]==2:
+    par["type%s"%o]="SEISPAKS"
+  if not par.has_key("n%s_1"%o):  par["n%s_1"%o]=array_i[5];
+  if not par.has_key("d%s_1"%o): par["d%s_1"%o]=array_f[6];
+  if not par.has_key("n%s_2"%o): par["n%s_2"%o]=int(array_f[7]);
+  if not par.has_key("n%s_3"%o): par["n%s_3"%o]=int(array_f[8]);
+  return par
+def get_segy_params(file,par,o,off):
+  f=open(file,"rb");
+  f.seek(off,0)
+  array_i=array.array("i");
+  array_i.fromfile(f,60)
+  f.seek(off,0)
+  array_h=array.array("h");
+  array_h.fromfile(f,120)
+  f.seek(off,0)
+  array_f=array.array("f");
+  array_f.fromfile(f,60)
+  if not par.has_key("n%s_1"%o):  par["n%s_1"%o]=int(array_h[57]);
+  if not par.has_key("d%s_1"%o): par["d%s_1"%o]=float(array_h[58])/1000000.;
+  if not par.has_key("n%s_2"%o): par["n%s_2"%o]=int(array_i[51]);
+  if not par.has_key("o%s_2"%o):  par["o%s_2"%o]=array_f[48];
+  if not par.has_key("d%s_2"%o): par["d%s_2"%o]=array_f[47];
+  return par
+
+
+def copy_pars(pars,fr,to):
+  for i in range(8):
+    f="n%s_%d"%(fr,i+1); t="n%s_%d"%(to,i+1)
+    if not pars.has_key(t) and  pars.has_key(f): pars[t]=pars[f]
+    f="o%s_%d"%(fr,i+1); t="o%s_%d"%(to,i+1)
+    if not pars.has_key(t) and  pars.has_key(f): pars[t]=pars[f]
+    f="d%s_%d"%(fr,i+1); t="d%s_%d"%(to,i+1)
+    if not pars.has_key(t) and  pars.has_key(f): pars[t]=pars[f]
+    f="label%s_%d"%(fr,i+1); t="label%s_%d"%(to,i+1)
+    if not pars.has_key(t) and  pars.has_key(f): pars[t]=pars[f]
+  return pars
+    
+    
+def pars_exist(ex,pars):
+  if not pars.has_key("n%s_1"%ex) or not pars.has_key("n%s_2"%ex):
+    return None
+  return 1
+def parse_position(args):
+  hist=[]
+  if args.has_key("position"):
+    order=args["position"].split(",")
+    if len(order) < 2:
+       err("position should be a comma seperated list")
+    for i in range(8-len(order)):
+      order.append("0")
+    hist.append("0-navigate-move-%s"%string.join(order,":"))
+    del args["position"]
+  return hist,args
+def parse_order(inum,arg):
+  order=arg.split(",")
+  iold=len(order)
+  ohave=[]
+  owant=[]
+  for i in range(len(order)):
+    owant.append(order[i])
+    ohave.append(i+1)
+  for i in range(8-len(order)): 
+    owant.append(i+iold+1)
+    ohave.append(i+iold+1)
+  #this is a dumb approach but it should work
+  lines=[]
+  for i in range(7):
+    if ohave[i] != int(owant[i]):
+      found=None
+     # print "looking for ",owant[i]
+      for j in range(8):
+        #print ohave[j]
+        if int(ohave[j])==int(owant[i]):
+           found=j
+      if not found:
+        err("Couldn't find all axes in order description %s, missing %d "%(arg,i+1))
+      if i < found: lines.append("%d-orient-transpose-Swap(%d%d)"%(inum,
+        i+1,found+1))
+      else: lines.append("%d-orient-transpose-Swap(%d%d)"%(inum,
+        found+1,i+1))
+
+      k=ohave[i]; ohave[i]=ohave[found]; ohave[found]=k
+      
+  return lines 
+def parse_view(idat,arg):
+  if arg!="FRONT" and arg!="SIDE" and arg!="TOP" and arg!="CUBE" and arg!="THREE" and arg!="CUT":
+  
+    err("Only recognize FRONT, SIDE, TOP, CUBE, THREE, or CUT for view")
+  return "%d-view-display-%s"%(idat,arg)
+def parse_backg(idat,arg):
+  if arg!="red" and arg!="green" and arg!="grey" and arg!="black" and arg!="white":
+    err("Only recognize red,green,grey,black, and white background colors")
+  return "%d-color-background-%s"%(idat,arg)
+def parse_overlay(idat,arg):
+  if arg!="red" and arg!="green" and arg!="black" and arg!="white":
+    err("Only recognize red,green,black, and white overlay colors")
+  return "%d-color-overlay-%s"%(idat,arg)
+def parse_colortable(idat,arg):
+  if arg!="gray" and arg!="flag"  and arg!="cbl" and arg!="cgsi" and arg!="rainbow" and  arg!="grayc":
+    err("Only recognize gray, grayc, flag, cbl, cgsi, and rainbow colortables")
+  return "%d-color-colortable-%s"%(idat,arg)
+ 
+def parse_data(ndat,idat,arg):
+  if int(arg) >= idat or int(arg) < 0:
+    err("data must be 0 to %d found %s"%(ndat,arg))
+  return "%d-view-h_data-%s:"%(idat,arg)
+def parse_single(sing):
+  return "0-pick-single-%s"%sing
+def parse_draw(draw):
+  return "0-pick-draw-%s"%draw
+def parse_range(rang):
+  vv=[]
+  if int(rang) > 20:
+     d=int(rang)-20; change="increase"
+  else:
+     d=20-int(rang) ; change="decrease"
+  for j in range(d):
+    vv.append("0-pick-range-%s"%change)
+  return vv
+  
+def parse_view_state(ndat,idat,args,hist):
+  if args.has_key("order%d"%idat):
+    hist.extend(parse_order(idat,args["order%d"%idat]))
+    del args["order%d"%idat]
+  if args.has_key("background%d"%idat):
+    hist.append(parse_backg(idat,args["background%d"%idat]))
+    del args["background%d"%idat]
+  if args.has_key("overlay%d"%idat):
+     hist.append(parse_overlay(idat,args["overlay%d"%idat]))
+     del args["overlay%d"%idat]
+  if args.has_key("colortable%d"%idat):
+    hist.append(parse_colortable(idat,args["colortable%d"%idat]))
+    del args["colortable%d"%idat]
+  if args.has_key("view%d"%idat):
+    hist.append(parse_view(idat,args["view%d"%idat]))
+    del args["view%d"%idat]
+  if args.has_key("idata%d"%idat):
+    hist.append(parse_data(ndat,idat,args["idata%d"%idat]))
+    del args["idata%d"%idat]
+  if args.has_key("single"): hist.append(parse_single(args["single"]))
+  if args.has_key("range"): hist.extend(parse_range(args["range"]))
+  if args.has_key("draw"): hist.append(parse_draw(args["draw"]))
+  if args.has_key("seminar"): hist.extend(seminar_params())
+  return hist,args  
+  
+def seminar_params():
+  x=[]
+  x.append("50-main-resize-2:623:1128:1000:750");
+  x.append("0-view-font-arial-18-bold")
+  return x
+       
+def set_initial_state(ndat,args):
+  hist,args=parse_position(args)
+  if args.has_key("nviews"):
+    nviews=int(args["nviews"])
+  else:
+     nviews=1
+  for i in range(nviews):
+     hist,args=parse_view_state(ndat,i,args,hist)
+  if hist:
+    f=open("my_hist","w")
+    for line in hist: f.write("%s\n"%line)
+    f.write("#\n");
+    f.close()
+    args["run_history"]="my_hist"
+    return args,1
+  return args,None
+def self_doc():
+  print basic_com
+  print basics
+  print grid
+  print io
+  print view
+
+def velan_params(args,ndat):
+  if ndat !=1: err("velocity analysis currently works with 1 file")
+  if not args.has_key("v0"): err("must provide v0, first velocity to scan for")
+  if not args.has_key("dv"): err("must provide dv, sampling in velocity")
+  if not args.has_key("nv"): err("must provide nv, number of velocites")
+  ndat=3;
+  print "Warning currently only support incore mode for NMO"
+  args["ng_6"]=args["nv"]
+  args["og_6"]=args["v0"]
+  args["dg_6"]=args["dv"]
+  args["store0"]="PART_BYTE"
+  args["store1"]="CREATED_FLOAT"
+  args["store2"]="CREATED_FLOAT"
+  args["type1"]="NMOED"
+  args["type2"]="SEMBLANCE"
+  if not args.has_key("i_t"): args["i_t"]=1;
+  args["i_t"]=int(args["i_t"])-1;
+  if not args.has_key("i_off"): args["i_off"]=2;
+  args["i_off"]=int(args["i_off"])-1;
+  args["nview"]=3;
+  args["ndata"]=3;
+  args["data1"]="NMOED"
+  args["data2"]="SEMBLANCE"
+  args["draw"]="line"
+  args["single"]=6
+  return ndat,args
+
+
+def basic_run(eq_args,args):
+  if len (sys.argv)==1:
+    err("")
+  ndat,args=find_files(args,eq_args)
+  if args.has_key("nmo"):
+   if args["nmo"]=="1":  ndat,args=velan_params(args,ndat)
+  args,hist=set_initial_state(ndat,args)
+  if args.has_key("valgrind"): command="valgrind --leak-check=full  %s"%binary
+  else: command=binary
+  for key,val in args.items():
+    command+=" %s='%s'"%(key,val)
+  print command
+  os.system(command)
+  if hist:
+    commands.getstatusoutput("rm my_hist")
+
+eq_args,args=parse_args(sys.argv[1:])
+basic_run(eq_args,args)

@@ -1,0 +1,126 @@
+#!/bin/csh -f
+#$
+#$=head1 NAME
+#$
+#$ pstexpen - makes a .ps figure for documents
+#$
+#$=head1 SYNOPSIS
+#$
+#$ pstexpen  infile.v outfile.ps
+#$
+#$=head1 DESCRIPTION
+#$
+#$ convert from vplot to postscript that gets included into a document
+#$
+#$
+#$=head1 COMMENTS
+#$
+#$ Creates a postscript file out of a vplot file
+#$ and adds bounding box information.
+#$
+#$ Optionally more pen filter arguments can be given:
+#$ pstexpen  infile.v outfile.ps invras=n fat=1 etc
+#$
+#$ Default additional arguments for pstexpen can be given in
+#$ the environmental variable "PSTEXPENOPTS". (For example,
+#$ "big=y hshift=1 vshift=1".)
+#$
+#$ Try big=y if you want "large" postscript plots (i.e. ones that
+#$ extend beyond the usual virtual vplot page) not to be clipped,
+#$ but be careful as this option won't work with "rotated" plots.
+#$
+#$ You may want to try dumbfat=y if the printer messes up your dashes.
+#$
+#$ By default the bounding box is flush against the edges of the plot.
+#$ Set the environmental variable "PSBORDER" to allow for padding.
+#$ ($PSBORDER shoul be a floating-point number, in inches.)
+#$
+#$ Note that most postscript interpreters won't allow negative
+#$ coordinates. pstexpen will issue a warning if any of the bounding
+#$ box limits are negative. Use hshift and vshift to shift the plot
+#$ away from negative coordinates.
+#$
+#$=head1 SEE ALSO
+#$
+#$L<pspen>
+#$
+#$
+#$
+#$
+#$
+#$=head1 CATEGORY
+#$
+#$ graphics/vplot/util/shells
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=cut
+#
+#KEYWORDS
+#vplot postscript tex
+#>
+#AUTHOR
+#Martin Karrenbach
+#keywords:  latex tex postscript ps vplot
+
+
+if ($#argv < 1)  then
+  head -42 $0 |more
+  exit
+else
+
+set infile=$1
+set outfile=$2
+
+shift
+shift
+
+if (! $?PSBORDER) then
+  set spacing = "0."
+else
+  set spacing = $PSBORDER
+endif
+
+if (! $?PSTEXPENOPTS) then
+  set opts = " "
+else
+  set opts = "$PSTEXPENOPTS"
+endif
+
+
+set tempfile = /tmp/$$temp
+
+vppen big=n stat=l  $opts  $*  <$infile | head -1 >>$tempfile
+
+#echo $tempfile
+set psxmin = ` awk <$tempfile '{ print ($8-'$spacing')*72 }' `
+set psxmax = ` awk <$tempfile '{ print ($10+'$spacing')*72 }' `
+set psymin = ` awk <$tempfile '{ print ($13-'$spacing')*72 }' `
+set psymax = ` awk <$tempfile '{ print ($15+'$spacing')*72 }' `
+
+if ($psxmin =~ -* || $psymin =~ -*) then
+  echo "Warning: there are negative postscript coordinates in $outfile"
+  echo "Some postscript interpreters cannot handle negative coordinates."
+  echo "Use hshift and vshift to shift plot to all-positive coordinates,"
+  echo "and run pstexpen again. The bounding box was (in inches):"
+  echo "xmin = "` awk <$tempfile '{ print ($8-'$spacing') }' `
+  echo "xmax = "` awk <$tempfile '{ print ($10+'$spacing') }' `
+  echo "ymin = "` awk <$tempfile '{ print ($13-'$spacing') }' `
+  echo "ymax = "` awk <$tempfile '{ print ($15+'$spacing') }' `
+endif
+
+\rm -f $tempfile
+
+echo "%\!PS-Adobe-2.0 EPSF-2.0" >$outfile
+echo "%%BoundingBox:" $psxmin $psymin $psxmax $psymax >>$outfile
+
+#pspen dumbfat=y size=a tex=y  $opts                 <$infile >>$outfile $*
+# (That should only be necessary for stupid printers.)
+# To reduce the size of the emitted postscript:
+#
+pspen size=a tex=y  $opts  $*  <$infile  >>$outfile
+
+endif
+

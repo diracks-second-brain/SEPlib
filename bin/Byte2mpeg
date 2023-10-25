@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+#$
+#$=head1 NAME
+#$
+#$ Byte2mpeg - converts byte file to mpeg
+#$
+#$=head1 SYNOPSIS
+#$
+#$ Byte2mpeg input-byte-file output-mpeg-file nf nx ny
+#$
+#$=head1 DESCRIPTION
+#$
+#$ Converts from bytes to mpeg
+#$
+#$=head1 PARAMETERS
+#$
+#$=over 4
+#$
+#$=item nf = 
+#$
+#$      number of frames
+#$
+#$=item nx = 
+#$
+#$      number of x raster
+#$
+#$=item ny = 
+#$
+#$      number of y raster
+#$
+#$=back
+#$
+#$=head1 SEE ALSO
+#$
+#$L<Grey>,L<vplot2gif>
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=head1 CATEGORY
+#$
+#$B<converters>
+#$
+#$=cut
+#>
+#
+$usage='
+Convert input-byte-file output-mpeg-file #of-frames #of-x-raster #of-y-raster
+';
+if ( $#ARGV == -1 ) { print "$usage\n"; exit (1); }
+$input = @ARGV[0];
+$output = @ARGV[1];
+$niter = @ARGV[2];
+$horizontal = @ARGV[3]; if ( "$horizontal" != "" ) {
+			 $horizontal = "-h " . "$horizontal";}
+			else { $horizontal = "-h 256 "; }
+$vertical = @ARGV[4];   if ( "$horizontal" != "" ) {
+			$vertical = "-v " . "$vertical"}
+			else { $vertical = "-v 256 "; }
+
+$iter = 0;
+
+while ( $iter < $niter ) {
+ print "Doing frame: $iter ...";
+ system("Window f3=$iter n3=1 < $input |Ta2vplot head=/dev/null out=junk.v");
+ system("ppmpen <junk.v n1=$vertical n2=$horizontal | ppmtoyuvsplit junk");
+ system("mv junk.U junk$iter.U");
+ system("	mv junk.Y junk$iter.Y");
+ system("mv junk.V junk$iter.V");
+ 	$iter++;
+ print "done\n";
+}
+$iter--;
+system("mpeg -a 0 -b $iter -h $horizontal -v $vertical -PF  junk ");
+system("cp junk.mpg $output");
+#system("xplaygizmo -p mpeg_play -quiet -shmem_off  junk.mpg");
+

@@ -1,0 +1,83 @@
+#!/usr/bin/perl
+#$
+#$=head1 NAME
+#$
+#$ vplot2mpeg - converts vplot to mpeg
+#$
+#$=head1 SYNOPSIS
+#$
+#$ vplot2mpeg input-vplot-file output-mpeg-file nf nx ny vplot_options 
+#$
+#$=head1 DESCRIPTION
+#$
+#$ Converts a vplot movie file into a MPEG file
+#$
+#$=head1 PARAMETERS
+#$
+#$=over 4
+#$
+#$=item nf = 
+#$
+#$      number of frames
+#$
+#$=item nx = 
+#$
+#$      number of x raster
+#$
+#$=item ny = 
+#$
+#$      number of y raster
+#$
+#$=item other
+#$
+#$      any vplot options
+#$
+#$=back
+#$
+#$=head1 SEE ALSO
+#$
+#$L<vplot2gif>
+#$
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=head1 CATEGORY
+#$
+#$B<converters>
+#$
+#$=cut
+#
+# Martin Karrenbach  12-28-94
+#>
+#
+$usage='
+Convert input-vplot-file output-mpeg-file #of-frames #of-x-raster #of-y-raster vplot_options
+ (x-raster, y-raster and vplot_options are optional)
+';
+if ( $#ARGV == -1 ) { print "$usage\n"; exit (1); }
+$input = $ARGV[0];
+$output = $ARGV[1];
+$niter = $ARGV[2];
+$horizontal = $ARGV[3]; if ( "$horizontal" == "" ) { $horizontal="256 "; }
+$vertical = $ARGV[4];   if ( "$vertical" == "" ) { $vertical = "256 "; }
+$options="";
+$options = @ARGV[5];  
+
+$iter = 0;
+
+$junk="junk$$";
+$newinput="junknew$$";
+
+while ( $iter < $niter ) {
+ print "Doing frame: $iter ...";
+ system("vppen $input out$iter=$junk$iter >/dev/null; vppen $junk$iter $options |vppen align=lb|vppen vpstyle=n >$newinput; ppmpen $newinput n1=$vertical n2=$horizontal | ppmtoyuvsplit $junk; mv $junk.U $junk$iter.U; mv $junk.Y $junk$iter.Y; mv $junk.V $junk$iter.V; ");
+ 	$iter++;
+ print "done\n";
+}
+$iter--;
+system("mpeg -a 0 -b $iter -h $horizontal -v $vertical -PF  $junk ");
+system("cp $junk.mpg $output");
+system("rm $junk\* $newinput");
+#system("xplaygizmo -p mpeg_play -quiet -shmem_off  junk.mpg");

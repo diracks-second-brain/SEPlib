@@ -1,0 +1,62 @@
+#!/bin/sh
+#<
+#shortfort
+#
+#
+#USAGE
+# shortfort <stdin >stdout
+#
+#DESCRIPTION
+# fold long Fortran lines at column 72 and generate
+#             continuation lines for the remainder.
+#
+# 
+# CATEGORY
+# Tools
+#
+# Compile Level
+# DISTR
+#>
+# KEYWORDS
+# shortfort fortran77 short
+#
+#%
+# Author:  Ray Abma   SEP   4/30/94
+# Revised: Matt Schwab SEP  5/1/94
+#          fixed bug with 77 character continuation lines
+# Revised: Stew Levin  SEP  5/2/94
+#          fixed "hiccup" at beginning of first continuation card
+#          (It's still not really an {\em awk} script yet...)
+# Revised: Stew Levin SEP 5/3/94
+#          fixed <n test to be <=n and "awkized" program
+#          added "folding" of comment lines, too
+#
+#
+gawk  -W compat '
+BEGIN {
+   N=72
+      }
+
+length($0) <= N {
+   print
+   next
+  }
+
+$0 ~ /^[Cc*]/  {
+   fprefix = "C&"
+   }
+
+$0 !~ /^[Cc*]/ {
+   fprefix = "     &"
+   }
+
+   {
+   print substr($0,1,N)
+   Nx = N -length(fprefix)
+   n = length($0)
+   for (i = N+1; i <= n; i += Nx) {
+        outlen = n + 1  - i
+        if (outlen > Nx ) outlen = Nx;
+        print fprefix substr($0,i,outlen)
+       }
+  } ' 

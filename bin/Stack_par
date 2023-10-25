@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+import SEP.stack
+import SEP.parjob
+import SEP.prog
+
+SEP.util.debug=1
+SEP.spawn.print_all=1
+stack=SEP.stack.stack("Stack")
+program=SEP.prog.prog("Stack  ",
+   "Stack_par intag= outtag=  axis=",
+    [stack],
+     ["Run Stack using the SEP python library"])
+
+program.get_options(delete=1)
+main_arg=program.return_args("Stack")
+restart=SEP.par.logic(main_arg.param("restart"))
+
+                                                                                
+stack.prep_run(restart)
+#stack.clean_files()

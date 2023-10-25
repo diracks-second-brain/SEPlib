@@ -1,0 +1,38 @@
+#!/bin/sh
+#  Keyword:  Unitary NMO canon
+if test -t 0
+  then
+#
+  echo "
+#
+#$
+#$=head1
+#$
+#$Unmo - Inverse NMO
+#$
+#$=head1 SYNOPSIS
+#$
+#$Unmo conj=0 inv=0 [vel=1.5] [velfile=vel.H] < in.H > out.H
+#$
+#$=head1 DESCRIPTION
+#$
+#$Inverse nmo.Invoking Stretch rule=unmo
+#$
+#$=head1 SEE ALSO
+#$
+#$L<Stretch>
+#$
+#$=head1 CATEGORY
+#$
+#$B<seis/velan>
+#$
+#$=cut
+#
+" 
+#
+  sleep 2
+  Stretch
+else
+  echo Stretch rule=unmo $*
+       Stretch rule=unmo $*
+fi

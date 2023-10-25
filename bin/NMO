@@ -1,0 +1,35 @@
+#!/bin/sh
+#  Keyword:  NMO canon
+if test -t 0
+  then
+#
+echo "
+#$
+#$=head1 NAME
+#$
+#$NMO - perform NMO
+#$
+#$=head1 DESCRIPTION                                                              
+#$Canonical Nmo , linear interp. and tabulation. Invoking Stretch rule=nmo  
+#$
+#$=head1 SYNOPSIS
+#$                                                           
+#$NMO conj=0 inv=0 [vel=1.5] [velfile=vel.H] < in.H > out.H    
+#$
+#$=head1 SEE ALSO
+#$
+#$L<Stretch>, L<Nmo3d>
+#$
+#$=head1 CATEGORY
+#$
+#$B<seis/velan>
+#$
+#$=cut
+"
+#
+  sleep 2
+  Stretch
+else
+  echo Stretch rule=nmo $*
+       Stretch rule=nmo $*
+fi

@@ -1,0 +1,74 @@
+#!/bin/csh -f
+#$
+#$=head1 NAME
+#$
+#$sat  - convert sep77 temps and shorthand to fortran90 
+#$
+#$=head1 SYNOPSIS
+#$   
+#$ sat in.rt  > out.r		
+#$
+#$=head1 DESCRIPTION
+#$
+#$Sep Auto Temporary space allocater in ratfor/fortran subroutines
+#$
+#$=head1  INPUT PARAMETERS
+#$
+#$=over 4
+#$
+#$=item in.rt - file 
+#$
+#$      contains [main and] subroutines
+#$
+#$=back
+#$
+#$=head1  COMMENTS
+#$
+#$C<subroutine goodie(n1)   		# comment not allowed on subroutine>
+#$
+#$C<integer n1,n2>
+#$
+#$C<common /comvar/n2			# common variable for array dimension>
+#$
+#$C<temporary real x(n1,n2)			# comment not allowed here either>
+#$
+#$C<temporary complex*8 y(n1+10,n2)>
+#$
+#$C<temporary real paddata(n1+n2,n2)	>
+#$
+#$IMPORTANT:
+#$Sat uses two subroutines: ``fortalloc'' and ``fortfree''.
+#$To link to these subroutines link to seplib.
+#$
+#$Sat can be used on the output of saw, but not the contrary.
+#$
+#$Line containing Ratfor on-line comments are passed unchanged and thus on-line
+#$comments must be avoided in lines containing sat keywords.
+#$
+#$Avoid variable and subroutine names containing "tempall".
+#$
+#$
+#$ note, sat.awk is replaced by the correct value by a sed step in the makefile.
+#$
+#$ note, AWK_PROG is replaced by the correct value by a sed step in the makefile.
+#$
+#$=head1 SEE ALSO
+#$
+#$L<saw>
+#$
+#$=head1 CATEGORY
+#$ 
+#$B<tools>
+#$
+#$
+#$=cut
+if ($#argv < 1)  then
+	head -41 $0  |more
+	exit
+else
+if ($#argv == 3)  then
+	(   <$3 $1/sat.fort  | gawk  -W compat -f $2/sat.awk )
+else
+	(  <$1 /scratch/rsb/speed/SEP-7.0.4/bin/sat.fort  | gawk  -W compat -f /scratch/rsb/speed/SEP-7.0.4/bin/sat.awk )
+endif
+endif

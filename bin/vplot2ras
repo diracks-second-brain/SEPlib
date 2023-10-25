@@ -1,0 +1,194 @@
+#!/bin/csh -f
+#$
+#$=head1 NAME
+#$
+#$ vplot2ras - converts vplot to .ras
+#$
+#$=head1 SYNOPSIS
+#$
+#$ vplot2ras myplot.v [myplot.ras [xsize=5. ysize= (any vppen options)]]
+#$
+#$=head1 DESCRIPTION
+#$
+#$ Convert vplot format to sun raster format at 75 dots/per inch,
+#$ ideal for inclusion in FrameMaker documents. Default output is
+#$ input file name with the .v ending changed to ".ras".
+#$
+#$ vplot2ras finds the smallest bounding box containing the input plot,
+#$ and makes a ras output just big enough to contain that image, plus
+#$ a border of .25 inches all around. (The position of the plot on the
+#$ vplot virtual page is irrelevant!)
+#$
+#$ If you do not specify the size on the command line, then the absolute
+#$ size of the original plot in the input vplot file will be used. Thus
+#$ a small plot comes out small, and a big plot comes out big.
+#$
+#$ You can override the 75. dots per inch by setting the environment
+#$ variable PPI.
+#$
+#$ You can override the .25 inch border by setting the environment
+#$ variable GIFBORDER. (Note, GIFBORDER will only come out in physical
+#$ units if PPI happens to be accurate for your display device.)
+#$
+#$=head1 PARAMETERS
+#$
+#$=over 4
+#$
+#$=item any vppen options
+#$
+#$=back
+#$
+#$
+#$=head1 BUGS
+#$
+#$ Currently, input vplot files are assumed to contain only one frame.
+#$ Old-style rotated plots require "big=n". vplot2ras will refuse to
+#$ rasterize a plot consisting of a single pixel (since its bounding box
+#$ has zero area).
+#$
+#$=head1 SEE ALSO
+#$
+#$L<vppen>,L<vplot2gif>
+#$
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=head1 CATEGORY
+#$
+#$B<converters>
+#$
+#$=cut
+if ($#argv < 1)  then
+cat <<\#
+NAME
+        vplot2ras --- make .ras plots from vplot
+ 
+SYNOPSIS
+ 
+        vplot2ras myplot.v [myplot.ras [xsize=5. ysize= (any vppen options)]]
+ 
+DESCRIPTION
+        Convert vplot format to sun raster format at 75 dots/per inch,
+	ideal for inclusion in FrameMaker documents. Default output is
+	input file name with the .v ending changed to ".ras".
+
+	vplot2ras finds the smallest bounding box containing the input plot,
+	and makes a ras output just big enough to contain that image, plus
+	a border of .25 inches all around. (The position of the plot on the
+	vplot virtual page is irrelevant!)
+
+	If you do not specify the size on the command line, then the absolute
+	size of the original plot in the input vplot file will be used. Thus
+	a small plot comes out small, and a big plot comes out big.
+
+	You can override the 75. dots per inch by setting the environment
+	variable PPI.
+
+	You can override the .25 inch border by setting the environment
+	variable GIFBORDER. (Note, GIFBORDER will only come out in physical
+	units if PPI happens to be accurate for your display device.)
+ 
+BUGS
+	Currently, input vplot files are assumed to contain only one frame.
+	Old-style rotated plots require "big=n". vplot2ras will refuse to
+	rasterize a plot consisting of a single pixel (since its bounding box
+	has zero area).
+
+AUTHOR
+	Joe Dellinger
+\#
+exit 0
+endif
+
+set val = 0
+
+onintr error
+
+set tempfile = /tmp/$$temp
+set infile=$1
+shift
+
+if ($#argv < 1) then
+set outfile=$infile:r.ras
+else
+set outfile=$1
+shift
+endif
+
+
+# Allow an extra .25 inches all around
+if (! $?GIFBORDER) then
+set spacing = ".25"
+else
+set spacing = $GIFBORDER
+endif
+
+# rasterize to 75 dots per inch
+if (! $?PPI) then
+set ppi = "75."
+else
+set ppi = $PPI
+endif
+
+
+if (! -r $infile) then
+echo "Cannot read input $infile""."
+goto error
+endif
+
+# If you gave some vppen options, call vppen to modify the file first
+if ($#argv < 1) then
+set vpfile = $infile
+else
+vppen size=a in=$infile > vppen.$$  $*
+set vpfile = vppen.$$
+endif
+
+
+
+# Now use vppen to find out how big and where on the page the plot is.
+vppen size=a stat=l <$vpfile | head -1 >>$tempfile
+
+set xmin = ` awk <$tempfile '{ print $8-'$spacing' }' `
+set xmax = ` awk <$tempfile '{ print $10+'$spacing' }' `
+set xcen = ` awk <$tempfile '{ print ($8+$10)/2. }' `
+
+set ymin = ` awk <$tempfile '{ print $13-'$spacing' }' `
+set ymax = ` awk <$tempfile '{ print $15+'$spacing' }' `
+set ycen = ` awk <$tempfile '{ print ($13+$15)/2. }' `
+
+# These have to be integers (no partial pixels), so round UP
+set width = ` awk <$tempfile '{ print int(($10-$8+'$spacing'*2)*'$ppi'+.9999)}' `
+set height = ` awk <$tempfile '{ print int(($15-$13+'$spacing'*2)*'$ppi'+.9999)}' `
+
+set cwidth = ` awk <$tempfile '{ print int(($10-$8)*'$ppi'+.9999)}' `
+set cheight = ` awk <$tempfile '{ print int(($15-$13)*'$ppi'+.9999)}' `
+
+if (($cwidth == 0 && $cheight == 0) || $cwidth == "" || $cheight == "") then
+echo "No plot found."
+echo "If this is an old-style plot, you need to specify big=n"
+goto error
+endif
+
+echo "$outfile will be $width pixels wide, $height pixels tall,"
+echo "at $ppi pixels per inch, with borders $spacing inches wide."
+
+# OK, now we know exactly where the image is and how big it is.
+# Rasterize it to portable pixmap (ppm) format at 75. dots per inch.
+# Ignore pesky "break" commands!
+ppmpen break=i n2=$height n1=$width ppi=$ppi size=a xcenter=$xcen ycenter=$ycen in=$vpfile > ppm.$$
+
+# Convert to GIF format
+pnmtorast < ppm.$$ > $outfile
+
+done:
+/bin/rm -f $tempfile
+/bin/rm -f ppm.$$ vppen.$$
+
+exit $val
+
+error:
+set val = 1
+goto done

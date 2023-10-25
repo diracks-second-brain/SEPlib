@@ -1,0 +1,119 @@
+#$=head1 NAME
+#$
+#$arithpar - math on parameters
+#$
+#$=head1 SYNOPSIS
+#$
+#$<in.H arithpar param function 
+#$
+#$=head1 DESCRIPTION
+#$
+#$Evaluate: C<param=function(esize,n1,n2,n4,d1,etc)> (cube parameters only )
+#$
+#$=head1 EXAMPLES
+#$
+#$<in.H arithpar midpt  n1/2-1   
+#$< in.H arithpar bytes \\\"esize*n1*n2*n3*n4
+#$
+#$=head1 SEE ALSO
+#$
+#$L<Get>,L<Math>
+#$
+#$=head1 CATEGORY
+#$
+#$B<util/vector>
+#$
+#$=cut
+#$
+gawk -W compat 'BEGIN {
+# coded by Jon Claerbout 9-18-90
+	dash   = ARGV[1]
+	lvalue = ARGV[2]
+	rvalue = ARGV[3]
+	print "END{"
+	if( rvalue == "" ) {
+printf("printf(\"Usage: <in.H arithpar param function		\\n\");\n")
+printf("printf(\"Evaluate: param=function(esize,n1,n2,n4,d1,etc)\\n\");\n")
+printf("printf(\"                        (cube parameters only )\\n\");\n")
+printf("printf(\"   Examples: 					\\n\");\n")
+printf("printf(\"<in.H arithpar midpt  n1/2-1 			\\n\");\n")
+printf("printf(\"<in.H arithpar bytes \\\"esize*n1*n2*n3*n4\\\"	\\n\");\n")
+printf("printf(\"<in.H arithpar lastx \\\"o2+d2*(n2-1)\\\"	\\n\");\n")
+printf("printf(\"      (quote protects asterisk from the shell)  \\n\");\n")
+printf("printf(\"<in.H Window `<in.H arithpar n1 n1/2` > out.H \\n\");\n")
+#printf("printf(\"   Letting Q denote a single quote		\\n\");\n")
+#printf("printf(\"<in.H arithpar label1 Q\\\"1/\\\"label1Q	\\n\");\n")
+
+		exit
+		}
+	ARGV[2] = ""
+	ARGV[3] = ""
+	n1=1;	n2=1;	n3=1;	n4=1
+	o1=1;	o2=1;	o3=1;	o4=1
+	d1=1;	d2=1;	d3=1;	d4=1
+	esize=4
+#	label1="none"
+#	label2="none"
+#	label3="none"
+#	label4="none"
+	}
+{
+for( i=1; i<=NF; i++ ) {
+	if( $i ~ "#" ) break
+	split( $i, array, "=" )
+	token = array[1]
+	value = array[2]
+	if      (token == "n1") n1= value
+	else if (token == "n2") n2= value
+	else if (token == "n3") n3= value
+	else if (token == "n4") n4= value
+
+	else if (token == "o1") o1= value
+	else if (token == "o2") o2= value
+	else if (token == "o3") o3= value
+	else if (token == "o4") o4= value
+
+	else if (token == "d1") d1= value
+	else if (token == "d2") d2= value
+	else if (token == "d3") d3= value
+	else if (token == "d4") d4= value
+
+#	else if (token == "label1") label1= value
+#	else if (token == "label2") label2= value
+#	else if (token == "label3") label3= value
+#	else if (token == "label4") label4= value
+
+	else if (token == "esize") esize= value
+
+	}
+}
+END{
+if( rvalue != "") {
+
+	print "n1=" n1
+	print "n2=" n2
+	print "n3=" n3
+	print "n4=" n4
+
+	print "o1=" o1
+	print "o2=" o2
+	print "o3=" o3
+	print "o4=" o4
+
+	print "d1=" d1
+	print "d2=" d2
+	print "d3=" d3
+	print "d4=" d4
+
+	print "esize=" esize
+
+#	printf("  label1=%s	\n", label1)
+#	printf("  label2=%s	\n", label2)
+#	printf("  label3=%s	\n", label3)
+#	printf("  label4=%s	\n", label4)
+
+	printf("print \"%s=\" %s\n", lvalue, rvalue ) 
+	}
+print "}"
+}
+' - $1 $2 > junk.arith;  awk -f junk.arith junk.arith; /bin/rm junk.arith

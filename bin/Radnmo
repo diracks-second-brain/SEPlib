@@ -1,0 +1,41 @@
+#!/bin/sh
+#  Keyword:  radial-trace NMO
+if test -t 0
+  then
+#
+  echo "
+#
+#$=head1 NAME
+#$
+#$Radnmo - Radial NMO
+#$
+#$=head1 SYNOPSIS
+#$
+#$	Radnmo conj=0 inv=0 [vel=1.5] [velfile=vel.H] < in.H > out.H
+#$
+#$=head1 DESCRIPTION 
+#$
+#$ Transform to Radial trace with NMO radial trace, u=x/tau, 
+#$ nearest neighbor, does NMO too. Inverse not exact when v=v(tau)
+#$ Invoking Stretch rule=radnmo
+#$ 
+#$
+#$=head1 SEE ALSO
+#$
+#$L<Stretch>
+#$
+#$=head1 CATEGORY
+#$
+#$B<seis/velan>
+#$
+#$=cut
+#$
+#>
+"
+#
+  sleep 2
+  Stretch
+else
+  echo Stretch rule=radnmo $*
+       Stretch rule=radnmo $*
+fi

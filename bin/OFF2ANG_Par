@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+import SEP.off2ang
+import SEP.pj_base
+import SEP.prog
+
+off2ang=SEP.off2ang.off2ang_par("OFF2ANG")
+program=SEP.prog.prog("OFF2ANG",
+   "OFF2ANG_par intag= outtag= ",
+    [off2ang],
+     ["Run OFF2ANG using the SEP python library"])
+
+program.get_options(delete=1)
+restart=SEP.args.logic(main.param("restart"))
+
+                                                                                
+stack.prep_run(restart)
+stack.clean_files()

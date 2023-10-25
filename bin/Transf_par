@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+import SEP.transf
+import SEP.prog
+
+transf=SEP.transf.transf_par("Transf")
+program=SEP.prog.prog("Transf",
+   "Transf_par intag= outtag= ",
+    [transf],
+     ["Run OFF2ANG using the SEP python library"])
+
+program.get_options(delete=1)
+
+                                                                                
+transf.prep_run(transf.param("restart"))
+transf.clean_files()

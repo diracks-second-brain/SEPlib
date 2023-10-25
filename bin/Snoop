@@ -1,0 +1,32 @@
+#!/bin/csh
+#
+# This shell rounds up all the source files of possible interest on the system
+# Since it is fairly time consuming (about 15 minutes of CPU), it is only run
+# twice a week, on Sunday and Wednesday mornings.
+#
+# the slightly weird directory designation ($dir/*) is use to overcome
+# problems when the directory you point at is an automounter mount point.
+#
+# Keywords: index snoop
+#
+rm -f KEYWORD_DIR/PROGLIST
+date
+foreach dir (`cat KEYWORD_DIR/DIRLIST | tr \\012 ' '`)
+echo "Doing $dir"
+uptime
+# check to see if directory exists.
+if ( -d $dir ) then
+cd $dir
+( find $dir/* \( -name \*.\[crfs\] -o -name \*.rt -o -name \*.ft -o -name \*.fs -o -name \*.rs -o -name \*.rst -o -name \*.saw -o -name \*.doc -o -name \*.sh -o -name \*.csh -name \*.pl -o -name \*.tex -o -name \*.latex -o -name \*.troff  -o -name \*.java -o -name \*.cc -o -name \*.f90 -o -name \*.r90 -o -name \*.C \) -print | BIN_DIR/xargs BIN_DIR/fgrep3 -i keyword ) >> KEYWORD_DIR/PROGLIST
+uptime
+echo "Done $dir"
+endif
+# finished with this directory
+end
+date
+< KEYWORD_DIR/PROGLIST sed -e 's+:[ 	Cc\!#/*%\\"]*[Kk][Ee][Yy][Ww][Oo][Rr][Dd][sS]*[ 	:]*+	+' | sed -e 's+[: 	*/#\!.]*$++' | tr ',' ' ' | fgrep -v -i keyword > KEYWORD_DIR/KEYWORDS.new
+if( -e KEYWORD_DIR/KEYWORDS) mv -f KEYWORD_DIR/KEYWORDS KEYWORD_DIR/KEYWORDS.old
+mv -f KEYWORD_DIR/KEYWORDS.new KEYWORD_DIR/KEYWORDS
+date
+
+

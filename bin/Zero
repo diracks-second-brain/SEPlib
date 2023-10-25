@@ -1,0 +1,40 @@
+#!/bin/sh
+# ----------
+#$=head1 NAME
+#$ 
+#$Zero - Create a zero length file
+#$ 
+#$=head1 SYNOPSIS 
+#$ 
+#$ Zero f1 [ f2 f3  ... ]
+#$ 
+#$=head1 DESCRIPTION
+#$ 
+#$ Create file(s) of zero length
+#$
+#$=head1 CATEGORY
+#$
+#$B<util/unix>
+#$
+#$=cut
+#>
+#  Keyword:  create-file zero-length : snap
+# ----------
+if [ $# -lt 1 ] ; then
+cat | more <<END
+  Usage
+  Zero f1 [ f2 f3  ... ]
+  
+  Description
+  Create file(s) of zero length
+END
+	exit;
+fi
+ 
+
+
+
+
+for f in $* ; do
+	   cat /dev/null > ${f}
+done

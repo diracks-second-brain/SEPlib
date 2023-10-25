@@ -1,0 +1,53 @@
+#!/bin/csh -f
+#
+# keywords: vplot raster pixel printer imagen
+#
+# Usage: rasterize file.v
+#
+# moves file.v to file.v.nonras; creates new file file.rv
+# New file will draw the same picture in the same place, but is
+# a raster file with 300 dots per inch resolution.
+#
+# Hints:
+#       Don't forget to use size=a and invras=n when plotting.
+#       rpen file.rv size=a scale=3
+#               is useful for checking the results.
+#
+# Runs MUCH faster on mazama than on hanauma. It can still take a little
+# while to rasterize a big complicated vplot file, though.
+#
+# It leaves temp files around if you kill it before completion.
+#
+set infile=$1
+
+set tempfile = /tmp/$$temp
+
+# First find out how big the thing is
+# Allow an extra .05 inches all around
+vppen size=a stat=l <$infile | head -1 >>$tempfile
+
+set xmin = ` awk <$tempfile '{ print $8-.05 }' `
+set xmax = ` awk <$tempfile '{ print $10+.05 }' `
+set xcen = ` awk <$tempfile '{ print ($8+$10)/2. }' `
+
+set ymin = ` awk <$tempfile '{ print $13-.05 }' `
+set ymax = ` awk <$tempfile '{ print $15+.05 }' `
+set ycen = ` awk <$tempfile '{ print ($13+$15)/2. }' `
+
+set width = ` awk <$tempfile '{ print ($10-$8+.1)*300 }' `
+set height = ` awk <$tempfile '{ print ($15-$13+.1)*300 }' `
+
+/bin/rm -f $tempfile
+
+# Rasterize it to Movie format
+Raspen n2=$height n1=$width ppi=300 size=a xcenter=$xcen ycenter=$ycen in=$infile > File.$$ colfile=colfile.$$ $2 $3 $4 $5 $6 $7 $8
+# Ta2vplot the movie file,
+# making sure to position it back where the original was.
+Ta2vplot < File.$$ invert=n orient=0 xll=$xmin xur=$xmax yll=$ymin yur=$ymax wantframe=y title=" " label1=" " label2=" " d1num=0. d2num=0. > File2.$$ hurry=n out=junk.$$ color=colfile.$$
+
+# Remove the junk
+mv -f junk.$$ "$infile:r.r""$infile:e"
+
+Rm File.$$
+rm -f File2.$$
+rm -f colfile.$$

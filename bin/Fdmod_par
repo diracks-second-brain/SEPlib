@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+import SEP.fdmod
+import SEP.prog
+
+fd=SEP.fdmod.fdmod_par("Fdmod")
+program=SEP.prog.prog("Finite-difference modeling ",
+   "Fdmod_par intag=vel.H maxt= hsfile= ",
+    [fd],
+     ["Run finite difference modeling using the SEP python library"])
+
+program.get_options(delete=1)
+program.prep_run(fd.logic("restart"))
+fd.clean_files()

@@ -1,0 +1,84 @@
+#!/bin/sh
+#$
+#$=head1 NAME
+#$
+#$ pstogif - .ps to .gif converter
+#$
+#$=head1 SYNOPSIS
+#$
+#$ pstogif file.ps file.gif
+#$
+#$=head1 DESCRIPTION
+#$
+#$ Script to convert an arbitrary PostScript image to a cropped GIF image
+#$ suitable for incorporation into HTML documents as inlined images to be
+#$ viewed with Xmosaic.
+#$
+#$=head1 SEE ALSO
+#$
+#$L<vplot2gif>,L<vplot2mpeg>
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=head1 CATEGORY
+#$
+#$B<converters>
+#$
+#$=cut
+#
+#>
+#
+# This is a modified version of the pstoepsi script 
+# by Doug Crabill dgc@cs.purdue.edu
+#
+# Note in the USAGE line below, the source PostScript file must end
+# in a .ps extention.  This is a GhostScript requirement, not mine...
+#
+# This software is provided without any guarantee.
+#
+# Nikos Drakos, nikos@cbl.leeds.ac.uk
+# Computer Based Learning Unit, University of Leeds.
+#
+# Tue Jun 8 13:11:53 BST 1993
+#
+# Modified by martin Karrenbach to produce interlaced gif files
+#
+
+USAGE="Usage: $0 <file>.ps <file>.gif"
+
+### Edit these variables if you want to run the script outside the translator
+### 
+GS='gs'
+PSTOPPM="/usr/local/src/gnu/ghostscript/gs26/pstoppm.ps"
+PNMCROP='pnmcrop'
+PPMTOGIF='ppmtogif'
+######################################################################
+
+BASE=`basename "$1" .ps`
+
+if [ $# -ne 2 -o ! -f "$1" -o "$1" = "$BASE" ] ; then
+	echo $USAGE 1>&2
+	exit 1
+fi
+
+trap 'rm -f ${BASE}.ppm; exit' 1 2 3 4 13 15
+
+$GS -q -dNODISPLAY $PSTOPPM << ND
+100 100 ppmsetdensity
+($BASE) ppm24run
+ND
+
+if test -f ${BASE}.ppm 
+	then $PNMCROP ${BASE}.ppm | $PPMTOGIF -interlace > $2
+else for i in `ls ${BASE}.[1-9]*ppm`
+	do $PNMCROP $i | $PPMTOGIF -interlace > `echo $i |sed 's/\.\(.*\)ppm/\1\.xbm/'`;
+	echo "Writing `echo $i |sed 's/\.\(.*\)ppm/\1\.xbm/'`"
+     done
+fi
+
+rm -f ${BASE}.ppm
+rm -f ${BASE}.[1-9]*ppm
+
+exit 0

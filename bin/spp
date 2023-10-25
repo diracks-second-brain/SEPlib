@@ -1,0 +1,446 @@
+#!/usr/bin/perl
+#$=head1 NAME
+#$
+#$ spp - sep preprocessor
+#$
+#$=head1 SYNOPSIS
+#$
+#$spp <infile >outfile -Csymbol -Dname=value -Dname -Uname -Idir -Ydir -strict C<-H>
+#$
+#$=head1 INPUT PARAMETERS
+#$
+#$=over 4
+#$
+#$=item      C<-Csymbol>
+#$
+#$            definition of comment symbol 
+#$
+#$=item      C<-Dname=value -Dname>
+#$
+#$            definition of names
+#$
+#$=item      C<-Uname>
+#$
+#$            undefinition of names
+#$
+#$=item      C<-strict>
+#$
+#$            be strict on directive lines
+#$
+#$=item      C<-H>
+#$
+#$            prints included file names
+#$
+#$=item      C<-f77>      
+#$
+#$           strict f77 output (folds lines longer than 72 col 
+#$           and uses "C" as comment symbol)
+#$
+#$=back
+#$
+#$=head1 DESCRIPTION
+#$
+#$        "Sep Pre Processor" 
+#$            for conditional compilation and macro expansion;
+#$            unlike its ancestor "cpp" it can be used 
+#$            for any programming language
+#$
+#$=head1 CATEGORY
+#$
+#$B<tools>
+#$
+#$=cut
+#!/usr/bin/perl
+# uncomment the above line
+# if you are using a weird shell
+# ----------
+#  Keywords:  preprocessor fortran ratfor f77 f90 cmf spp cpp
+# ----------
+# Martin Karrenbach   2-15-92
+#
+$DefaultSymbol='#';
+$DefaultStandInc='/usr/include';                #for include <...>
+################### end of default settings #########################
+
+$selfdoc = '
+spp <infile >outfile -Csymbol -Dname=value -Dname -Uname -Idir -Ydir -strict -H
+
+        "Sep Pre Processor" 
+            for conditional compilation and macro expansion;
+            unlike its ancestor "cpp" it can be used 
+            for any programming language
+
+            definition of comment symbol 
+            -Csymbol
+
+            definition of names:
+            -Dname=value
+            -Dname
+
+            undefinition of names:
+            -Uname
+
+            -strict   be strict on directive lines
+
+            -H        prints included file names
+
+            -f77      strict f77 output (folds lines longer than 72 col
+                                         and uses "C" as comment symbol)
+
+';
+
+                                        # selfdoc when no arguments and 
+                                        # stdin is not redirected
+if ( $#ARGV == -1 ) {                   
+     if ( seek(STDIN,-1,1) == 1 ){
+       print STDERR $selfdoc ;
+       exit(0) ;
+    }
+}
+
+$| = 1;                                 # flush buffers each time 
+
+if (&argumentative<0) { exit(-1); } ;   # command line processing
+
+&the_right_thing;
+
+exit(0);
+
+
+sub argumentative{                      # process command line arguments
+$true = 1 ;
+$false = 0 ;
+$comment=$DefaultSymbol;
+$whatfile=0;
+$DefaultUserInc='.';
+$justify = $false;
+$printinc = $false;
+
+while ($#ARGV!=-1) {
+   $_ = $ARGV[0] ;
+
+   if (! /^-/ ) {       # must be a filename 
+
+      if    ($whatfile == 0) { $inputfile = $_ ; $whatfile++;}
+
+      elsif ($whatfile == 1) { $outputfile = $_ ; $whatfile++;}
+
+      else { die "to many file names specified \n"; }
+
+   }
+   else {                      # here we parse the parameter list 
+
+      if (/^-C/) { $comment = substr("$_",2); }
+
+      elsif (/^-D/) { ($name,$value) = split(/=/,substr($_,2),2); 
+         if (defined($value)) { $Defines{$name}=$value ; }
+         else                 { $Defines{$name}=$true  ;  }
+      }
+      elsif (/^-U/) { $name = substr("$_",2); 
+         delete  $Defines{$name}  ; 
+      }
+      elsif (/^-I/) { $name = substr("$_",2); 
+        if ("$name" == '') { push (@Incdir,"$name");}
+        else { die "wrong -Iargument\n";}
+      }
+      elsif (/^-Y/) { $name = substr("$_",2); 
+        if ("$name" == '') { $DefaultStandInc = "$name";}
+        else { die "wrong -Yargument\n";}
+      }
+      elsif (/^-strict/) { $justify = $true; 
+      }
+      elsif (/^-H/) { $printinc = $true; 
+      }
+      elsif (/^-f77/) { $f77 = $true; $comment='C';
+      }
+
+      else  { die "unknown command line option \n"; }
+
+   }
+
+   shift(@ARGV);
+}
+
+1;}
+
+sub the_right_thing 
+{
+
+                                # do some initializations
+$level = 0;
+$pass{$level} = 1;
+   $ifdef = "ifdef";
+   $ifndef = "ifndef";
+   $if = "if";
+   $elif = "elif";
+   $else = "else";
+   $endif = "endif";
+   $define = "define";
+   $undef = "undef";
+   $defined = "defined";
+   $include = "include";
+
+if ($justify==$false) { $space='\s+'; }
+
+$line = 0;
+$inclevel = 1;
+
+$INPUTHANDLE = 'fh000';         #possible to open up to 1000 include files
+
+&process("STDIN",$INPUTHANDLE); # use STDIN the first time trough
+
+                                # to handle include file "process" is called
+                                # recursively
+sub process {
+   local($filename,$INPUTHANDLE) = @_;
+   if ($inclevel==1) {
+      open($INPUTHANDLE, "<&STDIN");
+   }
+   else {
+      $INPUTHANDLE++;           # string increment, isn't perl great?
+      unless (open($INPUTHANDLE , $filename)) {
+              print "$comment Warning: ignored $_"; 
+              return;}
+   }
+   $inclevel++;
+line:
+   while (<$INPUTHANDLE>) {             # the actual reading and parsing loop
+
+      $line++; s/\t/        /g; $theline = $_ ;  study $theline ;
+
+      if (/^$comment$ifdef\b/i | /^$comment$space$ifdef\b/i){
+         @firstfew = split(/$ifdef/,$_);
+         $level++;
+         $name =substr("$theline",length($ifdef)+length(@firstfew[0])); 
+         if (/\n$/) { chop $name;}
+          if (&logical_expression($name)) { $pass{$level} = 1 ;  }
+         else                             { $pass{$level} = 0 ;  }
+         next line;
+      }
+      if (/^$comment$ifndef\b/i | /^$comment$space$ifndef\b/i){
+         @firstfew = split(/$ifndef/,$_);
+         $level++;
+         $name =substr("$theline",length($ifndef)+length(@firstfew[0])); 
+         if (/\n$/) { chop $name;}
+         if (!(&logical_expression($name))) { $pass{$level} = 1 ;  }
+         else                               { $pass{$level} = 0 ;  }
+         next line;
+      }
+      if (/^$comment$if\b/i | /^$comment$space$if\b/i){
+         @firstfew = split(/$if/,$_);
+         $level++;
+         $_ =substr("$theline",length($if)+length(@firstfew[0])); 
+         s/^[\s\t]+//;s/[\s\t]+$//;   # strip leading and trailing \t \s
+         $name = $_ ;
+         if (/\n$/) { chop $name;}
+            if (&logical_expression($name)) { $pass{$level} = 1 ;  }
+            else                            { $pass{$level} = 0 ;  }
+         next line;
+      }
+      if (/^$comment$elif/i | /^$comment$space$elif/i) { 
+         if ($pass{$level} == 0 ) {
+           @firstfew = split(/$elif/,$_);
+           $_ =substr("$theline",length($elif)+length(@firstfew[0])); 
+           s/^[\s\t]+//;s/[\s\t]+$//;   # strip leading and trailing \t \s
+           $name = $_ ;
+           if (/\n$/) { chop $name;}
+              if (&logical_expression($name)) { $pass{$level} = 1 ;  }
+         }
+         else { $pass{$level}++;}
+        
+         next line;
+      }
+   
+      if (/^$comment$else/i | /^$comment$space$else/i) {
+          if ($pass{$level} > 0 )  { $pass{$level} = 0; }
+          else                     { $pass{$level} = 1; }
+          next line;
+      }
+      if (/^$comment$endif/i | /^$comment$space$endif/i) {
+         $level--;
+         next line;
+      }
+   
+   
+      if ( $pass{$level} == 1 ) { 
+         if (/^$comment$define/i | /^$comment$space$define/i) { 
+            @firstfew = split(/$define/,$_);
+            chop $theline; 
+            ($name,$value)=split(' ',substr("$theline",length($define)+
+                                 length(@firstfew[0])),2);
+            # add checking for arguments, in case its a macro
+            if ($name =~ /\(.*\)$/) { #it is a macro
+              $name =~ /(.*)\((.*)\)$/;
+              $macarg{$1} = $2;
+              $macdef{$1}  = $value ;
+            }
+            else {                    # it is a regular definition
+              if (defined($value)) { $Defines{$name}=$value ; }
+              else                 { $Defines{$name}=$true  ; }
+            }
+            next line;
+         }
+         elsif (/^$comment$undef/i | /^$comment$space$undef/i) { 
+            @firstfew = split(/$undef/,$_);
+            chop $theline; 
+            ($name,$value)=split(' ',substr("$theline",length($undef)+
+                                               length(@firstfew[0])),2);
+            delete $Defines{$name} ;  
+            next line;
+         }
+         elsif (/^$comment$include\s+["<]([^">]*)[">]/i |
+                /^$comment$space$include\s+["<]([^">]*)[">]/i ) {
+            $name = "$1";
+            if ($name =~/^\//) {                #absolute pathname
+              $incname = $name;
+            }
+            elsif (/^$comment$include\s+</i | 
+                   /^$comment$space$include\s+</i ) {
+               @CurrentIncdir = push(@Incdir,@DefaultStandInc);
+               $incname = &fullname($name);
+            }
+            else { 
+               @CurrentIncdir = push(@DefaultUserInc,
+                                      push(@Incdir,@DefaultStandInc));
+               $incname = $name ;
+            }
+            if ($printinc) { print STDERR "including: $incname\n";}
+            &process($incname,$INPUTHANDLE);
+            next line;
+         }
+         else {
+            # check for macros in line
+            while (($name,$argstring)=each%macarg ) { 
+               while (/$name\((.*)/) {                          # contains macro
+                 @argm = &getargs($argstring);
+                 $actargstring=(&match($1));
+                 @actarg = &getargs($actargstring);
+                 if ($#argm!=$#actarg) {die "Macro argument list mismatch\n";} 
+                 $newdef = $macdef{$name};
+                 for $i (0..$#argm) {$newdef=~s/$argm[$i]/$actarg[$i]/g;}
+                 s/$name\($actargstring\)/$newdef/;
+               } 
+            }
+            while (($name,$value)=each%Defines ) { s/$name/$value/g; }
+            if ($f77) { &printwrapped("$_");}
+            else      {  print STDOUT $_ ;}
+          }
+       }
+       next line;
+      }
+   
+   }
+   
+1;}
+   
+sub logical_expression {
+local($name)=@_;
+local($replace,$item);
+  @constexpr = split(/[\!=&|?\-\,\~]/,$name);   #allow also unaries
+  for $expr (@constexpr) {
+     @exprarray =split(/[=><]/,$expr);
+     do {$item = pop @exprarray; $item =~ s/\s+//g;
+       if ( "$item" !~ /["']/) {
+           if ( "$item" =~ /$defined\((.*)\)/ ) { 
+            $replace = "$1";
+            if (defined($Defines{$replace}))    {
+                s/$defined\($replace\)/$Defines{$replace}/;}
+           else                                {s/$item/($false)/;    }
+           }
+           else {
+            if (defined($Defines{$item})) {s/$item/$Defines{$item}/;}
+            else                          {s/$item/($false)/;       }
+          }
+       }
+     } while ($#exprarray > -1);
+  }
+  $junk=$_;
+  $junk=~s/\s*$comment\s*ifdef//;
+  $junk=~s/\s*$comment\s*ifndef//;
+
+  $evaluation = "if ( $junk ) "."{1;}else{0;}";
+  return (eval $evaluation );
+}
+
+sub defeval{
+local($name)=@_;
+return (eval("if ( $name ) "."{1;}else{0;}"));
+}
+
+sub getargs{
+local($name) = @_;
+local($part,$nargs,$par1level,$par2level,$par1,$par2,@actarg);
+@arglist = split(/,/,$name);
+$nargs=0;
+$parlevel=0;
+for $part (@arglist) {
+  $part = " ".$part." ";
+  $par1=split(/\(/,$part) -1; $par1level += $par1;
+  $par1=split(/\)/,$part) -1; $par1level -= $par1;
+  $par2=split(/\[/,$part) -1; $par2level += $par2;
+  $par2=split(/\]/,$part) -1; $par2level -= $par2 ;
+  $part =~ s/^\s//g;
+  $part =~ s/\s$//g;
+  
+  if ($par1level==0 & $par2level==0 & $par1==0 & $par2==0 ) { # we have a winner
+     $actarg[$nargs] =~ s/^\,//;                # fix up previous if necessary
+     $nargs++;
+     $actarg[$nargs] = "$part"; 
+     }
+  else {
+     $actarg[$nargs] .= ",$part"; 
+  }
+
+  }
+return @actarg;
+}
+
+sub match{
+local($name) = @_;
+local($part,$parlevel,$par,$actarg);
+@arglist = split(/\)/,$name." ");
+$parlevel=0;
+for $part (@arglist) {
+  $par = split(/\(/,$part)-1;
+  $parlevel += $par;
+  $actarg .= "$part";
+  if ($parlevel==0) { return $actarg;}  
+  }
+}
+
+sub fullname{
+local($name) = @_;
+local($compname);
+$compname="$name";
+for $idir (@CurrentIncdir) {
+    $compname = "$idir"."/"."$name";
+   if (-f "$compname") {return  "$compname";}
+   }
+}
+
+sub printwrapped
+{
+    local($outline)=@_;
+    local($praefix,$ncont,$icont);
+    #       print the whole line with continuation if necessary
+    #       first line is always from 1 - 72
+    $ncont = 0;
+    if ($outline =~ /^[cC]/){
+        $praefix = 'C    &';
+        }
+    else {
+        $praefix = '     &';
+        }
+    if (length("$outline") <= 72) {
+        print STDOUT $outline;
+    }
+    else {
+        print substr($outline, 0, 72)."\n";
+        $ncont = int((length($outline) - 72) / 66 + 1);
+        for ($icont = 1; $icont <= $ncont; $icont++) {
+           print STDOUT "$praefix".substr($outline, 71 + 
+                          ($icont - 1) * 66 + 1, 66) ."\n";
+        }
+    }
+return;
+}

@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+#
+#=head1 NAME
+#
+#Mv,Mv3d - Move a dataset
+#
+#=head1 DESCRIPTION
+#
+#Move seplib header and data file that it points to
+#
+#=head1 SYNOPSIS
+#
+#C<Mv [-i] [-v] [-f] Header1 Header2 >
+#
+#=head1 INPUT PARAMETERS
+#
+#=over 4
+#
+#=item i - flag
+#
+#      ask whether to delete each file
+#
+#=item f - flag
+#
+#      force delete, no ownership check will be done before deleting
+#
+#=item v - verbose
+#
+#      Tell what I am removing
+#
+#=item q - flag
+#
+#      Do not  give an error message if the binary doesn't exist
+#
+#=back
+#
+#=head1 SEE ALSO
+#
+#L<Cp>,L<Mv>
+#
+#=head1 CATEGORY
+#
+#B<util/unix>
+#
+#=cut
+import os
+import pwd
+import sys
+import SEP.sepfile
+import SEP.spawn
+import commands
+
+def parse_args():
+  args=[]
+  files=[]
+  for arg in sys.argv[1:]:
+    if arg =="-f":  args.append("force")
+    elif arg =="-i":  args.append("interactive")
+    elif arg =="-q":  args.append("quiet")
+    elif arg =="-v":  args.append("verb")
+    else: files.append(arg)
+  if files == None: doc_it(sys.argv[0])
+  if len(files) != 2: doc_it(sys.argv[0])
+  return args,files
+
+def doc_it(prog):
+  out=commands.getoutput("< "+prog+"  ExtractPOD |pod2text  ")
+  lines=out.split("\n")
+  for line in lines: print line
+
+
+def remove_file(file,args):
+  if not os.path.isfile(file):
+    if args.count("quiet")==0 : print "%s does not exist"%file
+    return
+  file_list=[]
+  sep=SEP.sepfile.sep_file(file)
+
+  if args.count("verb"): verb=1
+  else: verb=None
+
+  add=" "
+  if args.count("force") : add=add+" -f "
+  if args.count("interactive") : add=add+" -i "
+  sep.remove(add,verb)
+
+args,files=parse_args()
+SEP.spawn.run_wait("Scp3d %s %s "%(files[0],files[1]))
+remove_file(files[0],args)
+sys.exit(0)

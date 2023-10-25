@@ -1,0 +1,225 @@
+#!/usr/bin/perl
+@lines = <>;
+# adj_mod is included by default
+push (@mods, "use adj_mod");
+# function name pattern
+$fmatch =  join (
+		 '\s*', 
+		 '^',
+		 '[\!][\%]',
+		 '[\_]',
+		 '(lop|img)', 
+		 '\(',
+                 '(((\w|\_)+)\,)?',
+		 '((\w|\_)+)',                
+		 '(\((([^\)\(]|[\(][^\)]+[\)])+)\))?',
+		 '\,',
+		 '((\w|\_)+)',
+		 '(\((([^\)\(]|[\(][^\)]+[\)])+)\))?',
+		 '\)'
+		 );
+$declarations = join (
+		      '|',
+		      '(real',
+		      'integer',
+		      'complex',
+		      'logical',
+		      'type',
+		      'interface',
+		      'end\s+interface',
+		      'function',
+		      'end\s+function)',
+		      'optional'
+		      );
+foreach (@lines) {
+    #get module name
+    $module = $1 if (s/^\s*module\s+([^\s\!]+)//);
+    # get use'd modules
+    if (s/^\s*use\s*(.+)//) {
+	@list = split(/(\s+|\,)/,$1);
+	foreach $item (@list) {
+	    push (@mods, "use $item");
+	}
+    }
+    # get init declaration
+    if ($cont) {
+	if (/^[\!]([^\)]+)/) {   
+	    $initd .= $1;
+	} else {
+	    $cont = 0;
+	}
+    }
+    if (s/^\s*[\!][\%]\s*[\_]\s*init\s*\(([^\)]+)//) {
+	$initd = $1;
+	unless (/^[\)]/) {
+	    $cont = 1;
+	    chomp ($initd);
+	}
+	$_ = '';
+    }
+    # close
+    if ($close) {
+	unless (/^\s*end\s*module/) {
+	    push (@close, "  " . $_); 
+	    $_ = '';
+	}
+    }
+    $close = 1 if (s/^\s*[\!][\%]\s*[\_]\s*close\s*//);
+    # get operator function
+    if (/$fmatch/) {
+	$operd = 1;
+        $type = $1;
+        $iter = $3;
+	$mod = $5; 	$nmod = $8;
+	$dat = $10;	$ndat = $13;
+	if ($type eq "lop") {
+	    $_ = join ("\n     ",
+		       join ($module, 
+			     "function ", 
+			     "_lop (adj, add, $mod, $dat) result (stat)"),
+		       "integer              :: stat",
+		       "logical, intent (in) :: adj, add",
+		       "real, dimension (:)  :: $mod, $dat",
+		       "\n");
+	    if ($nmod || $ndat) {
+		$_ .= join ("\n  ",
+			    "    call adjnull (adj,add,$mod,$dat)",
+			    join ($module, "  call ","_lop2 (adj,$mod,$dat)"), 
+			    "  stat=0",
+			    join ($module, "end function ", "_lop\n"),
+			    join ($module, 
+				  "subroutine ", "_lop2 (adj, $mod, $dat)"),
+			    "logical, intent (in) :: adj",
+			    "real, dimension ($nmod) :: $mod",
+			    "real, dimension ($ndat) :: $dat",
+			    "\n");
+	    } else {
+		$adjnull = 1;
+	    }
+	} else {
+	    $_ = join ("\n     ",
+		       join ($module, 
+			     "function ", 
+			     "_img (adj, $iter, $mod, $dat) result (stat)"),
+		       "integer                           :: stat",
+		       "logical,             intent (in)  :: adj",
+                       "integer,             intent (in)  :: $iter",
+		       "real, dimension (:)               :: $mod, $dat",
+		       "\n");
+	}
+	
+    }
+    # remove comments
+    s/\!.*$//;
+    s/implicit\s+none//;
+    # put adjnull
+    if ($adjnull) {
+	unless (/^\s*($declarations|$)/) {
+	    $_ = "call adjnull (adj,add,$mod,$dat)\n" . $_;
+	    $adjnull = 0;
+	}
+    }
+    # assign stat
+    if (/^\s*end\s*(?:module\s*($module)?)?$/) {
+	if ($nmod || $ndat) {
+	    $_ = join($module,"end subroutine ","_lop2\n");
+	} else {
+	    $_ = join($module,"stat = 0\n  end function ","_$type\n");
+	}
+    } 
+    # private variables
+    unless (($initd) || ($operd)) {
+	 push (@privats, $_);
+	 $_ = '';
+     }   
+    # do init 
+    $do = 0 if ($operd);
+    if ($do) {
+	if (/^\s*$declarations(\*|\,|\s+|\:\:)/) {
+	    push (@locals, "  $_");
+	} else {
+	    push (@ins, "  $_");
+	}
+	$_ = '';
+    }
+    $do = 1 if ($initd);
+    # ident
+    $_ = '  ' . $_ if ($_);
+}
+
+unless (($module) && ($operd)) {
+    print STDERR "$0: not a LOPTRAN source\n";
+    print @lines;
+    exit 0;
+}
+
+print "module $module\n";
+foreach $mod (@mods) {
+    print "$mod\n";
+}
+print "  implicit none\n";
+foreach $init (@privats) {
+    if ($init =~ /allocatable/) {
+	$init =~ s/dimension\s*\((([^\)\(]|[\(][^\)]+[\)])+)\)(.*\:\:)s*(.+)/join(' ',&dots($1), $3, $4)/e;
+	foreach $arr (split ('\s*\,\s*',$4)) {
+	    $alloc{$arr} = $1;
+	}	
+	$init =~ s/\:\:/\, private \:\:/;
+    } elsif ($init !~ /private\s*\:\:/) {
+	$init =~ s/\:\:/\, private \:\:/;
+	push (@inits, $init);
+	if ($init =~ /\:\:\s*(.+)$/) {
+	    foreach $var (split ('\s*\,\s*',$1)) {
+		$var =~ s/\s+$//;
+		push (@vars, $var);
+		$initd =~ s/(\,|\s+|^)$var(\,|\s+|$)/join('',$1,$var,"_in",$2)/e;
+		$pnt{$var} = 1 if ($init =~ /pointer.*\:\:/);
+	    } 
+	}	
+    }	
+	print "  $init"  unless ($init =~ /^\s*[\n]?$/);
+}
+print "contains\n";
+print join($module, "  subroutine ", "_init ($initd)\n");
+foreach $init (@inits) {
+    if ($init =~ /pointer/) {
+	$init =~ s/\,\s*private//;
+    } else {
+	$init =~ s/private/intent \(in\)/;
+    }
+    foreach $var (@vars) {
+	$init =~ s/(\,|\:\:|\s+)$var(\,|\s+)/join('',$1,$var,"_in",$2)/e;
+    }
+    print "  $init" unless ($init =~ /(allocatable|^\s*[\n]?$)/);
+}
+print @locals;
+foreach $var (@vars) {
+    if ($pnt{$var}) {
+	print join($var,"    "," => ","_in\n");
+    } else {
+	print join($var,"    "," =  ","_in\n");
+    }
+}
+foreach $arr (keys (%alloc)) {
+    print join($arr,"    if (.not. allocated (",")) allocate (","($alloc{$arr}))\n");
+}
+print @ins;
+print join($module, "  end subroutine ", "_init\n");
+print @lines;
+print join($module, "  subroutine ", "_close ()\n");
+print @close;
+foreach $arr (keys (%alloc)) {
+    print join($arr,"    if (allocated (",")) deallocate (",")\n");
+}
+print join($module, "  end subroutine ", "_close\n");
+print "end module $module\n";
+
+exit 0;
+
+sub dots {
+    my $in = shift;
+    $in =~ s/[^\,\:]+/\:/g;
+    join ($in, "dimension (",")");
+}
+
+

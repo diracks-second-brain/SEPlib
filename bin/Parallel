@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+import SEP.pj_simple
+import SEP.prog
+
+parflow=SEP.pj_simple.par_job("Parallel")
+program=SEP.prog.prog("Parallel job using python scripts",
+   "Parallel command=prog.x tags='stdin,stdout' files='in.H,out.H' usage='INPUT,OUTPUT'  nblock=X [additional args] ",
+    [parflow],
+     ["Run a generic parallel job using  the SEP python library"])
+
+program.get_options(delete=1)
+restart=parflow.logic("restart")
+
+                                                                                
+porig=program.return_orig_args()
+porig.del_par("tags")
+porig.del_par("usage")
+porig.del_par("files")
+porig.del_par("command")
+porig.del_par("nblock")
+parflow.add_param("global_pars",porig)
+parflow.prep_run(restart)
+parflow.clean_files()

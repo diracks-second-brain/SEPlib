@@ -1,0 +1,198 @@
+#!/usr/bin/perl
+#$
+#$=head1 NAME
+#$
+#$ vplot2gif - converts vplot to gif
+#$
+#$=head1 SYNOPSIS
+#$
+#$ vplot2gif myplot.v [myplot.gif [xsize=5. ysize= (any vppen options)]]
+#$
+#$=head1 DESCRIPTION
+#$
+#$ Convert vplot format to .gif format at 75 dots/per inch, ideal for
+#$ WWW documents. Default output is input file name with the .v ending
+#$ changed to ".gif".
+#$
+#$ vplot2gif finds the smallest bounding box containing the input plot,
+#$ and makes a gif output just big enough to contain that image, plus
+#$ a border of .25 inches all around. (The position of the plot on the
+#$ vplot virtual page is irrelevant!)
+#$
+#$ If you do not specify the size on the command line, then the absolute
+#$ size of the original plot in the input vplot file will be used. Thus
+#$ a small plot comes out small, and a big plot comes out big.
+#$
+#$ You can override the 75. dots per inch by setting the environment
+#$ variable PPI.
+#$
+#$ You can override the .25 inch border by setting the environment
+#$ variable GIFBORDER. (Note, GIFBORDER will only come out in physical
+#$ units if PPI happens to be accurate for your display device.)
+#$
+#$=head1 PARAMETERS
+#$
+#$=over 4
+#$
+#$=item Any vppen option 
+#$
+#$=back
+#$
+#$ 
+#$
+#$=head1 BUGS
+#$
+#$ Currently, input vplot files are assumed to contain only one frame.
+#$ Old-style rotated plots require "big=n". vplot2gif will refuse to
+#$ rasterize a plot consisting of a single pixel (since its bounding box
+#$ has zero area).
+#$
+#$=head1 SEE ALSO
+#$
+#$L<pstogif>
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$ DISTR
+#$
+#$=head1 CATEGORY
+#$
+#$B<converters>
+#$
+#$=cut
+#>
+if ($#ARGV < 0) { 
+    print <<__END__;
+NAME
+        vplot2gif --- make .gif plots from vplot
+ 
+SYNOPSIS
+ 
+        vplot2gif myplot.v [myplot.gif [xsize=5. ysize= (any vppen options)]]
+ 
+DESCRIPTION
+        Convert vplot format to .gif format at 75 dots/per inch, ideal for
+	WWW documents. Default output is input file name with the .v ending
+	changed to ".gif".
+
+	vplot2gif finds the smallest bounding box containing the input plot,
+	and makes a gif output just big enough to contain that image, plus
+	a border of .25 inches all around. (The position of the plot on the
+	vplot virtual page is irrelevant!)
+
+	If you do not specify the size on the command line, then the absolute
+	size of the original plot in the input vplot file will be used. Thus
+	a small plot comes out small, and a big plot comes out big.
+
+	You can override the 75. dots per inch by setting the environment
+	variable PPI.
+
+	You can override the .25 inch border by setting the environment
+	variable GIFBORDER. (Note, GIFBORDER will only come out in physical
+	units if PPI happens to be accurate for your display device.)
+ 
+AUTHOR
+	Joe Dellinger
+__END__
+    exit 0;
+}
+
+$val = 0;
+$infile = shift;
+
+if ($#ARGV < 0) {
+    $outfile=$infile;
+    $outfile=~ s/[^\.]+$/gif/;
+} else {
+    $outfile= shift;
+}
+
+# Allow an extra .25 inches all around
+$spacing = ($ENV{'GIFBORDER'} || .25);
+
+# rasterize to 75 dots per inch
+$ppi = ($ENV{'PPI'} || 75.);
+
+# Scale ppm
+$scale = ($ENV{'PPMSCALE'} || 1);
+
+die "Cannot read input $infile.\n" unless (-r $infile);
+
+$random = time;
+
+# If you gave some vppen options, call vppen to modify the file first
+if ($#ARGV < 0) {
+    $vpfile = $infile;
+} else {
+    system("vppen vpstyle=n in=$infile > vppen.$random", @ARGV);
+    $vpfile = "vppen.$random";
+}
+
+print "Writing $vpfile...\n";
+
+# Now use vppen to find out how big and where on the page the plot is.
+chomp ($get = `vppen vpstyle=n stat=l <$vpfile | head -1`);
+@stat = split('\s+', $get);
+
+chomp ($get = `vppen vpstyle=n stat=l <$vpfile | tail -1`);
+if ($get =~ /Total\s+(\d+)/) {
+    $frames = $1;
+} else {
+    $frames = 1;
+}
+
+$xmin = $stat[8]  - $spacing;
+$xmax = $stat[10] + $spacing;
+$xcen = ($stat[8]+$stat[10])/2.;
+
+$ymin = $stat[13] - $spacing;
+$ymax = $stat[15] + $spacing;
+$ycen = ($stat[13]+$stat[15])/2.;
+
+# These have to be integers (no partial pixels), so round UP
+$width  = int(($stat[10]-$stat[8] +$spacing*2)*$ppi+.9999);
+$height = int(($stat[15]-$stat[13]+$spacing*2)*$ppi+.9999);
+
+$cwidth  = int(($stat[10]-$stat[8]) *$ppi+.9999);
+$cheight = int(($stat[15]-$stat[13])*$ppi+.9999);
+
+unless ($cwidth || $cheight) {
+    print "No plot found.\n";
+    unlink ("vppen.$random");
+    die "If this is an old-style plot, you need to specify big=n\n";
+}
+
+print "$outfile will be $width pixels wide, $height pixels tall,\n";
+print "at $ppi pixels per inch, with borders $spacing inches wide,\n";
+print "scaled by $scale,\n" if ($scale != 1);
+print "$frames frames in animation.\n" if ($frames > 1);
+
+# OK, now we know exactly where the image is and how big it is.
+# Rasterize it to portable pixmap (ppm) format at $ppi dots per inch.
+# Ignore pesky "break" commands!
+system ("vppen vpstyle=n outN=vppen.%d.$random <$vpfile >/dev/null");
+
+for ($i = 0; $i < $frames; $i++) {
+    $vppen = join ('.', 'vppen', $i, $random);
+    push (@vppens, $vppen);
+    if ($outfile =~ /\/$/) {
+	$gif = join ($i, $outfile, '.gif');
+    } else {
+	$gif =  join ('.', 'gif', $i, $random);
+	push (@gifs, $gif);
+    }
+    print "Processing frame $i...\n";
+    system ("ppmpen vpstyle=n break=i n2=$height n1=$width ppi=$ppi xcenter=$xcen ycenter=$ycen in=$vppen | pnmscale $scale  |ppmquant 128 | pnmcrop | ppmtogif -interlace > $gif");
+}
+
+unless ($outfile =~ /\/$/) {
+    $allgifs = join (' ', @gifs);
+    $Gifsicle = 'gifsicle  --colors 256 --merge --loopcount=forever --optimize --delay=100';
+    
+    system ("$Gifsicle $allgifs >$outfile");
+}
+
+unlink ("ppm.$random", "vppen.$random", @vppens, @gifs);
+
+exit 0;
+

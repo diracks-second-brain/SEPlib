@@ -1,0 +1,234 @@
+#!/usr/bin/perl
+
+
+sub get_args{
+  $math_cmd="Math_base";
+  $line=join(" ",@ARGV);
+  &add_list($line);
+  $ndepth=0;
+
+   
+ if($#ARGV==-1){
+   system("Math_base");
+   exit -1; 
+ }
+
+}
+
+sub add_list{
+  @list=split(/\s+/,$line);
+  foreach $arg (@list){
+     if($arg=~/=/){
+       ($name, $value) = split(/=/, $arg);
+      $args{$name} = $value;
+       if($name  eq "exp" || $name  eq "eqn" || $name  eq "exp_real"
+        | $name  eq "exp_imag") { }
+        elsif($name eq "par"){
+         &read_file($args{$name});
+        }
+        else{ $arg_out.="$arg ";}
+   }
+ } 
+}
+
+sub read_file{
+  $name="AA".$ndepth;
+  $ndepth++;
+  open($name,$_[0]);
+  while(<$name>){
+    $line=$_;
+    if($line=~/^(.+)#/){ $line=$1;}
+    &add_list($line);
+  } 
+  close($name);
+}
+
+
+
+sub decode_exp{
+  if(defined($args{"exp"})){
+    $args{"exp"}=check_exp($args{"exp"}) ;
+  }
+  if(defined($args{"eqn"})){
+    $args{"exp"}=check_exp($args{"eqn"}) ;
+  }
+  if(defined($args{"exp_real"})){
+    $args{"exp_real"}=check_exp($args{"exp_real"}) ;
+  }
+  if(defined($args{"exp_imag"})){
+    $args{"exp_imag"}=check_exp($args{"exp_imag"}) ;
+  }
+  if($nfiles==0){
+    print STDERR "Can't find any files to process\n";
+    exit -1;
+  }
+  for($i=1; $i <= $nfiles; $i++){
+    $file="file$i";
+    $arg_out.="$file=".$args{$file}." ";
+  }
+
+  if(defined($args{"exp"})){
+    $args{"exp"}=change_exp($args{"exp"}) ;
+  }
+  if(defined($args{"exp_real"})){
+    $args{"exp_real"}=change_exp($args{"exp_real"}) ;
+  }
+  if(defined($args{"exp_imag"})){
+    $args{"exp_imag"}=change_exp($args{"exp_imag"}) ;
+  }
+   
+}
+sub change_exp{
+  $mys=$_[0];
+
+  for($i=1;$i<=$nfiles;$i++){
+    $f="file$i";
+    $mys=~s/$args{$f}/$f/gm;
+  }
+  return $mys;
+}
+
+
+
+sub check_exp{
+  $exp_in=$_[0];
+  @mys=split(//,$exp_in);
+  $iexp=0;
+  $j=0;
+  $nlen=length($exp_in);
+  while($iexp <$nlen){
+    $iout=$iexp+1;#next location we will check
+    $good=0;
+    #THINGS THAT WE DON'T THINK ARE PARTS OF FILE NAMES
+    if($mys[$iexp] eq "(" ||
+      $mys[$iexp] eq ")" ||
+      $mys[$iexp] eq "^" ||
+      $mys[$iexp] eq "*" ||
+      $mys[$iexp] eq '+' ) {
+      $good=1;
+     }
+    if($good==0){ if($mys[$iexp] eq "@"){ $good=func_begin($iexp,$iout); }}
+    if($good==0){  $good=check_axis($iexp,$iout);}
+    if($good==0){  $good=check_num($iexp,$iout);}
+    if($good==0){  $good=check_filename($iexp,$iout); }
+    if($good==0 && $mys[$iexp] eq "/"){ $good=1;}
+    if($good==0){
+       print STDERR "trouble understanding experession\n";
+       $tot =substr($exp_in,$iexp);
+       print STDERR "STUCK AT:$tot\n";
+       exit -1;
+    }
+    print "CHECK VAL:$mys[$iexp] \n";
+    $iexp=$iout;
+  }
+  return $exp_in;
+}
+
+sub check_axis{
+  ($iin, $iout) = @_;
+  $axis =substr($exp_in,$iin,4);
+  if($axis=~/axis\d/){
+    $good=1;
+    $iout=$iin+5;
+  }
+  return $good;
+}
+sub check_num{
+  ($iin, $iout) = @_;
+   $t2=$nlen;
+   $good=0;
+   $t1=index($exp_in,"(",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,")",$iin+1);if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,"^",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,"*",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,"+",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $found=0; $t1=$t2-1-$iin;
+   while($found ==0 &&  $t1 > 0){
+     $num =substr($exp_in,$iin,$t1+1);
+     if($num=~/^[\d\.]+$/){
+        $found=1; $iout=$t1+1+$iin; $good=1;
+     }
+     $t1--;
+   } 
+
+  return $good;
+}
+sub check_filename{
+  ($iin, $iout) = @_;
+  #STUPID BUT SHOULD BE GENERALLY EFFECTIVE
+   #    create substrings from current position to lesser and lesser 
+   $t2=$nlen;
+   $good=0;
+   $t1=index($exp_in,"(",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,")",$iin+1);if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,"^",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,"*",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $t1=index($exp_in,"+",$iin+1); if($t1> 0 && $t1 < $t2) { $t2=$t1;}
+   $found=0; 
+#   $t1=$t2-1;
+   $t1=$t2-$iin-1;
+   while($found ==0 &&  $t1 > 0){
+     $name =substr($exp_in,$iin,$t1+1);
+     if (-e  $name){
+        $found=1; $iout=$iin+$t1+1; $good=1;
+        if(!defined($back{$name})){
+          $nfiles++;
+          $file="file"."$ext".$nfiles;
+          $args{$file}=$name;
+          $back{$name}=$file;
+          if($iout+2 < $nlen){
+            $check=substr($exp_in,$iout,3);
+            if($check eq ".re" || $check eq ".im"){ $iout+=3;}
+          }
+        }
+     } 
+    $t1--;
+   }
+   if($good==0) {$iout=$iin+1;}
+   return $good;
+}
+
+
+sub func_begin{
+  ($iin, $iout) = @_;
+  @funcs=("COS", "SIN", "TAN","ACOS","ASIN","ATAN","COSH","SINH","INT","EXP","LOG","SQRT",
+      "ABS","SGN");
+   my $decs = join("\$|^",@funcs);
+
+  $pos=index($exp_in,"(",$iin+1);
+  $g=0;
+  if($pos >0){
+    $test=substr($exp_in,$iin+1,$pos-$iin-1);
+    if($test=~/^$decs$/){ $g=1; $iout=$pos;}
+  } 
+  return $g;
+}
+   
+  
+    
+   
+  
+
+
+  
+
+
+
+sub do_command{
+if(defined($args{"exp"})){ $arg_out.="exp=".$args{"exp"}." " ; }
+if(defined($args{"exp_real"})){ $arg_out.="exp_real=".$args{"exp_real"}." " ; }
+if(defined($args{"exp_imag"})){ $arg_out.="exp_imag=".$args{"exp_imag"}." " ; }
+
+@args=split(/\s+/,$arg_out);
+exec $math_cmd ($0, @args); 
+}
+
+
+
+$nfiles=0;
+&get_args;
+#&get_files;
+if(!defined($args{"file1"})){ &decode_exp;}
+&do_command;
+
+

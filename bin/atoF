@@ -1,0 +1,47 @@
+#!/bin/sh
+# 
+# front end to Dd to allow user to type in a list of numbers
+# and generate a seplib header and data file from it automatically
+# suitable for use as primary or auxiliary input.
+#
+# Stewart A. Levin    7/27/86
+#
+#--------------------------------------------------------------------
+# Keyword: create-header conversion ascii float : Dd atof
+#--------------------------------------------------------------------
+#! /bin/sh
+if { [ \( -t 1 \) ] ; } then \
+{ cat <<DATA ; }
+/*<
+atof
+
+Description
+convert typed numbers to a seplib header and data file
+suitable for primary or auxiliary input
+  
+USAGE
+atoF [ < listing ] > Header
+  
+
+INPUT PARAMETERS:
+	listing		Stored list of free-format real numbers.  If not
+			supplied, an editor will be invoked to create one.
+
+OUTPUT PARAMETERS:
+	Header		Output seplib header.
+
+COMMENTS:
+
+	Several seplib programs have auxiliary inputs to supply what is
+	normally a short list of values (e.g. offsets for Nmo).  This
+	utility takes a typed list of numbers and makes a seplib format
+	data file from it for use with such commands.
+>*/
+DATA
+else
+if tty -s
+then cat /dev/null >atoFtemp$$ ; ${EDITOR-vi} atoFtemp$$ >&0  ; exec < atoFtemp$$ ;
+fi
+Dd in=stdin noheader=y ein=0 esize=4 $*
+rm -f atoFtemp$$
+fi

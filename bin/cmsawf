@@ -1,0 +1,204 @@
+#!/bin/csh -f
+#$
+#$=head1 NAME
+#$
+#$ saw  - converted seplib shorthand f77 code
+#$
+#$=head1 SYNOPSIS
+#$
+#$	saw src.rs > src.r 
+#$
+#$=head1 DESCRIPTION
+#$
+#$Allows for allocatable arrays and eases seplib parameter handeling
+#$
+#$=head1 COMMENTS 
+#$
+#$	- self doc :
+#$	  saw adds the call to the function doc which handles the self 
+#$          documentation :
+#$	  call doc( source )
+#$	  source must be defined at compile time as the name of the source file
+#$	  containing the the self documentation , passing the output of saw
+#$          through cpp with the following argument :
+#$
+#$	             -Dsource=\'`pwd`/$*.rs\'
+#$			
+#$	  For both fortran and ratfor the first commant bloc is used as the self 
+#$	  documentation :
+#$	  c
+#$	  c
+#$	  c		FORTRAN SELF DOCUMENTATION
+#$	  c
+#$	  c%
+#$
+#$	  #
+#$	  #
+#$	  #		RATFOR SELF DOCUMENTATION
+#$	  #
+#$	  #%
+#$
+#$	  It is IMPORTANT not to forget the sign % at the end of the self 
+#$  documentation .
+#$
+#$	- parameters :
+#$	     * from command line :
+#$		    from par:      type par_name:var_name=def_val , ....
+#$ 
+#$	       if(getch('par_name','i',var_name).eq.0) var_name=def_val
+#$               call putch('From par: var_name = par_name','i',var_name)
+#$
+#$	     * from input sep header
+#$		    from history:  type par_name:var_name=def_val , ....
+#$
+#$	       if(hetch('par_name','i',var_name).eq.0) var_name=def_val
+#$
+#$	     * from either command line or input sep header 
+#$		    from either:   type par_name:var_name=def_val , ....
+#$
+#$	       if(fetch('par_name','i',var_name).eq.0) var_name=def_val
+#$               call putch('From either: var_name = par_name','i',var_name)
+#$
+#$	     * from an input auxiliary header file
+#$		    from aux:      aux_name type par_name:var_name=def_val , ....
+#$
+#$	       if(auxpar('par_name','i',var_name,'aux_name').eq.0)     var_name=def_val
+#$               call putch('From aux(aux_name):var_name:par_name: aux_name_par_name','i' ,
+#$		          var_name)
+#$
+#$
+#$	     * to output header file :
+#$                    to history:      type par_name:var_name, ....
+#$	       call putch('var_name = par_name','i',var_name)
+#$
+#$	     * to an output auxiliary header file
+#$                    to aux:      aux_name type par_name:var_name=def_val , ....
+#$	       call auxputch('var_name = par_name','i',var_name,'aux_name')
+#$
+#$	       where 
+#$		    aux_name is the generic name of the auxiliary file .
+#$
+#$		    type  : is the type of the variable . allowed types are
+#$			    integer 
+#$			    real 
+#$			    complex 
+#$			    character
+#$		    par_name : is the parameter name 
+#$		    var_name : is the variable in which is stored the value of the 
+#$			       parameter as defined in the header file by
+#$				       par_name=var_name
+#$		    def_val  : is the default value taken by the variable if the 
+#$			       parameter is not found .
+#$
+#$	        in the case of from par either or aux  the 
+#$           definition of the parameter is
+#$	        "putched" into the output header file :
+#$			       par_name=var_name
+#$
+#$		if the defualt value is not given saw generates a call to erexit :
+#$		       call erexit('need par_name:var_name')
+#$		which stops the program if the parameter par_name is missing .
+#$
+#$			
+#$	- memory allocation :
+#$                    allocate:      type array1(dim1), array2(dim1,dim2)
+#$				        array3(dim1,dim2,dim3)
+#$	       allows dynamic allocation of arrays ( ONLY IN THE MAIN ) .
+#$	       type defines the type of the array and can take one of the 
+#$	       following values :
+#$	                 integer , integer*2 , integer*4
+#$			 real    , real*4    , real*8
+#$			 complex , complex*8 , complex*16
+#$
+#$	the syntaxe is IMPORTRANT the macros are case sensitive and also 
+#$	white space sensitive ( DON'T ADD IN WHITE SPACES IN THE MACROS )
+#$
+#$	- main subroutine
+#$	       the first subroutine ( DONT'T FORGET CASE SENSITIVE ) :
+#$			subroutine main_subroutine ( arg1, arg2, arg3 )
+#$	       is processed into the following code :
+#$
+#$        locore=fsbrk(lcrpos-1)
+#$        locore=loc(basecore)-locore
+#$        call main_subroutine()
+#$        call exit(0)
+#$        end
+#$
+#$        subroutine main_subroutine()
+#$        implicit undefined (a-z)
+#$        integer fetch, hetch, tetch, getch, auxpar
+#$
+#$		with a bloc for allocation handling , a call to the main subroutine and 
+#$		the head of the subroutine .
+#$
+#$	 
+#$
+#$	saw ignores any text string .
+#$
+#$	the structure of  saw source is :
+#$
+#$=head1 SEE ALSO
+#$
+#$L<sat>
+#$
+#$
+#$=head1 CATEGORY
+#$ 
+#$B<tools>
+#$
+#$=cut
+#	#
+#	#
+#	#		SELF DOCUMENTATION
+#	#
+#	#% end of self documentation
+#
+#	#
+#	#	parameter handling
+#	#
+#	from par:
+#	from history:
+#	from aux:
+#	to history:
+#	to aux:
+#
+#	allocate:
+#
+#	#
+#	#
+#	#
+#
+#	subroutine( arg1, arg2, arg3, arg4, ... , array1, array2, array3 )
+#	#
+#	#
+#	end	
+#		    
+#
+#KEYWORDS
+#	preprocessor sep headers allocation 
+#
+#SEE ALSO
+#	ratfor sat
+# note, cmsawf.awk is replaced by the correct value by a 
+# sed step in the makefile.
+#
+# note, AWK_PROG is replaced by the correct value by a 
+#sed step in the makefile.
+#
+# Category
+# Tools:Autowriter
+#
+# COMPILE LEVEL
+# DISTR
+#
+#>
+if ($#argv < 1)  then
+	head -177 $0  |more
+	exit
+else
+if ($#argv == 3)  then
+	(  <$3 $1/Lex.fort  | gawk  -W compat -f $2/cmsawf.awk )
+else
+	(  <$1 /scratch/rsb/speed/SEP-7.0.4/bin/Lex.fort  | gawk  -W compat -f /scratch/rsb/speed/SEP-7.0.4/bin/cmsawf.awk )
+endif
+endif

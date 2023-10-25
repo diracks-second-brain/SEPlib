@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+import SEP.listen
+import sys,os
+import commands
+
+
+def command_line(options):
+  if len(sys.argv) >1 : options["file"]=sys.argv[1]
+  if len(sys.argv) >2 : options["dir"]=sys.argv[2]
+  if len(sys.argv) >3 : options["read"]=sys.argv[3]
+  return options
+
+  
+def start_pdf(options):
+  com="%s %s & "%(options["read"],options["file"]);
+  os.system(com)
+  
+
+def start_server(options):
+    server = SEP.listen.SimpleServer((SEP.listen.HOST,SEP.listen.PORT), SEP.listen.SingleTCPHandler)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        sys.exit(0)
+
+
+options={}
+options["file"]="paper.pdf"
+options["dir"]="."
+options["read"]="acroread"
+options=command_line(options)
+SEP.listen.base_dir=options["dir"]
+start_pdf(options)
+start_server(options)

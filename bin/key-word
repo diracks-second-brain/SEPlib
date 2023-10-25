@@ -1,0 +1,208 @@
+#!/usr/bin/perl
+#$
+#$=head1 NAME
+#$
+#$key-word - find key words
+#$
+#$=head1 SYNOPSIS
+#$
+#$ key-word words [options]
+#$
+#$
+#$=head1 DESCRIPTION
+#$ Searches for specific keywords in program headers
+#$        by James Rickett - July 96
+#$
+#$ Needs snoop file to have been created by something else
+#$ 
+#$ Keyword : index key-word
+#$
+#$=cut 
+
+open(HDIR, 'echo $HOME |') || print "Warning: couldn't get a home directory\n";
+$home = <HDIR>; chop $home; $home = "$home/";
+@options = (@options, '-all', '/');
+
+#------------------------------------------------------------------------------
+# NEEDS TO BE MODIFIED IN A PORT TO A ANOTHER SYSTEM...
+
+$seplib = '/usr/local/src/our/sep4/';
+
+@options = (@options, '-sep', '/homes/sep/');
+@options = (@options, '-oldsep', '/homes/oldsep/');
+@options = (@options, '-prof', '/homes/sep/prof/');
+#------------------------------------------------------------------------------
+
+@options = (@options, '-seplib', $seplib);
+@options = (@options, '-home', $home);
+open(INDEX,"KEYWORD_DIR/KEYWORDS");
+open(SYNONYMS,"KEYWORD_DIR/SYNONYMS");
+
+$mode = 'and';
+
+if ($#ARGV == -1) {
+    # Self-doc
+    print "\nusage: keyword [-path_options] [-or] keyword_1 [keyword_2 ...]\n\n";
+    print "Current path_options are:\n";
+    # loop over possible @options
+    $it2 = 0;
+	while ($it2 < (@options-1)) {
+	    print "          $options[$it2]  ---->  $options[$it2+1]\n";
+	    $it2 = $it2 + 2;
+	}
+# to be implemented
+    print "          -<username>  ---->  ... /<username>/ ...\n";
+    print "\nDefault searches sep-distr and your home directory\n\n";
+    print "Option: -or  ----> keywords OR instead of default AND\n\n";
+    exit
+}
+
+# loop over command line arguments
+$default = 1;$it = -1;
+while ($it < $#ARGV) {
+    $tip = 0;
+
+    # loop over possible @options
+    $it2 = 0;
+	while ($it2 < (@options-1)) {
+	    if ($ARGV[$it] eq $options[$it2]) {
+		$tip=1; $default = 0;
+		@pathnames = (@pathnames, $options[$it2+1]);
+	    }
+	    $it2 = $it2 + 2;
+	}
+
+    if ($ARGV[$it] eq '-or') { $tip=1; $mode = 'or'; }
+
+    if (($ARGV[$it] =~ /^-/) & ($ARGV[$it] ne '-') & ($tip != 1)) { 
+	$junk = reverse $ARGV[$it]; chop $junk; $junk1 = reverse $junk;
+	@pathnames = (@pathnames, "/$junk1/");
+	$tip=1; $default = 0;
+    }
+
+    if ($tip == 0) {
+	@initial_keywords = (@initial_keywords, $ARGV[$it]);
+    }
+    $it = $it + 1;
+}
+
+# default @pathnames to home and sep-distr
+if ($default == 1) { @pathnames = ($home, '/usr/local/src/our/sep-distr/'); }
+
+print "Searching for paths containing... @pathnames";
+
+#------------------------------------------------------------------------------
+# loop over @initial_keywords adding synonyms to @keywords
+# (doesnt check if two initial keywords are themselves synonyms)
+
+$it=0;
+while ($it < @initial_keywords) {
+    $number_keywords[$it] = 1;
+    $it = $it +1;
+}
+
+# loop over each line of the SYNONYMS file
+SYN:
+while (<SYNONYMS>) {
+	
+    #loop over list of @initial_keywords
+    $it = 0;
+KEYWORD:
+    while ($it < @initial_keywords) {
+	
+	if ((/\s$initial_keywords[$it]\s/) | (/^$initial_keywords[$it]\s/)) {
+	    @words = split(' ',$_);
+	    
+	    #loop over list of @words
+	    $it2 = 0;
+	    while ($it2 < @words) {
+		@new_keywords = ();
+
+		# find @new_keywords
+		@new_keywords = (@new_keywords,$words[$it2]);
+
+		$it2 = $it2 + 1;
+		@keywords = (@keywords, @new_keywords);
+	    }
+	    $number_keywords[$it] = $it2;
+	    $it = $it + 1;
+	    next KEYWORD
+	}
+	$it = $it + 1;
+    }
+}
+
+$it=0; $point = 0;
+while ($it < @initial_keywords) {
+    if ($number_keywords[$it] == 1){
+	splice(@keywords,$point,0,$initial_keywords[$it]);
+	print "\nNo synonyms for $initial_keywords[$it] ";
+	print "(see man pages for adding more synonyms)";
+	$point = $point + 1;
+    } else {
+	print "\n$number_keywords[$it] synonyms for $initial_keywords[$it]: ";
+	$it2 = 0;
+	while ($it2 < $number_keywords[$it]) {
+	    print "$keywords[$point] ";
+	    $it2 = $it2 + 1; $point = $point + 1; 
+	}
+    }
+    $it = $it +1;
+}
+
+print "\n";$hits = 0;
+
+#------------------------------------------------------------------------------
+# loop over each LINE of the INDEX file  
+
+LINE:
+while (<INDEX>) {
+
+    # loop over list of @pathnames
+    $it2 = 0;
+    while ($it2 < @pathnames) {
+	    
+	# find matching pathnames
+	if (/$pathnames[$it2]/) {
+
+	    # loop over list of @number_keywords
+	    $it = 0; $point = 0;
+	    if ($mode eq 'or' ) { $match_key = 0; } else { $match_key = 1; }
+KEYWORD:
+	    while ($it < @number_keywords) {
+
+		# loop over synonyms
+		$it2 = 0;
+		$match_syn=0;
+		while ($it2 < $number_keywords[$it]) {
+		    if ((/\s$keywords[$point]\s/i) | (/\s$keywords[$point]-/i) | (/-$keywords[$point]\s/i)) { $match_syn = 1; }
+#		    if (/\s$keywords[$point]\s/i)  { $match_syn = 1; }
+		    $point = $point + 1; $it2 = $it2 + 1;
+		}
+		
+		if (($mode eq 'or' ) & ($match_syn == 1)) { $match_key = 1; }
+		if (($mode eq 'and') & ($match_syn != 1)) { $match_key = 0; }
+		$it = $it + 1;
+	    }
+
+	    if ($match_key == 1) { $hits = $hits + 1;$output = "$output$_"; }
+	    next LINE
+	}
+	$it2 = $it2 + 1;
+    }
+}
+
+print "Number of hits = ",$hits,"\n";
+if ($hits == 0) {
+    print "\nRemember although case doesn't matter, \na trailing";
+    print " 's' or 'ing' can mess things up for you.\n";
+    if ($mode eq 'and'){ print "\nYou could also consider the -or option.\n"; }
+}
+print $output;
+if ($hits > 25) {
+    print "\nTo decrease the number of hits: consider adding more keywords,\n";
+    print "or reducing the search path.\n";
+}
+
+
+

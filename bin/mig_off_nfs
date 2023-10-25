@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+import sys
+import SEP.util
+import SEP.wei
+import SEP.wei_flow
+import SEP.prog
+
+
+main      =SEP.wei_flow.mig_main()        #main arguments for WEI migration
+vel_transp=SEP.wei_flow.wtransp_interp(main)  #transpose and interpolate
+schoice   =SEP.wei_flow.lloyd_wei(main)       #choose the reference slowness
+wei       =SEP.wei_flow.off_mig(main)         #migration with offset domain gathers
+par       =SEP.wei.wpar_job_nfs()         #parallel job
+wei_par   =SEP.wei_flow.parallel_wei(wei,par,main) #WEI parallel job
+
+prefixes={}
+prefixes["WEI.TI"]="ti_"
+prefixes["WEI.LLOYD"]="lloyd_"
+
+SEP.util.debug=1
+program=SEP.prog.prog("Migrate using WEI NFS IMAGE",
+   "mig_off velocity= wei_D= ", 
+    [main,vel_transp,schoice,wei_par],
+     ["PSPI migration using the SEP python library"],
+      prefixes=prefixes)
+
+     
+
+program.get_options(delete=1)
+restart=SEP.args.logic(main.param("restart"))
+
+if not restart:
+  vel_transp.prep_run()
+  schoice.prep_run()
+wei.prep_run(restart)

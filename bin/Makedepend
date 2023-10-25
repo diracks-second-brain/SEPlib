@@ -1,0 +1,121 @@
+#!/usr/bin/perl
+#$
+#$=head1 NAME
+#$
+#$Makedepend - Make f90 dependencies
+#$
+#$=head1 SYNOPSIS
+#$
+#$Makedepend [pars] files >dependencies
+#$
+#$=head1 INPUT PARAMETERS
+#$
+#$=over 4
+#$
+#$=item C<-d> objdir 
+#$
+#$      Directory where object files are stored
+#$
+#$=item C<-s> srcdir 
+#$
+#$       Directory where source files are located
+#$
+#$=item C<-x> exedir 
+#$
+#$       Directory where executable files are stored
+#$
+#$=back
+#$
+#$=head1 DESCRIPTION
+#$
+#$Checks use statements for dependencies.  Creates a file that can be
+#$included in a makefile to ensure all portions of code are up to date
+#$
+#$
+#$=head1 CATEGORY
+#$
+#$B<tools>
+#$
+#$=cut
+$usage = "Usage: $0 [-s <srcdir>] [-d <objdir>] [-x <exedir>] file1.f90 file2.f90 file3.f90 ... > Make.depend\n";
+
+$file = shift;
+die $usage unless ($file);
+$srcdir=".";
+while ($file) {
+    if ($file eq "-s") { $srcdir = shift;}
+    elsif($file eq "-d"){ $objdir = shift;}
+    elsif ($file eq "-x") { $exedir = shift;}
+		elsif ($file !~ /\.fix\.[^\.]+$/) {
+	open (FILE,"$srcdir/$file") or die "$0: Couldn't open file $file\n";
+	$junk=$file;$junk=~s/.+\.//;
+	$junk2=$file;$junk2=~s/\..+$//;$junk3=$junk2.".x";
+	$type{$junk3}=$junk;
+	$base{$junk3}=$junk2;
+	while (<FILE>) {
+    undef %lines;
+		@lines=split(';',$_);
+		foreach $statement (@lines){
+	    push (@programs, $file) if ($statement =~ /^\s*program\s+(\w+)/i);
+	    $provides{$1} = $file if ($statement =~ /^\s*module\s+(\w+)/i);
+ 			$requires{$file} .=" $1"  if ($statement =~ /^\s*use\s+([\w\s\+]+)/i);
+    }
+    $requires{$file} =~ s/\+/ /gm;
+	} 
+	close (FILE);
+}
+    $file = shift;
+}
+print "ifndef QUICK\n";
+
+while ( ($obj,$list) = each %requires) {
+    $obj =~ s/\.[^\.]+$/\.o/;
+    $obj =~ s/(?:.*\/)?([^\/]*)$/$objdir\/$1/o if ($objdir);
+    @list = split (' ', $list);
+    foreach $module (@list) {
+			$module = $provides{$module};
+			$module =~ s/\.[^\.]+$/\.o/;
+			$module = join('/',$objdir,$module) if ($objdir && $module);
+    }
+		$hold="";
+		for($i1=0;$i1<@list;$i1++){
+			if($list[$i1] ne $obj){
+				$hold.="$list[$i1] ";
+			}
+		}
+		$list=$hold;
+    $objects{$obj}=$list;
+    print "$obj: $list\n" if($list);
+}
+
+print "endif  \n";
+
+foreach $prog (@programs) {
+    $obj = $prog;
+    $obj  =~ s/\.[^\.]+$/\.o/;
+    $obj = join('/',$objdir,$obj) if ($objdir);
+    $prog =~ s/\.[^\.]+$/\.x/;
+		$ext=$type{$prog};
+		$mybase=$base{$prog};
+    $prog = join('/',$exedir,$prog) if ($exedir);
+    undef %list;
+    foreach $item (split(' ',$objects{$obj})) {
+			&add ($item);
+    }
+    $list = join(' ', keys(%list));    
+		if($list){
+		 	print "$prog: $list \${OBJDIR}/$mybase.o \${SRCDIR}/$mybase.$ext\n\t \${F90_LN}\n" 
+		}
+}
+
+sub add {
+    my ($item) = @_;
+    $list{$item} = 1;
+		if($objects{$item} eq $item) {} else{
+    foreach $other (split(' ',$objects{$item})) {
+	&add ($other);
+    }
+	}
+}
+
+exit(0);

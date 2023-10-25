@@ -1,0 +1,174 @@
+#!/usr/bin/perl
+#$
+#$=head1 NAME
+#$
+#$vp_annotate -  annotate a vplot file with arrows and labels;
+#$
+#$=head1 SYNOPSIS
+#$
+#$vp_annotate <infile.v text=text_file  [ batch=n vpstyle=n ] >outfile.v
+#$
+#$=head1 DESCRIPTION
+#$
+#$annotate a vplot file with arrows and labels
+#$
+#$=head1 COMMENTS
+#$
+#$Annotate some vplot figure interactively or from a formerly constructed 
+#$text_file. Default is interactive, xtpen comes up and you can click 
+#$at the position in the plot where you want to put a label.
+#$
+#$text_file is a file containing all the information concerning the labels  
+#$and their position. It is generated in an interactive session.
+#$
+#$You can non-interactively reproduce annotated figures, by using 
+#$"batch=y text=text_file"
+#$
+#$=head1 SEE ALSO:
+#$
+#$L<vp_OverUnderAniso>
+#$
+#$L<vp_OverUnderIso>
+#$
+#$L<vp_SideBySideAniso>
+#$
+#$L<vp_SideBySideIso>
+#$
+#$L<vp_Unrotate>
+#$
+#$L<vp_Overlay>
+#$
+#$L<vp_Movie>
+#$
+#$=head1 CATEGORY
+#$
+#$B<graphics/vplot/util/shells>
+#$
+#$=head1 COMPILE LEVEL
+#$
+#$DISTR
+#$
+#$=cut
+#
+# keywords: vplot balloon annotate vp_annotate
+#
+# Thanks to Dave we have an interactive Xtpen 
+# that makes annotating vplot figures easy.
+#
+# Martin Karrenbach   7-15-92
+# added passing of unused options  Martin
+
+sub usage {
+  open( THIS, $0 ) ;
+
+  while ( <THIS> ) {
+       if ( $_ =~ /^\#([\s\S]*)$/ ) {
+         next if $_ =~ /^\#\!/ ;
+         exit if $_ =~ /^\#\>/ ;
+
+         print $1;
+         }
+       }
+
+  exit( 0 ) ;
+  }
+
+if ( $#ARGV == -1) { &usage ;}
+
+# security measures
+
+$SIG{'HUP'} = 'abortit';
+$SIG{'INT'} = 'abortit';
+$SIG{'TERM'} = 'abortit';
+eval <<'abort:';                        # onintr abort ;
+
+# initializations and defaults $true=0;
+
+$false=1;
+$interactive = $true ;
+$vpstyle="n";
+$textfile = "text_file" ;
+$cnt=-1;
+
+$xtpen_message='"Move cursor to the place, where the balloon arrow 
+should point to, then click left mouse button.
+Fill out the label and eventually change the defaults,
+then click on CONFIRM.  Repeat for more annotations.
+To create the annotated file, QUIT out of xtpen."';
+
+$xtpen_result='"This is the annotated vplot figure.
+You might play with vpstyle=y, if you only want to 
+see the original portion."';
+
+# argument parsing
+
+$remaining="";
+while($#ARGV != -1) { $_ = $ARGV[0];
+if (/^batch=y/) { $interactive = $false ; }
+elsif (/^text=/) { s/^text=//; $textfile = "$_"; }
+elsif (/^vpstyle=/) { s/^vpstyle=//; $vpstyle = "$_"; }
+else  { $remaining = "$remaining"."$ARGV[0]"; }
+shift(@ARGV);
+}
+
+
+
+# copy input file
+
+$cnt=$cnt+1;
+$tempfile = "temp_vplot"."$cnt";
+open(INFILE,"> $tempfile.v") || die "Could not open tempfile\n";
+while(<STDIN>) {print INFILE $_ ; }
+close(INFILE);
+	
+# run xtpen in the interactive session
+
+if ($interactive == $true) { 
+  system "xtpen message=$xtpen_message $remaining interact=$textfile boxy=y <$tempfile.v";}
+
+# digest the text file containing labels
+
+open(TEXT,"<$textfile") || die "Could not open $textfile\n";
+while(<TEXT>){
+    $cnt = $cnt + 1;
+    $tempfile = "temp_vplot"."$cnt" ;
+    chop($_);
+    system " Box $_ out=$tempfile.v head=/dev/null ";
+}
+close(TEXT);
+
+$filelist="";
+for ( $i=0; $i<=$cnt; $i++){ $filelist = " $filelist"."temp_vplot"."$i".".v " ;}
+
+# run vppen
+
+if ($interactive == $true) { 
+  system "vppen $filelist  erase=once  vpstyle=$vpstyle $remaining | xtpen message=$xtpen_result"; }
+
+open(VPPEN,"vppen $filelist  erase=once  vpstyle=$vpstyle $remaining |")||
+                                                    die "Could not run vppen\n";
+# write the composite vplot file to the output
+
+while(<VPPEN>){print STDOUT $_ ;}; close(VPPEN);
+
+
+system "/bin/rm $filelist" ;
+
+exit(0);
+
+# clean up and emergency
+
+abort:
+&abortit($cnt);
+exit(-1);
+
+sub abortit{
+local($cnt);
+print STDERR "Abnormal exit caught signal\n" ;
+if ( $cnt >-1 ) {
+   for ( $i=0; $i<=$cnt; $i++){ 
+        $file = "temp_vplot"."$i".".v " ;
+	if (-e $file ) { system("/bin/rm  $file") ;}
+   }
+}
+};
