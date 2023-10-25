@@ -1,0 +1,177 @@
+1-d 1-dimensional 1d one-dimensional
+15-degree 15 continued-fraction
+2-d 2-dimensional 2d two-dimensional
+3-component 3-comp 3
+3-d 3-dimensional 3d three-dimensional
+45-degree 45 continued-fraction
+absolute abs cabs absolute-value fabs
+adapt adaptive adaptive-filter adaptive-filtering
+add sum subtract multiply divide 
+agc gain-control automatic-gain-control
+allocate alloc
+amplitude amp
+anisotropy aniso
+ap array-processor fps
+archive archives backup back
+arctangent atan arctan
+ascii ansi
+automatic auto
+average avg mean
+axisymmetric axisymmetry transverse-isotropy TI
+backwards backward
+bandpass  hi-pass low-pass
+beep bell ring
+bias offset shift add
+bib bibliography cite citation
+burg maximum-entropy
+cable cables cabling serial lines ethernet
+cake cakefile
+canon canonical
+capture catch catching
+cascaded repeated cascade
+cat concatenate catenate
+cg conjugate-gradient conjugate-gradients
+clean cleanup clear purge tidy neat cleaning 	
+clip clipping
+cmp common-midpoint
+colors color colour colours
+coltab color-table colour-table
+convolve convolution
+combine merge add mix
+complex cmplx rtoc
+continuation continue
+convert conversion
+copy cp
+crosshairs crosshair
+dead sick
+data data-file
+data-shuffle reorder resort sort shuffle
+decon deconvolution whiten pef prediction prediction-error weiner wiener prediction-error-filter
+delta impulse spike
+depth z
+diffraction propagation wave-propagation
+divide division div
+dmo dip-moveout
+document documents documnets documnet paper article man documentation
+downward down downwards downward-continue downward-continuation
+drawing draw
+dsr double-square-root pyramid
+equation equations eqn
+error err
+esize size resize n0 word-size element-size conversion conversions convert
+expand expanding lengthen
+fft fft2d ft2d ft1d fourier fft3d ft3d fast-fourier fourier-transform ft fourier-transformation spectra spectrum dft
+estimate estimation
+example demo demonstration sample
+file files
+fill pattern-fill pattern patterns fill-pattern
+filter filtering
+finite-difference finite-differences finite-differencing differencing fd
+flag point-out show mark
+format formatting formatted unformatted unformat
+gauss gaussian
+gaussian-elimination gauss-jordan gauss
+group-velocity phase-velocity group impulse-response dispersion-relation slowness-surface
+header-file header head
+hidden hidden-line
+hyperbola hyperbolic
+hyphen hyphenate
+io i/o input output input-output read write
+illumination relief shade light
+imag imaginary real
+imagen laser-printer laser
+interpolate interpolation interp
+interviews iv
+job process jobs
+keyword key-word index
+kurtosis sharp sharpness
+layer layers stratify stratified
+least-square least-squares lsqr ls
+library libraries lib subroutines programs
+linear-moveout lmo
+litweq li
+log logarithm power log10 e exp exponentiate exponent
+low-pass
+math mathematics functions function number numbers numeric numerical
+makefile make 
+match matching
+matrix matrices mat
+max maximum
+median quantile quant
+message msgs reminders
+midpoint mp
+migration mig migrate
+minimum min
+modeling modelling model
+move mv
+mute window edit
+neighbor nearest-neighbor
+nice renice
+nmo normal-moveout
+pad padding
+percentile
+phase-shift gazdag
+phone call telephone fax number
+picking pick picked
+pie-slice frequency-domain fourier-domain dip-filter frequency w
+plot plotting vplot graphics
+polygon poly fill
+polynomial poly
+prestack pre-stack before-stack
+proofread proofreading proofr proof
+random noise rand
+raster cell-array bitmap
+raster-tech raster-tek rt rastertech rastertek
+raytrace raytracing ray
+read read-tape tape-read
+recipe recipes program programs algorithm algorithms prog
+redoc idoc reproduible reproducibility 
+reflection-coefficient reflection-coefficients c rc
+remove rm
+rescale scale stretch replicate replication pixel-replication
+reverse invert
+root sqrt
+routines routine
+runge-kutta predictor-corrector runga
+scale scaling
+seismograms seismogram
+sep seplib
+shell csh sh
+signal-catch signal-catching signal-capture sigvec
+sinc sinc-interpolation
+slant slant-stack sstack p-tau ptau
+slice cut subset plane
+slides slide photo photograph light-table camera
+slowness slow sloth
+smooth smoothing
+solve solver solution solves
+start-job startjob start
+statistic statistics
+stolt stolt-migration
+stop stop-job
+strip stripping clean
+subsample decimate shorten sample resample
+superimpose superpose
+swab swap swap-byte
+symmetric symetric
+synthetic synth syn
+system sys
+tab tabs
+tape tapes
+terminal term
+tex latex document 
+time time-domain t
+timer timing
+transfer file-transfer
+transform transformation
+transpose transp
+triplicate triplication trip
+tty ttyname terminal
+twist rotate reorient orient align
+typeset typesetting paper papers
+utility utilities subroutine
+vector vectorizing vectorize vectorized vec
+velan velocity-analysis
+velocity v
+vsp vertical-seismic-profile
+write write-tape tape-write
