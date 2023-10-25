@@ -1,0 +1,56 @@
+SDD(1)                        SEPlib Manual Pages                       SDD(1)
+
+
+
+NNAAMMEE
+       Sdd - Convert between formats
+
+SSYYNNOOPPSSIISS
+       Sdd esize= ein= real=yes line=8 format=  allpos=n/y < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       esize      - int
+                 element size on output file.
+
+       ein       - int
+                 element size on input file.
+                 ( if esize is not found in input heade file ).
+
+       real      - int
+                 [yes]  for conversions to or from esize=8.
+                 the imaginary part of the complex numbers is assumed zero
+                 no- the real part is assumed zero.
+
+       line      - int
+                 [8] for conversion to ascii default is to
+                 print 8 numbers per line.
+
+       format    - char*
+                 format to use in printf for ascii output.
+                 [-8.3g]  for float.
+                 [-6d]   for bytes and shorts.
+
+       allpos    - char
+                 [n]  y  maps only positive numbers in 0-255
+
+       n1,n2,n3  - int
+                 cube dimensions. (from history)
+
+       esize     - int
+                 (from history) 0 -ascii float,integer or complex
+                 (complex format i=(0.,1.))
+                 1 -movie format (only input)
+                 2 -short integer
+                 3 -floating point with least significant byte truncated.
+                 4 -floating point
+                 8 -complex
+
+DDEESSCCRRIIPPTTIIOONN
+        Convert from input esize=0,1,2,3,4,8 to output esize=0,1,2,3,4,8
+
+CCAATTEEGGOORRYY
+       uuttiill//iinnffoo
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     SDD(1)

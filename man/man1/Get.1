@@ -1,0 +1,37 @@
+GET(1)                        SEPlib Manual Pages                       GET(1)
+
+
+
+NNAAMMEE
+       Get - Simple operations on parameters
+
+SSYYNNOOPPSSIISS
+       Get par=parfile parform=y < Input.h parameter1 parameter2 parameter3
+       ...
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       parform  -   char
+                  [y]-Returns 'parameter1=whatever
+                  parameter2=whatever' etc
+                  according to their values in the input header / parfiles.
+                  n-Returns the values of the parameters separated by spaces.
+
+DDEESSCCRRIIPPTTIIOONN
+       Simple operations on parameters
+
+CCOOMMMMEENNTTSS
+          Example:  Here is a shell to make   n1 = n1 / 2
+                        #/bin/csh -f
+                        set n1 = `Get <junk.H parform=n n1`
+                        @ nh = $n1 / 2
+                        echo n1=$nh
+
+SSEEEE AALLSSOO
+       Headermath
+
+CCAATTEEGGOORRYY
+       uuttiill//iinnffoo
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     GET(1)

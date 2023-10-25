@@ -1,0 +1,59 @@
+net::koko::snrect::::okuork:o::s:esprlci:b:-o6u.r1S::E::Psdleoipcblsi:Mb:a-pn6ou.da1:l:::sPdeaopgclesis:b:_pboads:e::s:evpellisbi_mbpa(s3e)::velsimp(3)
+
+
+
+NNAAMMEE
+       velsimp - simple velocity transfrom
+
+SSYYNNOOPPSSIISS
+       "call velsimp( adj,add, t0,dt,x0,dx,s0,ds, nt,nx,ns, modl, data)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       adj   - int
+                 0- (slow->offset), 1- (offset->slow)
+
+       add   - int
+                 0- erase output, 1 save output
+
+       t0    - real
+                 Initial time
+
+       dt    - real
+                 Sampling in time
+
+       x0    - real
+                 First offset
+
+       dx    - real
+                 Offset sampling
+
+       s0    - real
+                 First slowness
+
+       ds    - real
+                 Sampling in slowness
+
+       nt    - int
+                 Number of time samples
+
+       nx    - int
+                 Number of offset
+
+       ns    - int
+                 Number of slownesses
+
+       modl  - real(nt,ns)
+                 time,slowness panel
+
+       data - real(nt,nx)
+                 time,offset panel
+
+DDEESSCCRRIIPPTTIIOONN
+       A fortran77 program to convert from time,slowness to time, offset
+
+LLIIBBRRAARRYY
+       sseeppvveellaannff
+
+
+
+6.0        net::koko::src::Tohuur:F:esbep1l2ib1-66:.018:::0d8oc2s0:0:4pod::seplib_base::velsimp(3)

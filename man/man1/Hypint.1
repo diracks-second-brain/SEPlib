@@ -1,0 +1,52 @@
+HYPINT(1)                     SEPlib Manual Pages                    HYPINT(1)
+
+
+
+NNAAMMEE
+       Hypint - velocity space transform
+
+SSYYNNOOPPSSIISS
+       Hypint conj=0 inv=0 vmin=1.4 vmax=3.0 n2= < in.H > out.H
+
+DDEESSCCRRIIPPTTIIOONN
+       Velocity space transformation using INTEGRATION.  The conjugate opera-
+       tor is hyperbola superposition.  pseudo-unitary weighting with offset
+       and velocity.  includes causal filter sqrt(i omega) uniform intervals
+       of slowness.  nearest neighbor interpolation.
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       conj -   integer
+                 [0]  adjoint
+
+       inv  -   integer
+                 [0]  inverse
+
+       vmin -   real
+                 [1.4]  minimum velocity
+
+       vmax -   real
+                 [3.0]  maximum velocity
+
+       n1,n2,n3-integer
+                 standard seplib parameters
+
+       o1,o2,o3-real
+                 standard seplib parameters
+
+       d1,d2,d3-real
+                 standard seplib parameters
+
+CCOOMMMMEENNTTSS
+       conj=0 & inv=0 operator itself conj=1 & inv=0 conjugate transpose
+       conj=0 & inv=1 pseudoinverse conj=1 & inv=1 conjugate-transpose-pseu-
+       doinverse
+
+SSEEEE AALLSSOO
+       Hypmovie
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  HYPINT(1)

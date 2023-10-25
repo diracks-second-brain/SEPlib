@@ -1,0 +1,102 @@
+VELAN(1)                      SEPlib Manual Pages                     VELAN(1)
+
+
+
+NNAAMMEE
+       Velan - Velocity analysis
+
+SSYYNNOOPPSSIISS
+       Velan velopt=vel nv= dv= v0= nw= dw= w0= ng=all g0=0 dg=1 ntout=nt/10
+       dtout=(nt/ntout)*dt t0out=t0 tsmoo=2*dtout smute=2 < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       velopt  - char*
+                 vel - scan over velocity (nv,dv,v0 required)
+                 slow - scan over slowness (nw,dw,w0 required)
+
+       nv      - int
+                 number of velocities
+
+       dv,v0   - float
+                 sampling and first velocity
+
+       nw      - int
+                 number pf slownesses
+
+       dw,w0   - float
+                 sampling and first slownesses
+
+       ng      - int
+                 [all] number of gathers analyzed
+
+       g0      - int
+                 [0]   number of gathers to skip before beginning analysis
+
+       dg      - int
+                 [1]   increment between gathers analyzed
+
+       ntout   - int
+                 [nt/10]  time-axis of out
+
+       dtout   - float
+                 [(nt/ntout)*dt] dtout must be an integer multiple of dt
+
+       t0out   - float
+                 [t0]first time to analyze
+
+       tsmoo   - float
+                 [2*dtout]  length of temporal smoothing window
+
+       smute   - float
+                 [2] samples for which nmo stretch exceeds smute
+                 are zeroed
+
+       n1,n2,n3-int
+                 standard seplib params
+
+       o1,o2,o3-float
+                 standard seplib params
+
+       d1,d2,d3-float
+                 standard seplib params
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       n1 - integer
+                 ntout
+
+       d1 - float
+                 dtout
+
+       o1 - float
+                 t0out
+
+       n2 - int
+                 nv
+
+       d2 - float
+                 dv
+
+       o2 - float
+                 v0
+
+       n3 - int
+                 ng midpoint axis
+
+       d3 - float
+                 (input d3)*dg
+
+       o3 - float
+                 (input o3) + g0*(input d3)
+
+DDEESSCCRRIIPPTTIIOONN
+       Velocity analysis of common-midpoint gathers
+
+SSEEEE AALLSSOO
+       Velan3d
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   VELAN(1)

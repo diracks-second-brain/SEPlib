@@ -1,0 +1,69 @@
+HEAD1(1)                      SEPlib Manual Pages                     HEAD1(1)
+
+
+
+NNAAMMEE
+        Txdec
+
+DDEESSCCRRIIPPTTIIOONN
+         TX domain noise removal, 2- or 3-D
+
+SSYYNNOOPPSSIISS
+         Txdec < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       w1,w2,w3  - integer
+                                        window sizes in samples to calculate the
+
+                                        noise filters in.  The noise and signal should
+
+                                        be stationary within these windows.
+           =item   k1,k2,k3  - integer
+
+                                        number of windows
+
+       a1,a2,a3  - integer
+                                        PEF sizes (time,along w2,along w3)
+
+       lag1,lag2,- integer
+                                        Filter lags (time,along w2,along w3)
+
+       lag3
+       lambda    - real
+                                         stabilization factor
+
+          defaults
+
+                 a1=5,a2=2,a3=1     In-line or 2-D PEFs only.
+
+                                    For a 3-D PEF, use something like a2=2,a3=2.
+
+                                    Be warned, as the number of filter coefficients
+
+                                    increases, the run time increases by about
+
+                                    the cube of the number of filter coefficients.
+
+                 w1=min(n1,20)
+
+                 w2=min(n2,20)
+
+                 w2=min(n3,6)
+
+                 k1= 1.5 * n1/(w1-a1+1.)
+
+                 k2= 1.5 * n2/(w2-a2+1.)
+
+                 k3= 1.5 * n3/(w3-a3+1.)
+
+                 lag1 = (a1/2)+1
+
+                 if a3 is 1, then lag2 =(a2/2)+1,  else  lag2 = 1
+
+                 lag3=1
+
+        Author- Ray Abma, 1995
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   HEAD1(1)

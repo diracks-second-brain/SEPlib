@@ -1,0 +1,68 @@
+VCONVERT(1)                   SEPlib Manual Pages                  VCONVERT(1)
+
+
+
+NNAAMMEE
+       Vconvert - Convert from one type of velocity to another
+
+DDEESSCCRRIIPPTTIIOONN
+       Convert one type of velocity function to another
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1out    -   int
+                  Output fast axis; only can change if outpar != inpar.
+
+       d1out     -   float
+                  Ignored if outpar = inpar.
+
+       o1out    -   float
+                  see above
+
+       label1  -   char*
+                  see above
+
+       oversamp-   int
+                  [1]oversampling rate (default is no oversampling)
+
+       lsinc   -   int
+                  [12]oversampling interpolator length
+                  oversampling used with inpar != outpar only.
+
+       alpha   -   float
+                  [0.01]  fraction of peak value at ends of gaussian taper
+                   on sinc interpolator for oversampling
+
+       invelopt-   int
+                  [1] velocity
+
+       outvelopt-  int
+                  [2] slowness
+                  3- slowness squared
+                  4- velocity squared
+
+       intype    -int
+                  [1] interval
+
+       outtype   -int
+                  [2] rms
+
+       inpar      -int
+                  [1] function of time
+
+       outpar    -int
+                  [2] function of depth
+
+CCOOMMMMEENNTTSS
+         NOTE: Vrms(z) [type=2 and par=2] is not understood by this routine.
+
+         NOTE: oversampling may improve v(z)<=>v(t) conversion if velocity
+               field contains high wavenumber components.  It can introduce
+               spurious high wavenumber jitter if the velocity field is smooth.
+               Decreasing alpha may help.  Use with caution!
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                VCONVERT(1)

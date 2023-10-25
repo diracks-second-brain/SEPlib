@@ -1,0 +1,90 @@
+RESHAPE(1)                    SEPlib Manual Pages                   RESHAPE(1)
+
+
+
+NNAAMMEE
+       Reshape - Reshape a SEPlib dataset
+
+SSYYNNOOPPSSIISS
+       Reshape [pars] < in.H >out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       reshape - int*
+             Reshape a dataset (e.g. 1,2,4 will combine 3rd and 4th axis of a dataset,see examples)
+
+       esize   - int
+             [esize from history]  Four posibilities:
+
+             key1 (make esize=4 from header key1)
+
+             grid (make esize=4 from the grid values)
+
+             key1,key2 (make esize=8 from header key1 and key2)
+
+             x1,x2 (make esize=8 from two array  elements in the first axis of the dataset)
+
+       axis_  - int*
+             Window a given axis in the dataset (e.g. axis1=1,3,4)  will change n1=3, and take
+
+              the first, third, and fourth values of axis 1
+
+       n_,o_,d_,label_,unit_
+              Change description parameters of the output
+
+       maxsize - int
+             [20]  Maximum amount of memory to use in megabytes
+
+       in.ignore_hff - int
+             [0]   Wether (1) or not (0) to ignore header axes
+
+       in.ignore_gff - int
+             [0]   Wether (1) or not (0) to ignore grid axes
+
+DDEESSCCRRIIPPTTIIOONN
+       Reshape a SEPlib dataset.  Usually this will involve shifting axes for
+       use with other SEPlib programs.
+
+CCOOMMMMEENNTTSS
+        Parameters are considered in the following order
+
+        1) reshape commands
+
+        2) esize changes
+
+        3) axis changes
+
+        4) User specified n,o,d
+
+        As a result if you specify more than 1 change in a single command
+
+        the changes are based on the new data description (e.g
+
+        reshape=1,1,2,3 axis3=1,5 will be based on axis 2 of the input not axis3.
+
+EEXXAAMMPPLLEESS
+         Given a regular dataset  n1=10, n2=10 n3=10
+         Reshape < in.H >out.H  reshape=1,1,3,4
+         Out: n1=10 n2=1 n3=10 n4=10
+
+         Given: n1=10 n2=10 n3=10
+         Reshape < in.H >out.H axis3=1,4,7
+         Out: n1=10 n2=10 n3=3 (where the first, third, and seventh slice are copied)
+
+        Given: n1=10 n2=10 n3=10 esize=4
+         Reshape < in.H >out.H esize=1,3
+         Out: esize=8 n1=10 n2=10  (complex from 1,3 samples of axis 1)
+
+         Given:  sep3d n1=10 n2=10 n3=10 keys(s_x,s_y,g_x,g_y)
+         Reshape < in.H >out.H esize=s_x,s_y
+         Out: esize=8 n1=10 n2=10  (header kay values s_x,s_y)
+
+         Given:  sep3d dataset with a grid n2=20 n3=20
+         Reshape < in.H >out.H esize=grid
+         Out: esize=4  Grid values changed from integ to real, n1=20 n2=20 n3=1
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 RESHAPE(1)

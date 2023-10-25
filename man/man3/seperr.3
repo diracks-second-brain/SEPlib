@@ -1,0 +1,49 @@
+net::koko::srnce:t::o:ukro:k:os:e:pslricb:-:6o.u1Sr:E::P:dlsoiecbpsl:Mi:abpn-ou6da.:l1::sP:eadpgolecissb:_:bpaosde::::sseeppleirbr_(b3a)se::seperr(3)
+
+
+
+NNAAMMEE
+       seperr - print line and exit with a failure code
+
+SSYYNNOOPPSSIISS
+       "void seperr(string)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       char* -  string
+                 C print statement, see comments
+
+DDEESSCCRRIIPPTTIIOONN
+       This function permits the programmer to terminate program execution and
+       print an error message using printf (3) format control.  The message is
+       prefixed with the program name to prevent confusion.
+
+       From fortran you can only specify a string to print, no format control
+       is available.
+
+CCOOMMMMEENNTTSS
+       From C:
+
+       "seperr(format, value1, value2, ...)"  char *format
+
+       From Fortran:
+
+       "call seperr('error message')"
+
+SSEEEE AALLSSOO
+       _p_r_i_n_t_f(3), seplib, sepwarn
+
+DDIIAAGGNNOOSSTTIICCSS
+       The system exit code used is -1.
+
+BBUUGGSS
+       Fortran programmers can only pass string values.
+
+KKEEYYWWOORRDDSS
+       error exit quit
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0         net::koko::src:T:houurF:e:bse1p2li1b6-:60.81::0:8do2c0s0:4:pod::seplib_base::seperr(3)

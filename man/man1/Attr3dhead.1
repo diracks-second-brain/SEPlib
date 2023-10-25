@@ -1,0 +1,41 @@
+ATTR3DHEAD(1)                 SEPlib Manual Pages                ATTR3DHEAD(1)
+
+
+
+NNAAMMEE
+       Attr3dhead - Info on header keys
+
+SSYYNNOOPPSSIISS
+       Attr3d  <in.H pars
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       nkeys -  integer
+                  [nkeys]number of  keys to calculate parameters on.
+
+       key_  -  character
+                  name of key to calc parameters on (only
+                  necessary if nkeys < less than nkeys in dataset
+
+       key_list -  character  *
+                  string containing keys to print  (can use instead
+                  of nkeys, keys_). The list should be separeted by :
+
+       max_size -  integer
+                  [1000000] maximum amount of memory for Attr to use.
+
+       verbose -  integer
+                  [1] 0-print only min,max, and non-zero
+                   1-print above plust rms,mean, and norm
+
+DDEESSCCRRIIPPTTIIOONN
+        Calculates statistics for header values of SEP3d dataset
+
+SSEEEE AALLSSOO
+       Attr
+
+CCAATTEEGGOORRYY
+       uuttiill//iinnffoo =cut
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004              ATTR3DHEAD(1)

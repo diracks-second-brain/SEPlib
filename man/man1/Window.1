@@ -1,0 +1,106 @@
+WINDOW(1)                     SEPlib Manual Pages                    WINDOW(1)
+
+
+
+NNAAMMEE
+       Window - Window a dataset by cutting or decimation
+
+SSYYNNOOPPSSIISS
+       Window par= < in.H > out.H
+
+IINNPPUUTT  PPAARRAAMMEETTEERRSS
+       min1-  float
+                  [o1] minimum value of the 1-axis to be copied
+
+       max1-  float
+                  [o1+(n1-1)*d1]  maximum value of the 1-axis to be copied
+
+       min2-  float
+                  [o2] minimum value of the 2-axis to be copied
+
+       max2-  float
+                  [o2+(n2-1)*d2]  maximum value of the 1-axis to be copied
+
+       min3-  float
+                  [o3] minimum value of the 3-axis to be copied
+
+       max3-  float
+                  [o3+(n3-1)*d3]  maximum value of the 1-axis to be copied
+
+       min4-  float
+                  [o4] minimum value of the 4-axis to be copied
+
+       max4-  float
+                  [o4+(n4-1)*d4]  maximum value of the 1-axis to be copied
+
+       n1-  int
+                  [1+((len-1-f1)/j1)]   number of elements to copy from
+                  each vector
+
+       n2-  int
+                  [1+((vecs-1-f2)/j2)]  the number of vectors to be copied
+
+       n3-  int
+                  [1+((planes-1-f3)/j3)] the number of planes to be copied
+
+       n4-  int
+                  [1+((cubes-1-f4)/j4)]  the number of cubes to be copied
+
+       j1-  int
+                  [1]  increment (in samples) between input elements
+
+       j2-  int
+                  [1]    increment between input vectors
+
+       j3-  int
+                  [1]    increment between input planes
+
+       j4-  int
+                  [1]    increment between input cubes
+
+       d1-  float
+                  [input d1] increment (physical) between input elements
+
+       d2-  float
+                  [input d2] increment (physical) between input vectors
+
+       d3-  float
+                  [input d3] increment (physical) between input planes
+
+       d4-  float
+                  [input d4] increment (physical) between input cubes
+
+       f1-  int
+                  [0] the first element of each vector to be copied
+
+       f2-  int
+                  [0] the first vector of each plane to be copied
+
+       f3-  int
+                  [0] the first plane of each cube to be copied
+
+       f4-  int
+                  [0] the first cube to be copied
+
+       squeeze- char
+                 [y]  By default Window moves dimensions with size 1
+                 to the end. If this special-case behavior is
+                 not desired, set squeeze=n.
+
+DDEESSCCRRIIPPTTIIOONN
+        Window portion of dataset data can be 1-D, 2-D, 3-D, or 4-D.  Can cut out
+        a block of samples and/or decimate (subsample) along any axis.
+
+CCOOMMMMEENNTTSS
+        KEYWORDS subsample  window  data-shuffle
+               Anachronisms no longer recognized it0,dt,dx,nc,dv,it0,ix0......
+
+SSEEEE AALLSSOO
+       Window3d
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  WINDOW(1)

@@ -1,0 +1,81 @@
+NMO3D(1)                      SEPlib Manual Pages                     NMO3D(1)
+
+
+
+NNAAMMEE
+       Nmo3d - NMO in sep3d datasets
+
+SSYYNNOOPPSSIISS
+       Nmo3d  <in.H >out.H pars Nmo3dM  intag=in.H outtag=out.H pars
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       verb   -  integer
+                  [0] Whether (1) or not(0) to be verbose
+
+       linear -  integer
+                  [1] Do linear interpolation NMO, [0] Nearest neighbor
+
+       adj    -  integer
+                  [0] Perform adjoint opperation(1), forward(0)
+
+       inv    -  integer
+                  [0] Perform inverse(1), else forward(0)
+
+       maxsize-  integer
+                  [10]Number of megabytes of traces to hold
+
+       slowfile- sepfile
+                  Slowness file (regular cube or sep3d with headers)
+
+       velfile-  sepfile
+                  Velocity file (regular cube or sep3d with headers)
+
+       slow   -  float
+                  Slowness to do NMO on
+
+       vel    -  float
+                  [1.5] Velocity to do constant velocity NMO
+
+       off_keys- integer(:)
+                  Offset float key(s) describing
+
+       off_axes- integer(:)
+                  Offset axes
+
+       vel_key-  integer
+                  Key that relates SEP3d velocity file to SEP3d data
+
+       data_keys- integer
+                  Key that relate SEP3d data file file velocity file
+
+       data_axes int*
+                  Axes that relate SEP3d data file file velocity file
+
+       vel_axes- int*
+                  Offset axis/axes that relate to the off_axes or
+                  offkeys of the dataset.
+
+       master_data- int
+                  Whether or not the master trace has any of the data sections (only
+                  valid for Nmo3dM)
+
+DDEESSCCRRIIPPTTIIOONN
+         Performs NMO, adjoint NMO, pseudoinverse NMO
+
+SSEEEE AALLSSOO
+       NMO, Velan3d
+
+CCOOMMMMEENNTTSS
+        off_keys and off_axes, are somewhat optional
+        If none of these are suplied checks keys and then axes for
+        aoffset, offset_x, and offset_y.
+
+        If you supply a key number > key number of data_record_number subtract 1
+        to the parameter (data_record_number is not stored with the headers)
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   NMO3D(1)

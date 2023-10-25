@@ -1,0 +1,96 @@
+TPOW(1)                       SEPlib Manual Pages                      TPOW(1)
+
+
+
+NNAAMMEE
+       Tpow - scales on the time axis
+
+SSYYNNOOPPSSIISS
+       Tpow par= < in.H > out.H
+
+DDEESSCCRRIIPPTTIIOONN
+          Select a power of t for seismogram scaling
+          out(t)  =  data(t)* t**tpow
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1,n2,n3 - int
+                  [nt],[nx],[11] usual seismic data t inner
+
+       d1,d2     -float
+                  [dt],[dx] samplinginterval
+
+       o1,o2     -float
+                  [ot],[ox] [first sample time]
+
+       tpow      -float
+                  power of time
+
+       panel     -char*
+                  [1]: (default) 1st panel is used for estimating tpow.
+                  When panel=all, all panels are used.
+
+       tmin      -float
+                                   [o1]:   time of the first sample to be used in estimating tpow.
+
+       tmax      -float
+                  [4.]: end of region used on time axis
+
+       ofdep     -char*
+                  [unknown]      unknown: automatic picking of first
+                    arrivals will be applied to compute the muting parameters
+                  no:  data are offset-independent
+                  yes: data are offset-dependent
+
+       v0-  float
+                  (km/s) apparent |dx/dt|. muting
+                   before first arrival time will
+                   be applied in estimating the
+                   medians. when no v0 is given
+                   and ofdep is not 'no', automatic
+                   picking will be applied
+
+       nxmin - int
+                  [1]: the first trace used for Tpow
+
+       nxmax=nx
+                  the last trace used. For 3-d data,
+                  trace nxmin to trace nxmax are
+                  used on each plane if panel=all.
+
+       eps  - float
+                  [0.05]: (default) iteration of estimating dtpow stops
+                  when abs(dtpow) < eps.
+
+       idt  - integer
+                  [2]: subsample rate (integer) of time for tpow
+                  estimating
+
+       idx  - integer
+                  [1]: subsample rate (integer) of trace for tpow estimating
+
+       iwind - integer
+                  [9]: window length used for calculating L-1 energy in autopicking
+
+       perc  - float
+                  [10.]: when L-1 norm of present window exceeds
+                  that of the previous one by
+                  'perc', first arrival is picked
+
+CCOOMMMMEENNTTSS
+       MMEETTHHOODD
+
+         m02 * (.25*tmax)**(dtpow) = m24 * (.75*tmax)**(dtpow)
+         tpow = tpow + dtpow
+         where
+           m02 --- median over (0, tmax/2)    of | data(t) | * t**tpow
+           m24 --- median over (tmax/2, tmax) of | data(t) | * t**tpow
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    TPOW(1)

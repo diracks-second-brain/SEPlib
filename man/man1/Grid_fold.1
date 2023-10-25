@@ -1,0 +1,67 @@
+GRID_FOLD(1)                  SEPlib Manual Pages                 GRID_FOLD(1)
+
+
+
+NNAAMMEE
+       Sort3d, Grid_fold - Sort, transpose, or test gridding parameters
+
+SSYYNNOOPPSSIISS
+       Sort3d,Grid_fold  <in.H >out.H pars
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       nkeys-  integer
+                  number of sort keys
+
+       key_-  character
+                  name of key to sort in ascending order
+
+       ng_-  integer
+                  number of grid cells for key_
+
+       dg_-  real
+                  sampling of grid cells for key_
+
+       og_-  real
+                  first location of grid cell for key_
+
+       plane- char*
+                  plane to transpose (eg) '34'
+
+       verb-  integer
+                  [0] amount of progress info to print out
+
+       synch-  integer
+                  [0] whether [1] or not [0] to synch traces
+
+       compress_tr-  integer
+                  [1] whether (1) or not(0) to compress the
+                  trace in bin axis if it equal 1
+
+       preserve_nd - integer
+                   [0]  wheter (1) or not(0) to preserver the input n2,n3,n4,n... values
+
+       max_memory,max_size-  integer
+                  [20] maximum amount of memory in   megabytes
+                  to use. This is only somewhat accurate because
+                  it will always hold (n_sort_keys +1 * n2).
+                  Memory consumed will be approximately
+                  max(max_memory,100000+(n_sort_keys+1)*n2
+
+DDEESSCCRRIIPPTTIIOONN
+        Sort3d serves three purposes: Sorting, tranposing or testing binning params
+
+        To sort a SEP3d dataset use nkeys key1, og1, etc Sort3d < in.H >out.H [pars]
+
+        To transpose a dataset provide : Sort3d  plane=23 < in.H >out.H
+
+        To test a gridding pattern use sort pars  Grid_fold  < in.H >out.H [pars]
+
+SSEEEE AALLSSOO
+       Fold3d
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004               GRID_FOLD(1)

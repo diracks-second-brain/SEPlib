@@ -1,0 +1,44 @@
+MISS(1)                       SEPlib Manual Pages                      MISS(1)
+
+
+
+NNAAMMEE
+       Miss - Missing data interpolation with a prescribed helix filter
+
+SSYYNNOOPPSSIISS
+       Miss < in.H prec=1 niter=100 padin=0 padout=0 filt= [mask=] > interp.H
+
+DDEESSCCRRIIPPTTIIOONN
+       Fills missing data by mimimizing the data power after convolution.
+       Works in any number of dimensions!
+
+PPAARRAAMMEETTEERRSS
+       from history
+          iinntteeggeerr _n_1_, _n_2_, _n_3
+
+       from par
+          iinntteeggeerr _p_r_e_c=2 - use preconditioning for missing data interpolation
+
+          iinntteeggeerr _n_i_t_e_r=100 - number of iterations
+
+          iinntteeggeerr _p_a_d_i_n=0 - pad data beginning
+
+          iinntteeggeerr _p_a_d_o_u_t=0 - pad data end
+
+          ffiilleennaammee _f_i_l_t - helix filter
+
+          ffiilleennaammee _m_a_s_k (optional) - selector for known data
+
+EEXXAAMMPPLLEESS
+       _g_e_e_/_l_a_l_/_l_a_c_e_9_0_/, _g_e_e_/_m_d_a_/_h_o_l_e_9_0_/, _g_e_e_/_m_d_a_/_s_e_a_b_9_0_/, _g_e_e_/_p_r_c_/_g_a_l_i_l_e_e_9_0,
+       _g_e_e_/_p_r_c_/_s_e_p_9_5_/
+
+MMOODDUULLEESS
+       _m_i_s_2_._r_9_0, _b_o_u_n_d_._r_9_0, _h_e_l_i_x_._r_9_0
+
+SSEEAA AALLSSOO
+       Helicon, Pef
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    MISS(1)

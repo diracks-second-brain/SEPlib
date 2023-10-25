@@ -1,0 +1,75 @@
+BYTE(1)                       SEPlib Manual Pages                      BYTE(1)
+
+
+
+NNAAMMEE
+       Taplot,Byte - Convert floats to bytes
+
+SSYYNNOOPPSSIISS
+       Byte  par= < in.H > in.T
+
+DDEESSCCRRIIPPTTIIOONN
+       Convert data to raster format .  PLOT = clip{ [ (DATA -
+       bias)*(it*d1+o1)**tpow ]**gpow }
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       tpow - float
+                 [0.]  gain(it) = (it*d1+o1)**tpow, it in samples
+
+       pclip - int
+                 [99]  clip percentile
+
+       clip - float
+                 clip value (if not specified defaults to pclip)
+
+       phalf - int
+                 [85]  gpow percentile
+
+       gpow  - float
+                 [1]  if given gpow<=0, sample gain power computed at phalf percentile
+
+       bias  - float
+                 [0.0] plot = data - bias
+
+       gainpanel - char*
+                 [1]-plane(s) where gpow and clip are estimated
+                 i- ith plane is used ( i is integer )
+                 all-all the planes are used
+                 every -calculate gain parameters for every panel
+
+       gaincube
+                 i- ith plane is used ( i is integer ) NOT YET
+                 every -calculate gain parameters for every cube
+                 all-all the planes are used NOT YET
+
+       gainstep - float
+                 the subsampling rate used in estimating gpow and clip
+                 default = max(1,nt/256) (>=1)
+
+       allpos   - char
+                 [n]/y  if yes, map only positive values to 0-255
+
+       transp   - char
+                 [no] if yes, saves Movie the trouble of transposing t and x.
+
+       n1,n2,n3 - int
+                 cube dimensions
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       esize    - int
+                 [1]  raster data
+
+       maxval, minval -float
+                 maximum and minimum value of data to be displayed
+                 by Ta2vplot. For use by Ta2vplot's wantscalebar
+                 option.
+
+SSEEEE AALLSSOO
+       Grey
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    BYTE(1)

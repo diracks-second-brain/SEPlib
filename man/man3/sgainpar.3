@@ -1,0 +1,78 @@
+net::koko::nsertc::::kooukro::::sserpcl:i:bo-u6r.:1S::Es:Pedlpoilcbisb:M-:a6pn.ou1da::l::dsPoeacpgsle:is:bp_obda:s:es:e:pslgiabi_nbpaasre(:3:)sgainpar(3)
+
+
+
+NNAAMMEE
+       sgainpar - gain seismic data
+
+SSYYNNOOPPSSIISS
+       "int sgainpar
+       (tag,adata,ant,ahbytes,anx,adit,atpow,ait0,apclip,aphalf,aclip,agpow,adbias,adt,anp,againip)"
+
+DDEESSCCRRIIPPTTIIOONN
+        Subroutine to compute gain factors for seismic data all arguments
+        are addresses if any argument has the value zero, it reverts to its default.
+
+PPAARRAAMMEETTEERRSS
+       tag    -char*
+                 tag of dataset, may be lseeked to appropiate place, default 0
+
+       data   -float*
+                  save copy of data here, useful for pipes
+                  if 0, then data not saved, default 0
+
+       nt     -int*
+                 raslength of data vector, default 1024
+
+       nx     -int*
+                 number of vectors to examine, default all data or 256,
+                 whichever is less
+
+       np     -int*
+                 number of planes of data, (n3)  default 1
+
+       dit    -int*
+                 integer separation between samples,
+                 default nt*nx / 262144, because only 262144 values
+                 are sorted to find percentiles (for np=1)
+
+       tpow   -float*
+                 multiply samples by ((it*dit+it0)*dt)**tpow, default 0
+
+       it0    -float*
+                 time of first sample in units of samples, default 0
+
+       dbias  -float*
+                 subtract dbias from the data
+
+       pclip  -float*
+                  percentile for clipping seismic data, default 99
+
+       phalf  -float*
+                 percentile for determining gpow, default 85
+
+       gainip -int*
+                 plane where clip and gpow are estimated
+                 default 1 (the first plane is used)
+                 when -1, data of all planes are considered
+
+       d  -float*
+                 sample interval of data
+
+       clip -float*
+                 clip value
+
+       gpow    -float*
+                 raise each data sample to this power,
+                 gpow = log (.5) / log (half / clip),
+                 if (half / clip < .001) gpow = 1. (detects synthetics)
+
+SSEEEE AALLSSOO
+       Grey
+
+LLIIBBRRAARRYY
+       sseeppaauuxx
+
+
+
+6.0       net::koko::src::oTuhru::Fseebpl1i2b-166.:10:8::d0o8cs2:0:0p4od::seplib_base::sgainpar(3)

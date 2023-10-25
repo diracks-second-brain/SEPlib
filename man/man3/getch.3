@@ -1,0 +1,62 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::gseetpclhi(b3_)base::getch(3)
+
+
+
+NNAAMMEE
+       getch - grab a parameter from command line
+
+SSYYNNOOPPSSIISS
+       "int getch(name, format, value)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       name-  char*
+                 parameter name
+
+       format -char*
+                 format of variable (d,f,s)
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       value - void*
+                  variable value of variable
+
+RREETTUURRNN VVAALLUUEE
+       x = number of matches found
+
+DDEESSCCRRIIPPTTIIOONN
+       This function is the seplib equivalent of the older _g_e_t_p_a_r_(_) for
+       extracting values from command line expressions of the form
+       `name=value'.
+
+CCOOMMMMEENNTTSS
+       More than one name may be searched by separating the alternatives by
+       blanks or commas.  Possible format conversions are "d" (or "i"), "f"
+       (or "r"), "g" and "s" for integer, floating point, double precision,
+       and strings respectively.  If no match is found, the variable is not
+       altered.
+
+       When a keyword `par=filename' is encountered on the command line, that
+       file (and any that it might in turn point to) is scanned as well.
+       Getch returns a count of the number of matches it found.
+
+DDIIAAGGNNOOSSTTIICCSS
+       Program execution is terminated with extreme prejudice if a par file
+       cannot be opened or the command argument list cannot be found.  It is
+       also an error for parfiles to be nested more then 10 deep.
+
+BBUUGGSS
+       It should be possible to limit the length of retrieved strings and to
+       extract individual characters.  It is also not presently possible to
+       redirect search to an internal argument list.
+
+KKEEYYWWOORRDDSS
+       parameter command line argument
+
+SSEEEE AALLSSOO
+       fetch, hetch, putch, auxpar, getch_add_string
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::getch(3)

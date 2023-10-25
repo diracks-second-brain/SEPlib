@@ -1,0 +1,70 @@
+INTERP(1)                     SEPlib Manual Pages                    INTERP(1)
+
+
+
+NNAAMMEE
+       Interp - Interpolate dataset using sinc, linearm or nearest neighbor
+
+SSYYNNOOPPSSIISS
+       Interp < in.H o1 pars > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       lsinc - integer
+                   [10]: length of interpolation operator
+                 (recommend < 20; MUST BE EVEN)
+
+       type  - int
+                    [2]: Type of interpolation,0 nearest neighbor,1-linear,2-sinc
+
+       o1out - float
+                   [o1]: First sample on axis1
+
+       o2out - float
+                   [o2]: First sample on axis2
+
+       o3out - float
+                   [o3]: First sample on axis3
+
+       d1out - float
+                   [d1]: Sampling of the output axis 1
+
+       d2out - float
+                   [d2]: Sampling of the output axis 2
+
+       d3out - float
+                   [d3]: Sampling of the output axis 3
+
+       n1out - int
+                   [max in/dout]: Number of samples in axis 1
+
+       n2out - int
+                   [max in/dout]: Number of samples in axis 2
+
+       n3out - int
+                   [max in/dout]: Number of samples in axis 3
+
+       maxsize-int
+                   [20]:  Amount of memory to use in megabytes
+
+       ntab  - int
+                   [101]: Interpolation table size (aka if outspace
+                 corresponds to inspace .012 .01 table will be chosen)
+
+DDEESSCCRRIIPPTTIIOONN
+       Interpolate dataset using sinc, linear, or nearest neighbor, up to 3
+       dimensions(if it can be held in memory). If any of the
+       n1out,n2out,n3out, o1out,o2out,o3out or d1out,d2out,d3out is omitted
+       the corresponding value in the input data is used.
+
+EEXXAAMMPPLLEE
+               Interp < in.H lsinc=12 type=2 > out.H
+               conputes a 12-point sinc-interpolator on the input data.
+               All of the standard n's, d's and o's are taken from the
+               input data
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  INTERP(1)

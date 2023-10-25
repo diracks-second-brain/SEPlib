@@ -1,0 +1,176 @@
+CUBEPLOT(1)                   SEPlib Manual Pages                  CUBEPLOT(1)
+
+
+
+NNAAMMEE
+       Cubeplot - plot seismic data cube
+
+SSYYNNOOPPSSIISS
+       Cubeplot movie=0 frame1=0 frame2=0 frame3=0 point1=0.5 point2=0.5
+       wantcoordlabel=1 wantaxes=y popup=n < in.T > out.V
+
+DDEESSCCRRIIPPTTIIOONN
+       Cubeplot - 3D raster plot of seismic data cube
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       movie      - int
+                 0 output is single cube plot
+                 1 output is movie over 1 axis
+                 2 output is movie over 2 axis
+                 3 output is movie over 3 axis
+
+       nframe-  int
+                 number of frames in movie
+
+       dframe-  float
+                 increment between input frames for movie (must be positive)
+
+       frame1-    int
+                 frame numbers for cube faces that display
+
+       frame2-  int
+                 a single frame. For faces that display a movie,
+
+       frame3-  int
+                 this is the starting frame number.
+
+       center- int
+                 [0] default the frames to the center of the cube
+
+       point1- float
+                 front face of cube takes up this fraction of 1 axis
+
+       point2- float
+                 front face of cube takes up this fraction of 2 axis
+
+       flat - char
+                 if flat=y, the three faces are displayed flat rather
+                 that in a perspective view.
+
+       wantcoordlabel- int
+                 By default (wantcoordlabel=1), lines are drawn to
+                 indicate where in the cube the three slices are taken
+                 from, and the coordinate values of the three cube
+                 slices shown are plotted. If you want the frame numbers
+                 instead of the coordinates, specify wantcoordlabel=0.
+                 If you want lines to be drawn with no labeling,
+                 specify -1. For no lines to be drawn specify -2.
+
+       wantaxes  - char
+                 Axes are drawn by default. Specify wantaxes=n to skip them.
+
+       wantoutline    - char
+                 By default, lines are drawn to outline each face of the
+                 cube. Specify wantoutline=n to override.
+
+       n1pix      - int
+                 number of pixels on 1 axis of vplot raster
+                 default is 2*n1. Using fewer reduces memory requirements,
+                 but makes a coarser image.
+
+       n2pix     -  int
+                 number of pixels on 2 axis of vplot raster
+                 default is 2*n2.
+
+       popup -  char
+                 Specifying popup=y brings up an xtpanel
+                 (if you have xtpanel
+                 installed) with three sliders. Moving these sliders changes
+                 the frames plotted on the three cube faces. If you pipe
+                 the output of Cubeplot to 'Xtpen cachepipe=n' you will see
+                 the display update as the sliders are moved.
+                 You can specify your own xtpanel script file by doing
+                 popup_file=filename.
+
+       wantscalebar - char
+                  [0] (0,1,n,y) turns on scale bar
+
+       bartype      - char
+                  [h]  (v)   horizontaly or verticaly aligned bar
+
+       barwidth     - float
+                  [.4]     (inches)
+
+       barreverse   - int
+                  [0]   (0,1,n,y)  reverse the scale
+
+       barlabel     - char
+                  label for the scale bar
+
+       screenht - float
+                 [10.24] sets screen height
+
+       screenwd - float
+                 [13.75] sets screen width
+
+       screenratio-float
+                 [.75] sets screen height to width ratio
+
+       xinch,yinch  -    float
+                 [10.24],[7.5]
+
+       crowd,crowd1,crowd2  - float
+                 [.75][crowd1=crowd][crowd2=crowd]
+                 (.75< crowd < 1.) crowds labels off the screen
+                 by expanding data on 1 or 2 axis.
+
+       xll,yll,xur,yur - int
+                 sets Lower Left and Upper Right coordinates
+
+       wheretitle- char
+                 [t] (t,b,l,r) where to put title (top, bottom, left, right)
+
+       titlefat -int
+                 [0] makes the title fat
+
+       title - char*
+                 title for plot
+
+       titlesz - int
+                 [10] font size for title
+
+       backcol - float*
+                 [0,0,0] background color (R,G,B) between 0 and 1
+
+       fillcol - float*
+                 [backcol] fill color (R,G,B) between 0 and 1
+
+       color  - char*
+                 [I] (esize=1) or  color=332(esize=3)(triplets) color table
+
+       polarity- int
+                 [1] white is high by default
+
+       nreserve - int
+                 [8] number of colors to reserve
+
+       movish - char
+                 [n] if y,halves the color table like movie does (0,1 n,y)
+
+       hurry - char
+                 [1]   (0,1 n,y)
+
+CCOOMMMMEENNTTSS
+           color= one of {I,i,F,R,W,G,T} just like in Movie. You may also append
+           a 'C' to make clipped values show up Red (ie color=IC is like color=I
+           but with clipped values flagged). You will need to have nreserve at least
+           3 for this option to work, since you have to leave the normal vplot 'Red'
+           (vplot default color 2) as a possibility.
+           If color=T, colfile= should give the name of a color-table file (just
+           like Movie).  Optionally, you may also specify a color of the format RGB,
+           (ie color=332) where each of R,G, and B is the integer number of bits
+           to allot to that primary. This is meant for esize=3, but it also makes
+           funky color tables when esize=1.
+
+SSEEEE AALLSSOO
+       Grey,Rickmovie,xtpen
+
+CCOOMMPPIILLEE LLEEVVEELL
+        DISTR
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                CUBEPLOT(1)

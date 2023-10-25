@@ -1,0 +1,50 @@
+DIS3DHEAD(1)                  SEPlib Manual Pages                 DIS3DHEAD(1)
+
+
+
+NNAAMMEE
+       Dis3dhead - Display headers
+
+SSYYNNOOPPSSIISS
+       Dis3dhead  <in.H pars
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       nkeys -  integer
+                 [nkeys]number of  keys to calculate
+                 parameters on.
+
+       key_  -  char*
+                 name of key to calc parameters on (only
+                 necessary if nkeys < less than nkeys in dataset
+
+       key_list -  character
+                 string containing keys to print (can use
+                 instead  of nkeys, keys_). The list should be
+                 seperated by :.
+
+       max_size -  integer
+                 [1000000] maximum amount of memory for Attr to use.
+
+       int_format-  char*
+                 "i7" Format print statement stlye for int
+
+       float_format - char*
+                 "f10.4" Format print statement stlye for float
+
+       guide -  integer
+                 [50] every 50 given values name of keys are
+                 printed. 0 will result in only a single printing
+                 of header names
+
+DDEESSCCRRIIPPTTIIOONN
+        Displays header values
+
+SSEEEE AALLSSOO
+       Disfil, Attr3dhead
+
+CCAATTEEGGOORRYY
+       uuttiill//iinnffoo
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004               DIS3DHEAD(1)

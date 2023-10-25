@@ -1,0 +1,47 @@
+HELICON(1)                    SEPlib Manual Pages                   HELICON(1)
+
+
+
+NNAAMMEE
+       Helicon - Helix convolution and deconvolution (N-dimensional!)
+
+SSYYNNOOPPSSIISS
+       Helicon < in.H filt= adj=0 div=0 > out.H
+
+DDEESSCCRRIIPPTTIIOONN
+       Applies helix convolution (polynomial multiplication) or deconvolution
+       (polynomial division). One is the exact inverse of the other. Watch for
+       helical boundary conditions.
+
+PPAARRAAMMEETTEERRSS
+       from history
+          iinntteeggeerr aarrrraayy _n - reads _n_1, _n_2, _n_3, ...
+
+       from par
+          ffiilleennaammee _f_i_l_t - helix filter file
+
+          iinntteeggeerr _a_d_j=0 - apply adjoint (backward) filtering
+
+          iinntteeggeerr _d_i_v=0 - apply inverse recursive filtering (polynomial divi-
+          sion)
+
+          llooggiiccaall _r_e_g_r_i_d=1 - regrid the filter
+
+          llooggiiccaall _r_e_g_r_i_d=0 - bound the filter
+
+       from aux (filt)
+          iinntteeggeerr aarrrraayy _h - helix grid (can be _h_1, _h_2, ...)  ; iinntteeggeerr aarrrraayy
+          _l_a_g=1,...,n1 - comma separated list of filter lags
+
+          rreeaall _a_0=1 - zero-lag filter coefficient
+
+EEXXAAMMPPLLEESS
+       _g_e_e_/_h_l_x_/_h_e_l_d_e_r_i_v_/, _g_e_e_/_h_l_x_/_h_e_l_i_c_o_n_9_0_/, _g_e_e_/_h_l_x_/_h_e_l_o_c_u_t_9_0_/, _g_e_e_/_m_d_a_/_m_o_r_-
+       _g_a_n_/, _g_e_e_/_p_r_c_/_s_e_p_9_5_/
+
+MMOODDUULLEESS
+       _h_e_l_i_c_o_n_._l_o_p, _p_o_l_y_d_i_v_._l_o_p, _r_e_g_r_i_d_._r_9_0, _h_e_l_i_x_._r_9_0
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 HELICON(1)

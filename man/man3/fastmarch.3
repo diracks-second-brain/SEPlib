@@ -1,0 +1,54 @@
+net::koko:n:estr:c::k:ookuor::::ssrecp:l:iobu-r6:.:1Ss:Ee:Ppdlloiicbbs-:M6:a.pn1ou:da::ld:osPceaspg:le:ispbo_db:a:ssee:p:lfiabs_tbmaasrec:h:(f3a)stmarch(3)
+
+
+
+NNAAMMEE
+       fastmarch - travel times using eikonal solver
+
+SSYYNNOOPPSSIISS
+       C-"fast-
+       march(order,s1,s2,s3,b1,b2,b3,nz,ny,nx,dz,dy,dx,slow0,slow,ttime)"
+
+       F-"fastmarch(order,s,b,n,d,slow0,slow,ttime)"
+
+IINNPPUUTT  PPAARRAAMMEETTEERRSS
+       order - integer
+                 What order eikonal to run
+
+       s1,s2,s3- float
+                 shot location relative to coordinate system
+
+       s- float[3]
+                 shot location
+
+       b1,b2,b3- int
+                 constant-velocity box around the source
+
+       b- int[3]
+                 bounding box
+
+       nz,ny,nx - integer
+                 standard seplib parameters
+
+       n- int[3]
+                 size of slowness cube
+
+       slow- float*
+                 slowness cube
+
+OOUUTTPPUUTT  PPAARRAAMMEETTEERRSS
+       ttime - float*
+                 travel time cube
+
+DDEESSCCRRIIPPTTIIOONN
+       Fast marching eikonal solver
+
+SSEEEE AALLSSOO
+       FMeikonal, hwt_travel_cube
+
+LLIIBBRRAARRYY
+       sseeppttrraavveell
+
+
+
+6.0      net::koko::src::ouTrh:u:sFeepbli1b2-61.61::0:8d:o0c8s:2:0p0o4d::seplib_base::fastmarch(3)

@@ -1,0 +1,77 @@
+STRETCH(1)                    SEPlib Manual Pages                   STRETCH(1)
+
+
+
+NNAAMMEE
+       Stretch - Generic stretch routine
+
+SSYYNNOOPPSSIISS
+       Stretch rule=nmo conj=0 inv=0 [vel=1.5] [velfile=vel.H] < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       conj  -   integer
+                 [0]  - operator itself
+                 1  - conjugate operator
+
+       inv   -   integer
+                 [0] -  operator itself
+                 1  - pseudo inverse
+
+       rule  -   character string
+                 -NMO, linear interp. and tabulation
+                  nmo0  -NMO, nearest neigbor, integer arithmetic.
+                  nmo1  -NMO, nearest neighbor interpolation.
+                  nmo2  -NMO, linear interpolation
+                  unmo  -NMO, pseudoUnitary. (conjugate is pseudoinverse)
+                  rownmo-NMO by linear interp,
+                  inverse divides out the row sum.
+                  offset-trace resampling on 2-axis along hyperbolic curves.
+                  linear on 2-axis, near neighbor on 1-axis.
+                  inverse approximated by conjugate.
+                  radial - radial trace without nmo.
+                  radnmo - radial trace, u=x/tau, nearest
+                  neighbor, does NMO too.
+                  inverse not exact when v=v(tau)
+                  stolt  - stolt stretch, give n1= on command line.
+                  lmo1  -LMO, nearest neighbor interpolation.
+                  lmo2  -LMO, linear interpolation
+
+       t_of_tau - file
+                 somefile.H  overrides vel.H
+
+       vel     -  real
+                 [1.5]   velocity
+
+       velfile  - file
+                 velocity file, supersedes constant velocity.  Can be 2-D.
+                 If 2-D, n2 of velocity file must equal n3 of data.  Otherwise
+                 the first velocity function is used for all n3.  Consistency
+                 of o2,d2 of velocity file with o3,d3 of data is NOT checked.
+
+       n1,n2   -  integer
+                 standard seplib parameters (from history)
+
+       o1,o2   -  real
+                 standard seplib parameters (from history)
+
+       d1,d2   -  real
+                 standard seplib parameters (from history)
+
+       n1     -   integer
+                 (from velfile) length of velocity trace
+
+DDEESSCCRRIIPPTTIIOONN
+         Stretch transformations with:   2       2     2    2
+                                        t  =  tau  +  x  / v(tau)
+
+CCOOMMMMEENNTTSS
+         rule=radnmo not yet passing dot product test.
+         rule=stolt not yet implemented
+         rule=lmo not well tested
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 STRETCH(1)

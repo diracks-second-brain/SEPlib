@@ -1,0 +1,75 @@
+GAUSS(1)                      SEPlib Manual Pages                     GAUSS(1)
+
+
+
+NNAAMMEE
+       Gauss - Make gaussian anomalies
+
+SSYYNNOOPPSSIISS
+       Gauss.x   >out.H pars
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       velback - real
+                [0.] background velocity
+
+       n1 - integer
+                [1]  first axis dimension
+
+       n2 - integer
+                 [1]  second axis dimension
+
+       n3- integer
+                [1]  third axis dimension
+
+       o1- real
+                 [0.]  first axis origin
+
+       o2- real
+                 [0.]  second axis origin
+
+       o3- real
+                 [0.]  third axis origin
+
+       d1      - real
+                 [1.]  first axis sampling
+
+       d2      - real
+                 [1.]  second axis sampling
+
+       d3      - real
+                 [1.]  third axis sampling
+
+       ngauss  - integer
+                 [1]  number of gaussian anomalies
+
+       maxvel  - real
+                 [1.]  maximum deviation from background
+
+       var     - real
+                 [1.]  variance  of gaussian anomalies
+
+       max1    - real
+                 [center of axis 1]location of maximum along 1 dimension
+
+       max2    - real
+                 [center of axis 2]location of maximum along 2 dimension
+
+       max3    - real
+                 [center of axis 3]location of maximum along 3 dimension
+
+       zero_at -real
+                 distance to zero anomaly
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       out.H - sepfile
+                 SEPlib file with gaussian model
+
+DDEESSCCRRIIPPTTIIOONN
+       Makes simple Gaussian anomailes
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   GAUSS(1)

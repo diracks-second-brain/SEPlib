@@ -1,0 +1,46 @@
+net::koko::snrect::::okuork:o::s:esprlci:b:-o6u.r1S::E::Psdleoipcblsi:Mb:a-pn6ou.da1:l:::sPdeaopgclesis:b:_pboads:e::s:espelpiwba_rbna(s3e)::sepwarn(3)
+
+
+
+NNAAMMEE
+       sepwarn - print a string and return a specified value
+
+SSYYNNOOPPSSIISS
+       "int sepwarn(warn,format,value1,value2,...)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       warn -   int
+                 return value to issue
+
+       format - string
+                 format statement
+
+       value* - void
+                 additional return values
+
+DDEESSCCRRIIPPTTIIOONN
+       This function issues a warning message  and returns (warn) to the call-
+       ing program
+
+       From fortran you can only specify a string to print, no format control
+       is available.
+
+CCOOMMMMEENNTTSS
+       From C:
+
+       "sepwarn(format, value1, value2, ...)"  or "return(sepwarn,format,
+       value1, value2)" char *format
+
+       From Fortran:
+
+       "call sepwarn('warning message')" or "stat=sepwarn('warning message')"
+
+SSEEEE AALLSSOO
+       seperr
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0        net::koko::src::Tohuur:F:esbep1l2ib1-66:.018:::0d8oc2s0:0:4pod::seplib_base::sepwarn(3)

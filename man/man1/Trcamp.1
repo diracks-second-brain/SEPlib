@@ -1,0 +1,38 @@
+TRCAMP(1)                     SEPlib Manual Pages                    TRCAMP(1)
+
+
+
+NNAAMMEE
+       Trcamp - Calculate total energy in a tapered time window
+
+SSYYNNOOPPSSIISS
+       Trcamp < in.H  isum=1 itaper=0  > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       isum - integer
+                   [1]: type of sum in time gate
+                     1: RMS sum
+                     2: sum of squares
+                     3:  LOG_{10} of sum of squares
+
+       t1   -  real
+                   [t0]: start of time gate
+
+       t2   -  real
+                   [tmax]: end of time gate
+
+       itaper -integer
+                   [0]: symmetric triangle taper in window: (0-1-0).
+
+DDEESSCCRRIIPPTTIIOONN
+       Calculate total amplitude/energy in a (tapered) time window
+
+SSYYNNOOPPSSIISS
+               Trcamp < in.H  isum=2 itaper=0  > out.H
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  TRCAMP(1)

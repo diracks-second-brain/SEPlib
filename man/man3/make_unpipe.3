@@ -1,0 +1,30 @@
+net::koknoe:t::s:rkco:k:oo:u:rs:r:cs:e:poluirb:-:6s.e1Sp:El:Pidlboi-cb6s.:M1:a:pn:ouddao:lc:ssP:ea:pgpleoisdb:_:bsaespel:i:bm_abkaes_eu:n:pmiapkee(_3u)npipe(3)
+
+
+
+NNAAMMEE
+       make_unpipe - unpipe a seplib file (therefore back seakable)
+
+SSYYNNOOPPSSIISS
+       make_unpipe(tag)
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       tag - char*
+                 tag to unpipe
+
+DDEESSCCRRIIPPTTIIOONN
+       Make sure that a seplib input dataset is not a pipe.  If it isn't a
+       pipe we do nothing.  If it is we make a temporary dataset and then copy
+       the data to a new file which is made temporary by unlinking it after it
+       has been created. This ensures that it will disappear when the job
+       ends.
+
+CCOOMMMMEENNTTSS
+       WARNING DO NOT CLOSE THE FILE AFTER _m_a_k_e___u_n_p_i_p_e_(_) has been called
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0    net::koko::src::our:T:hsuepFleibb-162.11:6::d0o8c:s0:8:p2o0d0:4:seplib_base::make_unpipe(3)

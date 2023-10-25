@@ -1,0 +1,83 @@
+SURFACE(1)                    SEPlib Manual Pages                   SURFACE(1)
+
+
+
+NNAAMMEE
+       Surface - make surfaces
+
+SSYYNNOOPPSSIISS
+       Surface [n1= n2= n3=1 nsurf=1 ] > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1,n2,n3   -   integer
+                 output cube dimensions.
+
+       mag        -   real
+                 real     [1.] determines the magnitude of the spike.
+                 Crossing spikes add their magnitudes.
+
+       nsurf        -   integer
+                 [1] number of surfaces
+
+       a            -    float*
+                 [n1/2]   - static shift
+
+       b2           -    float*
+                 [0] what to scale the 2nd axis by (b2*(o2+d2*i2))
+
+       b3           -    float*
+                 [0] what to scale the 3rd axis by (b3*(o3+d3*i3))
+
+       c2           -    float*
+                 [0] what to scale the 2nd axis by (c2*(o2+d2*i2)^2)
+
+       c3           -    float*
+                 [0] what to scale the 3rd axis by (c3*(o3+d3*i3)^3)
+
+       min_ext2     -    float*
+                  [o2]  minimum extent along extent
+
+       min_ext3     -    float*
+                  [o3]  minimum extent along extent
+
+       max_ext2     -    float*
+                  [o2+d2*(n2-1)]  minimum extent along extent
+
+       max_ext3     -    float*
+                  [o3+d3*(n3-1)]  minimum extent along extent
+
+       title      -   char*
+                  ' '  get putched into output header file .
+
+       o1,o2,o3   -   real
+                 [0.] standard seplib
+
+       d1,d2,d3   -   real
+                 [.004],[.1],[.1] standard seplib parameters
+
+       add       - integer
+                  [1]   Add crossing surfaces (1) or replace value (0)
+
+       layers    - integer
+                  [0]   If 1, perform causal integration
+
+       label1..3  -   char*
+                  ['sec'],['km],['km']  standard seplib meaning
+
+DDEESSCCRRIIPPTTIIOONN
+       Make linear and parolbic surfaces. Spikes are placed at nearest integer
+       location corresponding to the formula:
+
+       iz=floor(((a+b2*(o2+d2*i2)+b3*(o3+d3*i3)+
+            c2*(o2+d2*i2)^2 + c3*(o3+d3*i3)^2)-o1)/d1+.5)
+
+CCOOMMMMEENNTTSS
+SSEEEE AALLSSOO
+       Gauss, Vel, Surface
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 SURFACE(1)

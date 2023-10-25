@@ -1,0 +1,100 @@
+ANISO2D(1)                    SEPlib Manual Pages                   ANISO2D(1)
+
+
+
+NNAAMMEE
+       Aniso2d - anisotropic modeling
+
+SSYYNNOOPPSSIISS
+       Aniso2d  par=Par < Hsourcefn  > Hverticalgeophone
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       moduli - file
+                   velocity model file (c11,c13,c33,c14, and rho ) (next 4 pars
+                   from this file
+
+       n1   - integer
+                   # of z grid points (becomes nz in the program) max=400
+
+       n2   - integer
+                   # of x grid points (becomes nz in the program) max=400
+
+       d1   - real
+                   z grid point spacing (becomes dz in the program)
+
+       d2   - real
+                   x grid point spacing (becomes dx in the program)
+                   The constants are in order c11,c13,c33,c44,rho and
+                   are stored nz(fast) by nx
+
+       Hsource - file
+                  Source function file (next two pars from this file)
+
+       n1 - integer
+                  length of source
+
+       d1- real
+                  time sample interval (this will be used for calculations)
+                  so it should be within stability limits
+
+       nt - integer
+                  number of time steps to run, max=4000
+
+       nsrc- integer    #
+                   of shots to make (default=1)
+
+       src_1 - integer
+                  Position of first source (in grid points)
+
+       src_type - integer
+                  vertical force =1; horizontal =2; shear source =3
+                  explosive force=4
+
+       src_inc  - integer
+                  shot increment (in x grid points) default=1
+
+       group_1  - integer
+                  Position of first receiver for first shot default=1
+
+       ngroup   - integer
+                  Number of receivers default=nx
+
+       src_depth- integer
+                  Shot depth (grid points)
+
+       geo_depth- integer
+                  depth of geophones (in grid points)
+
+       surf_type- integer
+                  free surface (default) =1; absorbing =0
+
+       snap_i   - integer
+                  number of time steps between snapshots
+
+       rollalong- integer
+                  receiver spread rollalong with the
+                  shots? 1=yes=default; 0=no
+
+       vpmax    - real
+                  maximum velocity in model (optional stability check)
+                  for stability vpmax*dt/dx <.5
+                  since anisotropic sqrt(max(c11,c33)/rho)*dt/dx <.5
+                  for no dispersion (vmin/fmax)/dx >2.8
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       Hverticalgeophone - file
+                 is output file for the vertical component seismogram
+
+DDEESSCCRRIIPPTTIIOONN
+          Program to do anisotropic heterogenous elastic modelling in 2d,
+          explicit finite-difference 2nd order in time 16th order in x and z
+
+SSEEEE AALLSSOO
+       Iso2d
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 ANISO2D(1)

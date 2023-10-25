@@ -1,0 +1,47 @@
+FOLD3D(1)                     SEPlib Manual Pages                    FOLD3D(1)
+
+
+
+NNAAMMEE
+       Fold3d - Calculate fold maps of a SEP3d dataset
+
+SSYYNNOOPPSSIISS
+       Fold3d  <in.H >out.H
+
+IINNPPUUTT PPAARRMMAAEETTEERRSS
+       max_size-
+                 integer [10] maximum memory in megabytes
+
+       compress-
+                 integer(:) [none] which axes to compress (see examples below)
+
+       verb- logical
+                 [n]   whether or not to be verbose
+
+DDEESSCCRRIIPPTTIIOONN
+       Calculate fold maps of SEP3d datasets. These maps may be of any number
+                 of dimensions (see examples below).
+
+EExxaammpplleess
+       Given a dataset with grid axes
+
+       axis2=trace_in_bin; axis3=aoffset; axis4=cmp_x; axis5=cmp_y
+
+        Fold3d < sep3d.H compress=2 > new.H
+         will create a fold map of dimensions (aoffset,cmp_x,cmp_y)
+
+        Fold3d < sep3d.H compress=2,3 >new.H
+         will create a fold map of dimensions (cmp_x,cmp_y)
+
+        Fold3d < sep3d.H compress=2,3,5 >new.H
+         will create a fold map of dimensions (cmp_x)
+
+SSEEEE AALLSSOO
+       Sort3d
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  FOLD3D(1)

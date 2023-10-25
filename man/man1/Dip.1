@@ -1,0 +1,67 @@
+DIP(1)                        SEPlib Manual Pages                       DIP(1)
+
+
+
+NNAAMMEE
+       Dip - Calculate dip
+
+DDEESSCCRRIIPPTTIIOONN
+       Calculates the dip of dataset using one of several methods
+
+SSYYNNOOPPSSIISS
+       Dip < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       verb      - logical
+                 [n]: Whether or not to be verbose
+
+       max_size      - integer
+                 [100]: Maximum memory in megabytes to use
+
+       v3d      - logical
+                 [n]: Whether [y] or not [n] to run 3-D version (smooth between slices,
+
+                      more memory intensive and slower)
+
+       method      -  char*
+                 [sergey_f]: Sergey's fast method
+
+           eps      -  real
+                     [.0001]:   - Smoothness of axis1
+
+           eps2      -  real
+                     [.0001]:   - Smoothness  of axes2 and 3
+
+           nl_iter      -  integer
+                     [10]:   - Number of non-linear iterations
+
+                 [sergey_s]: Sergey's slow method
+
+           eps      -  real
+                     [.01]:   - Smoothness of
+
+           nl_iter      -  integer
+                     [10]:   - Number of non-linear iterations
+
+           niter      -  integer
+                     [30]:   - Number of linear iterations
+
+                 [puck_f]: Puck fast method
+
+           nwind      -  _i_n_t_e_g_e_r(3)
+                     [min(n,5)]:   - Smoothing of dx and dt
+
+                 [puck_s]: Puck slow method
+
+           nwind      -  _i_n_t_e_g_e_r(3)
+                     [min(n,5)]:   - Moving window to calculate dx and dt
+
+SSEEEE AALLSSOO
+       Ft3d
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     DIP(1)

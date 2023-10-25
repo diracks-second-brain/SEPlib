@@ -1,0 +1,72 @@
+net::koko::src::noeutr::::ksoekpol:i:bs-r6c.:1S::Eo:Pudlroi:cb:ss:Me:appnlouidab:l-:6sP.ea1pg:le:isdbo_cbsa:s:ep:o:dd:o:cs(e3p)lib_base::doc(3)
+
+
+
+NNAAMMEE
+       doc - program self documentation
+
+SSYYNNOOPPSSIISS
+       doc(SOURCE)
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       SOURCE - char*
+                 Location of source file
+
+DDEESSCCRRIIPPTTIIOONN
+       SEPlibs documentation mechanism. When a program is called with no argu-
+       ments and no in or out the begining of the file is searched for docu-
+       mentation.  For C, the first comment
+
+CCOOMMMMEENNTTSS
+       Standard practice is to give program usage description in comment lines
+       at the beginning of the source file.  Doc reads such comments from the
+       file name it is passed and prints them (on the stderr file) when the
+       program is invoked without inputs or arguments.  Thus the prospective
+       user need only type the program name to obtain a parameter description.
+
+       If the filename is a relative path the documentation will be searched
+       for in the list of directories defined by the compile time variable
+       DEFAULT_DOC_PATH followed by the list of directories in the environment
+       variable "SEP_DOC_PATH". Both of these should be colon separated lists
+       of directories.
+
+       Copying is done up to the end of the first comment block or preproces-
+       sor control symbol (# for C, % for Ratfor).  Output is piped through
+       more so that long descriptions can be viewed.
+
+       In the interest of increased portability,  provision is made to input
+       the comments directly as a (long) character string. (This is fairly
+       messy, however, and compiler length limitations may interpose.)
+
+       The standard include file <sep.startup> generates the call
+       `doc(SOURCE)'. The standard gnu-makefile rules for building seplib will
+       automatically define SOURCE.
+
+        If the programmer predefines SOURCE via a #define
+       they should only do so if it is not previously defined., e.g.
+
+        #ifndef SOURCE
+
+        #define SOURCE "./segy/programs/Segy.c"
+
+        #endif
+
+SSEEEE AALLSSOO
+        seplib, more
+
+DDIIAAGGNNOOSSTTIICCSS
+       If SOURCE has not been defined,  the cc compiler will yell.
+
+BBUUGGSS
+       Unpredictable results if comments don't appear at the beginning of the
+       program.  Fortran version needs % to recognize end of comment stream.
+
+KKEEYYWWOORRDDSS
+               self doc documentation manuals
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0            net::koko::sTrhcu::Foeubr:1:2se1p6l:i0b8-:60.81:2:0d0o4cs::pod::seplib_base::doc(3)

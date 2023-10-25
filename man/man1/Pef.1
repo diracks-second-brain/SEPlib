@@ -1,0 +1,47 @@
+PEF(1)                        SEPlib Manual Pages                       PEF(1)
+
+
+
+NNAAMMEE
+       Pef - Estimate PEF in N dimensions
+
+SSYYNNOOPPSSIISS
+       Pef < data.H a= [center=] [gap=] [maskin=] [maskout=] > pef.H
+
+DDEESSCCRRIIPPTTIIOONN
+       Estimates PEF by least squares, using helix convolution.  Can ignore
+       missing data
+
+PPAARRAAMMEETTEERRSS
+       from history
+          iinntteeggeerr aarrrraayy _n - reads _n_1, _n_2, _n_3, etc.
+
+       from par
+          iinntteeggeerr aarrrraayy _a= - filter size
+
+          iinntteeggeerr _n_i_t_e_r=2*prod(a) (optional) - number of PEF iterations
+
+          iinntteeggeerr aarrrraayy _c_e_n_t_e_r=a/2+1 (optional) - zero-lag position (filter
+          centering)
+
+          iinntteeggeerr aarrrraayy _g_a_p=0 (optional) - filter gap
+
+          ffiilleennaammee _m_a_s_k_i_n_, _m_a_s_k_o_u_t (optional) - data selectors
+
+       to history
+          iinntteeggeerr aarrrraayy _l_a_g - comma separated list of filter lags
+
+EEXXAAMMPPLLEESS
+       _g_e_e_/_m_d_a_/_h_o_l_e_9_0_/, _g_e_e_/_m_d_a_/_m_i_s_s_3_9_0_/, _g_e_e_/_m_d_a_/_m_o_r_g_a_n_/, _g_e_e_/_m_d_a_/_s_e_a_b_9_0_/,
+       _g_e_e_/_p_c_h_/_s_i_g_n_o_i_9_0_/
+
+MMOODDUULLEESS
+       _s_h_a_p_e_._r_9_0, _b_o_u_n_d_._r_9_0, _m_i_s_i_n_p_u_t_._r_9_0, _p_e_f_._r_9_0, _c_o_m_p_r_e_s_s_._r_9_0, _p_r_i_n_t_._r_9_0,
+       _h_e_l_i_x_._r_9_0
+
+SSEEEE AALLSSOO
+       MSPef, Fillmiss, Helicon, Decon
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     PEF(1)

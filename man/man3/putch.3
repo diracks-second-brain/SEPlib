@@ -1,0 +1,80 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::psuetpclhi(b3_)base::putch(3)
+
+
+
+NNAAMMEE
+       putch - put argument in output history file
+
+SSYYNNOOPPSSIISS
+         int putch(name, format, val)
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       name  -char*
+                 parameter name
+
+       format - char
+                 format of variable (d,f,s)
+
+       val- void*
+                 variable value of variable
+
+RREETTUURRNN VVAALLUUEE
+           0 = if sucessful
+
+DDEESSCCRRIIPPTTIIOONN
+       This function is a seplib companion to the input routines fetch, getch,
+       and hetch that appends values to the output history file with expres-
+       sions of the form `name=value'.
+
+CCOOMMMMEENNTTSS
+       Possible format conversions are "d" (or "i"), "f" (or "r"), "g" and "s"
+       for integer, floating point, double precision, and strings respec-
+       tively.
+
+       These values may be diverted from the default history file on standard
+       output with the command line parameter `head=filename'.
+
+EEXXAAMMPPLLEESS
+       From C:
+
+       putch ( "intpar", "i", &int);
+
+       putch ( "intpar2", "d", &int);
+
+       putch ( "float", "f", &float);
+
+       putch ( "floatpar", "r", &float);
+
+       putch ( "somename", "s", "name");
+
+       From Fortran:
+
+       call putch ( 'intpar', 'i', int)
+
+       call putch ( 'intpar2', 'd', int)
+
+       call putch ( 'floatpar', 'f', float)
+
+       call putch ( 'float', 'r', float)
+
+       call putch ( 'somename', 's', 'name')
+
+SSEEEE AALLSSOO
+       getch, fetch, hetch, puthead
+
+DDIIAAGGNNOOSSTTIICCSS
+       Program execution is terminated when an invalid format is passed.
+
+BBUUGGSS
+       It is not presently possible to specify multiple output names in one
+       call as can presently be done on input with fetch, etc.
+
+KKEEYYWWOORRDDSS
+       parameter output
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::putch(3)

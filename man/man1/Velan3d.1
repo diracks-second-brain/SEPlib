@@ -1,0 +1,56 @@
+VELAN3D(1)                    SEPlib Manual Pages                   VELAN3D(1)
+
+
+
+NNAAMMEE
+       Velan3d - Perform velocity analysis
+
+SSYYNNOOPPSSIISS
+       Velan3d  <in.H >out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       v0 - float
+                 first velocity
+
+       dv - float
+                 velocity sampling
+
+       nv - integer
+                 number of velocities
+
+       ntout - integer
+                 [ntin/5] number of samples in output
+
+       smooth - integer
+                 [ntin/ntout*2] smoothing window
+
+       mute  - real
+                 [1.8] muting parameter
+
+       off_keys - integer(:)
+                 keys which contain offset information
+
+       offset_axes - integer(:)
+                 axes which describe the offset and/or
+                 the axes which to perform velocity on
+
+       verb    - integer
+                 [0] wheter or not to be verbose
+
+DDEESSCCRRIIPPTTIIOONN
+        Performs Velocity Analysis on sep3d datasets
+
+CCOOMMMMEENNTTSS
+        off_keys and off_axes, are somewhat optional
+        If none of these are suplied checks keys and then axes for
+        offset, offset_x, and offset_y.
+
+SSEEEE AALLSSOO
+       Velan,Nmo3d
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 VELAN3D(1)

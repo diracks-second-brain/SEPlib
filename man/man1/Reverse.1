@@ -1,0 +1,63 @@
+REVERSE(1)                    SEPlib Manual Pages                   REVERSE(1)
+
+
+
+NNAAMMEE
+       Rtm2d- - Reverse time migration or two-way wave equation forward model-
+       ing
+
+SSYYNNOOPPSSIISS
+           Rtm2d par=parfile.P wavelet=wavelet.H Slow=slowness.H Data=data.H
+              Image_X=image_x.H Image_Z=image_z.H
+
+PPAARRAAMMEETTEERRSS
+          [modeling]  :to do forward modeling
+
+         migration:to do reverse time migration
+
+       extrapolate_oper- char *
+                [fd]       : finite-difference method
+
+               fft       : psedu-spectral method
+
+               write_wave=y              : whether to write wavefield to harddisk or not$
+
+       image_X  - sepfile
+               [optional] horizontal Common Image Gathers
+
+       image_Z  - sepfile
+               [optional]  vertical Common Image Gathers
+
+       o_source  d_source n_source- real, real, integer
+             [0.,10.,1]   sampling of Sources
+
+       dt, nt_source - real, integer
+             [1500,.002]   sampling in time
+
+       hx_min, dx_offset, n_off - real, real, integer
+             [-100.,10.,200]   sampling of offset
+
+       dz_image, nz_image : Sampling parameters for depth
+       z_source, z_receiver: depth of source and receiver
+       image_nhx, image_nhz: horizontal and vertical subsurface offset number
+       of
+       images x_min_wave, x_max_wave: aperture of the wavefield
+       xcoe_taper, zcoe_taper: tapering boundary condition parameters
+       nx_bd_taper, z_bd_taper: thickness of tapering boundary condtion
+       nop  : thickness of one-way wave equation boundary condtion
+       x_min_image, x_max_image: aperture of the image
+       verb - logical
+            [.false.] Whether or not to print progress messages
+
+       pct_master - real
+            [2.]  How often to print when master process
+
+       pct_slave - real
+            [10.] How often to print when non-master process
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 REVERSE(1)

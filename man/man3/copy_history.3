@@ -1,0 +1,115 @@
+net::konkeot::::skrock:o::o:usrr:c::s:eopulri:b:-s6e.p1Sl:Ei:Pbdl-oi6cb.s1:M::a:pndouodac:ls::sP:eappgoledis:b:_sbeapslei:b:_cboapsye_:h:icsotpoyr_yh(i3s)tory(3)
+
+
+
+NNAAMMEE
+       auxin, auxout, auxinout, auxscr,auxsockout,copy_history - returns I/O
+       pointer to auxiliary data file
+
+SSYYNNOOPPSSIISS
+               From C:
+               #include <seplib.h>
+
+               FILE *auxin(tag)
+               FILE *auxtmp(tag);
+               FILE *auxout(tag)
+               FILE *auxinout(tag)
+               FILE *auxsockout(tag)
+               FILE *auxscr(tag)
+               void copy_history( intag, outtag )
+               char *tag, *intag, *outtag;
+
+               From Fortran:
+
+               integer auxin(tag)
+               integer auxout(tag)
+               integer auxinout(tag)
+               integer auxsockout(tag)
+               integer auxscr(tag)
+               integer auxtmp(tag)
+               integer copy_history(intag,outtag)
+
+DDEESSCCRRIIPPTTIIOONN
+       These routines open an auxillary seplib dataset for input, output, or
+       both. For historical reasons they return a stream pointer (or a file
+       descriptor for Fortran users).  These return values should not be used
+       for I/O. Always use the tag name to read and write data. The return
+       values should only be used to check for errors.
+
+       For _a_u_x_i_n_(_) the location of this data is determined by a line "in=file-
+       name" in the auxiliary input history.  The history is in turn located
+       according the following priorities: Look for 'tag=history' on the com-
+       mand line.  Look for 'tag=history' on standard input.  Look for the
+       file `tag' in the current directory.
+
+       For _a_u_x_o_u_t_(_), an output history is created and initialized as neces-
+       sary. The default name `tag' of this output history may be overrrided
+       by specifying `tag=history' on the command line. If the output history
+       already exists it will be overwritten.  The location of the data file
+       is constructed automatically following rules similar to those used by
+       _o_u_t_p_u_t_(_). If the file exists it will be truncated to zero length before
+       starting output.
+
+       For _a_u_x_i_n_o_u_t_(_), the history file will be searched for using the same
+       rules as auxin and appended to if it exists.  If the history already
+       exists, the data file it points at will be reused. If you wish to
+       append to the end of that file you should seek to the end before writ-
+       ing.  If the history file doesn't exist the history file and data file
+       will be created as for auxout.  The call to _a_u_x_i_n_o_u_t_(_) must be the
+       first use of the tag in your program.  Any other call will implicity
+       open the dataset as either an input or output dataset.
+
+       _c_o_p_y___h_i_s_t_o_r_y_(_) is used to copy the input history from the stream
+       defined by tagin to the stream defined by tagout.
+
+EEXXAAMMPPLLEE
+               A binary file "elevations" has been generated for a
+               seismic section. The history, say Helev, describing it
+               would contain
+
+                       in="elevations"
+
+                       ne=120 units=feet datum=250
+
+               A program written to use these elevations would be invoked
+
+                       <Hin Prog elev=Helev >Hout
+
+               and the source for Prog might contain code such as
+
+                       auxpar("ne","d",&ne,"elev");
+
+                       auxpar("esize","d",&esize,"elev");
+
+                       auxpar("units","s",units,"elev");
+
+                       auxpar("datum","f",&datum,"elev");
+
+                       sreed("elev",elevations,ne*esize)
+
+                       for(i=0; i<ne; ++i) elevations[i] -= datum;
+
+DDIIAAGGNNOOSSTTIICCSS
+               Calls to auxin()/auxout()/auxinout()/auxsockout()/auxscr() from C return
+               NULL if there is no auxiliary history or data whilst
+               the fortran routine returns -1 in the same situation.
+               Other errors will cause program termination with a
+               suitable message.
+
+SSEEEE AALLSSOO
+               L<auxclose>, L<auxpar>, L<auxputch>, input, L<sreed>, L<srite>,
+               L<sseek>
+
+BBUUGGSS
+               Don't forget to declare auxin an integer in Fortran
+               and Ratfor programs.
+
+KKEEYYWWOORRDDSS
+       auxillary dataset input output
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0   net::koko::src::our::TsheuplFiebb-61.21:1:6d:o0c8s::0:8po2d0:0:4seplib_base::copy_history(3)

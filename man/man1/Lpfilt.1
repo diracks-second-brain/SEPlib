@@ -1,0 +1,48 @@
+LPFILT(1)                     SEPlib Manual Pages                    LPFILT(1)
+
+
+
+NNAAMMEE
+       Bandpass,Lpfilt - Bandpass dataset
+
+SSYYNNOOPPSSIISS
+              Bandpass <in.H  flo=0. fhi=0.5/dt
+                        nplo=6 nphi=6 phase=0 > out.H
+
+              Lpfilt <in.H  f3db= order=6  > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       flo,fhi,f3db - real
+                    low and high cutoff frequencies;
+                    flo for lowcut filter (no default); fhi=[0.5/dt] for highcut;
+                        gain at flo and fhi is: -6db for zero-phase filter
+                                           -3db for minimum-phase filter. flo and f3db are equivalent
+
+       nplo,nphi,order - integer
+                   number of poles for low and high cutoffs;
+                       filter roll-off rate is proportional to number of poles
+                 (order,nplo are equvilant)
+
+       phase - integer
+                    [0]: for zero-phase; =1 for minimum-phase
+
+DDEESSCCRRIIPPTTIIOONN
+       Butterworth bandpass filter.
+
+EEXXAAMMPPLLEEDD
+              Bandpass <in.H in=stdin out=stdout flo=0. fhi=0.5/dt
+                                           nplo=6 nphi=6 phase=0 > out.H
+
+RREEFFEERREENNCCEE
+       Technical reference: Oppenheim, A.V., and Schafer, R.W., 1975, Digital
+       signal processing, Prentice-Hall Inc.
+
+SSEEEE AALLSSOO
+       Lpfilt
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  LPFILT(1)

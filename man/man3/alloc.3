@@ -1,0 +1,46 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::aslelpolci(b3_)base::alloc(3)
+
+
+
+NNAAMMEE
+       alloc - allocate C array with error checking
+
+SSYYNNOOPPSSIISS
+       "char *alloc(nbytes)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       nbytes - integer
+                 Number of bytes to allocate
+
+DDEESSCCRRIIPPTTIIOONN
+               Alloc provides dynamic core allocation (via malloc (3))
+               with error checking.
+               Alloc returns a pointer to a block of at least nbytes
+               characters suitably aligned (after possible pointer coercion)
+               for storage of any type of object.
+
+CCOOMMMMEENNTTSS
+               In order to allocate an array of floating point numbers, use
+               the following command in the calling routine:
+
+                       float *x;
+                       x = (float *) alloc(nx*sizeof(float));
+
+               nx is the number of elements needed in the array.
+
+SSEEEE AALLSSOO
+               malloc (3)
+
+DDIIAAGGNNOOSSTTIICCSS
+               Alloc terminates program execution with an appropriate
+               error message if core could not be allocated.
+
+KKEEYYWWOORRDDSS
+       alloc malloc memory allocation
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::alloc(3)

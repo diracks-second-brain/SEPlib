@@ -1,0 +1,82 @@
+KIRMOD3D(1)                   SEPlib Manual Pages                  KIRMOD3D(1)
+
+
+
+NNAAMMEE
+       Kirmod3d - Kirchoff modeling
+
+SSYYNNOOPPSSIISS
+       Kirmod3d par=parfile.P < Geom.H > output.H Green= Reflector=
+           Wavelet= Green= [Ang_diff= Ang_surf= ]
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       Stdin
+                   Contains sep3d headers of geometry to be modeled
+
+       mode -integer
+                =1 - kinematic  Isotropic scatterers (simpler, faster, default)
+                =2 - dynamic    Uses Rayleigh scattering to get *approximately* correct
+                amplitudes.
+
+       nt_data=(int)
+                 Number of time samples in modeled data
+
+       dt_data=(real)
+                 Sample interval in modeled data
+
+       t0_data=(real)
+                 First time to be modeled
+
+       [ntr_block=(int)]
+                 Number of traces in each block
+
+       [spow=1 (int)]
+                 Directivity of source !!! (not implemented)
+
+       [rpow=1 (int)]
+                 Directivity of receiver !!! (not implemented)
+
+       convolve_wave-int
+                  =1 Convolve output with wavelet (default)
+                  =0 Don't
+
+       Wavelet -   sepfile
+                  1D real sep77 file containing wavelet in time domain
+
+       Reflector - 2D real sep77 file
+                 kinematic: n1=4 (z,x,y,perturbation)
+                 dynamic:   n1=6 (z,x,y,d_rho,d_lambda,d_mu)
+
+       Green -     3D real sep77 file
+                 containing traveltimes &
+                 amplitudes (& angles) for 1D greens function
+                 1-axis ... depth
+                 2-axis ... offset
+                 3-axis ... (:,:,1) = traveltimes
+                 (:,:,2) = amplitudes
+                 (:,:,3) = sin_theta_diff (dynamic only)
+                 (:,:,4) = cos_theta_diff (dynamic only)
+                 (:,:,5) = sin_theta_surf (dynamic only)
+                 (:,:,6) = cos_theta_surf (dynamic only)
+
+DDEESSCCRRIIPPTTIIOONN
+        Born/Kirchhoff modeling program for sep3d
+        Needs Green's function tables supplied externally
+        See 'Modeling heterogeneous reservoirs using the first order Born
+          Approximation', Rickett, Biondi & Lumley (SEP92)
+          for references on Born/Rayleigh scattering
+
+SSEEEE AALLSSOO
+       Marine_geom3d (for creating geometries) Gfgradz (for creating Green's
+       function tables) Scat3d (for converting cube of scatterers to
+       (x,y,z,ampl)) Wavelet (for making wavelets)
+
+KKEEYYWWOORRDDSS
+        born kirchhoff modeling modelling 3D sep3d avo amplitude
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                KIRMOD3D(1)

@@ -1,0 +1,53 @@
+MUTE3D(1)                     SEPlib Manual Pages                    MUTE3D(1)
+
+
+
+NNAAMMEE
+       Mute3d - Muting in sep3d datasets
+
+SSYYNNOOPPSSIISS
+       Mute3d  <in.H >out.H pars
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       verb   -  integer
+                  [0] Whether (1) or not(0) to be verbose
+
+       maxsize-  integer
+                  [10]Number of megabytes of traces to hold
+
+       vmute    -  float
+                  [1.45] -  Outer mute velocity
+                   0.0   -  Flat mute in offset
+
+       tmute    -  float
+                  [0.0]  start time of (hyperbolic) outer mute
+
+       tramp    -  float
+                  [0.25]  linear mute time ramp in seconds
+
+       off_keys- integer(:)
+                  Offset float key(s) describing
+
+       off_axes- integer(:)
+                  Offset axes
+
+DDEESSCCRRIIPPTTIIOONN
+         Performs Muting on regular or irregular dataset
+
+SSEEEE AALLSSOO
+       NMO, Velan3d
+
+CCOOMMMMEENNTTSS
+        off_keys and off_axes, are somewhat optional
+        If none of these are suplied checks keys and then axes for
+        aoffset, offset_x, and offset_y.
+
+        If you supply a key number > key number of data_record_number subtract 1
+        to the parameter (data_record_number is not stored with the headers)
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  MUTE3D(1)

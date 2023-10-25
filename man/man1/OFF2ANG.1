@@ -1,0 +1,54 @@
+OFF2ANG(1)                    SEPlib Manual Pages                   OFF2ANG(1)
+
+
+
+NNAAMMEE
+       OFF2ANG - Conversion from offset to angle and back
+
+SSYYNNOOPPSSIISS
+       OFF2ANG par=parfile.P < input.H > output.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       inverse=.false. (logical)
+                 Whether to do forward (offset to  angle)
+                            or inverse ( angle to offset) transformation
+
+       maxmem=100. (real)
+                 Maximum in-core memory (in Mbytes)
+
+       eps=1.0 (real)
+                 Epsilon parameter used by the radial trace transform
+
+       push=.false. (logical)
+                 push=.false. means pull transformation
+
+       verb=.false. (verb)
+                 Verbose execution
+
+       nzpad=n1 (int)
+                 Pading on the depth axis
+
+DDEESSCCRRIIPPTTIIOONN
+        Conversion from angle to offset and back.
+        Uses radial trace transforms in the Fourier domain.
+        Theory in Sava & Fomel(2000) - SEP103
+
+        real input/output
+
+         forward transformation
+         input  is z-hx-hy-mx-my(-ro)
+         output is z-ax-ay-mx-my(-ro)
+
+         inverse transformation
+         input  is z-ax-ay-mx-my(-ro)
+         output is z-hx-hy-mx-my(-ro)
+
+KKEEYYWWOORRDDSS
+         angle-domain, wave-equation
+
+CCAATTEEGGOORRYY
+       sseeiiss//iimmaaggee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 OFF2ANG(1)

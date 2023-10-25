@@ -1,0 +1,52 @@
+netn:e:tk:o:kkoo:k:os:r:cs:r:co:u:ro:u:rs:e:psleipbl-i6b.-16:.:1Sd:Eo:Pcdlsoi:cb:sp:Mo:adpn:ou:das:le:psPleaipgble_isbba_sbea:s:es:e:ps_egpe_tg_egtr_igdr_iadx_iasx_ipsa_rp(a3r)(3)
+
+
+
+NNAAMMEE
+       sep_get_grid_axis_par - grab data's n,o,d and label
+
+SSYYNNOOPPSSIISS
+       "ierr=sep_get_grid_axis_par(tag_history,i_axis,n,o,d,label)"
+
+IINNPPUUTT  PPAARRAAMMEETTEERRSS
+       char* - tag_history
+                 Tag of History File
+
+       int*  -  i_axis
+                 Axis number of the parameters to read
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       int* - n
+                 value of n-i (i = i_axis)
+
+       float* - o
+                 value of o-i (i = i_axis)
+
+       float* - d
+                 value of d-i (i = i_axis)
+
+       char* - label
+                 value of label-i (i = i_axis)
+
+RREETTUURRNN VVAALLUUEESS
+        -1 = if fails for other reasons
+
+        0 = if successful
+
+        +1 = if tag_history is not a Sep History File
+
+DDEESSCCRRIIPPTTIIOONN
+       Get the values that describe the GRid Axes from the History File.
+
+CCOOMMMMEENNTTSS
+               Defaults the others (o=0 d=1 label="label-i axis").
+
+SSEEEE AALLSSOO
+       sep_get_data_axis_par, sep_get_header_axis_par, sep_put_grid_axis_par
+
+LLIIBBRRAARRYY
+       sseepp33dd
+
+
+
+net6:.:0koko::src::our::seplib-6.T1h:u:dFoecbs:1:2po1d6:::0s8e:p0l8ib2_0b0a4se::sep_get_grid_axis_par(3)

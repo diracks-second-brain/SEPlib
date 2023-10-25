@@ -1,0 +1,87 @@
+OVERLAY(1)                    SEPlib Manual Pages                   OVERLAY(1)
+
+
+
+NNAAMMEE
+       Overlay - draws simple overlays
+
+SSYYNNOOPPSSIISS
+        Overlay < in.H > out.V [pars]
+
+DDEESSCCRRIIPPTTIIOONN
+               Draws polylines, text, boxes, and oval overlays
+
+CCOOMMMMEENNTTSS
+        Options let you position objects, control the
+        size of the labeling, etc.
+        The objects can be overlayed onto vplot
+        graphics files using the 'erase=once' option of pen filters.
+        For example, 'Tube < Wiggleout.H Boxout.H erase=once' The
+        interact option of pen filters can be used to determine the
+        coordinate of the spot the box's pointer is to point at.
+        (Alas, not all pen filters support the 'interact' capability.)
+        The special pen filter Vppen can be used to combine vplot
+        files.
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       type -  char*
+                   Must be 'box','oval','arrow','polyline', or 'text'
+
+       fat  -  int
+                   [0] Fatness of object
+
+       color-  int
+                   [7]     Color of object
+
+BBooxx PPaarraammeetteerrss
+       x   -   float
+                   [0]  Relative Position of left edge of box
+
+       y   -   float
+                   [0]  Relative Position of  bottom edge of box
+
+       width -   float
+                   [1.]  Width of box
+
+       height  -  float
+                   [1.]  Height of box
+
+OOvvaall PPaarraammeetteerrss
+       x,y   - float
+                  [0,0]   Center of oval x
+
+       x_oval,y_oval -  float
+                  [1.,1.]  Major axes for oval
+
+AArrrrooww aanndd PPoollyylliinnee ppaarraammeetteerrss
+       x,y -  float*
+                  [0,0][1.,1.]   Array of points to draw lines between (max 50)
+
+       pscale -    float  (arrow only)
+                   [1.]    scale factor for width of pointer
+
+TTeexxtt ppaarraammeetteerrss
+       x,y - float
+                 [0.,0.]   Location of text
+
+       size -      float
+                   [.25]    Height of text, in inches
+
+       label-      char*
+                   ' '   Text string for label
+
+       angle-      int
+                   [0]     Angle for text
+
+       boxit-     int
+                  [1] Whether (1) or not (0) to create a box arround text
+
+CCOOMMPPIILLEE LLEEVVEELL
+        LOCAL
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 OVERLAY(1)

@@ -1,0 +1,65 @@
+net::koko::nsertc::::kooukro::::sserpcl:i:bo-u6r.:1S::Es:Pedlpoilcbisb:M-:a6pn.ou1da::l::dsPoeacpgsle:is:bp_obda:s:es:e:paluixbp_ubtacshe(:3:)auxputch(3)
+
+
+
+NNAAMMEE
+       auxputch - put parameter into auxilary file
+
+SSYYNNOOPPSSIISS
+       "int auxputch(name, type, val, tag)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       name -    char*
+                 name variable name
+
+       type-     char*
+                 format ((d our i),(f or r),(g or s))
+
+       val - void*
+                 variable value of variable
+
+       tag - char*
+                 tag of history file
+
+RREETTUURRNN VVAALLUUEE
+       0 = if successful
+
+DDEESSCCRRIIPPTTIIOONN
+       Writes Parameters to an auxilary history file
+
+CCOOMMMMEENNTTSS
+       This function is a seplib companion to the input routine auxpar.  Aux-
+       putch writes or appends values to the auxiliary history file Possible
+       format conversions are "d" (or "i"), "f" (or "r"), "g" and "s" for
+       integer, floating point, double precision, and strings respectively.
+
+       The default auxiliary output header name given in string `tag' for the
+       auxiliary output header may be overriden by coding `tag=header_file' on
+       the command line.  (This is the same action taken by snap.)  The output
+       header file is created if necessary.
+
+       Examples: from C: auxputch ( "int", "i", &int, "tag") auxputch ( "int",
+       "d", &int, "tag") auxputch ( "float", "f", &float, "tag") auxputch (
+       "float", "r", &float, "tag") auxputch ( "name", "s", "name", "tag")
+
+       from Fortran: call auxputch ( 'int', 'i', int, 'tag') call auxputch (
+       'int', 'd', int, 'tag') call auxputch ( 'float', 'f', float, 'tag')
+       call auxputch ( 'float', 'r', float, 'tag') call auxputch ( 'name',
+       's', 'name', 'tag')
+
+SSEEEE AALLSSOO
+       auxpar, slice, auxclose,putch
+
+DDIIAAGGNNOOSSTTIICCSS
+       Program execution is terminated when an invalid format is passed.  Not
+       all sequences of auxout) and auxputch have been tested.
+
+KKEEYYWWOORRDDSS
+       auxillary header parameter output
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0       net::koko::src::oTuhru::Fseebpl1i2b-166.:10:8::d0o8cs2:0:0p4od::seplib_base::auxputch(3)

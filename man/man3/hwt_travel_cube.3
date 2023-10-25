@@ -1,0 +1,75 @@
+net:n:ekto:k:ok:o:ksor:c::s:rocu:r::o:usre:p:lsiebp-l6i.b1S-:E6:P.dl1oi:cb:sd:Mo:acpnsou:da::lp:osPdea:pg:lesisebp_lbiabs_eb:a:shew:t:_htwrta_vterla_vceulb_ec(u3b)e(3)
+
+
+
+NNAAMMEE
+       hwt_travel_cube - get travel times
+
+SSYYNNOOPPSSIISS
+       "int hwt_travel_cube(int *n,float *o,float *d,float *shot,float
+       aimi,float aima,
+        float oi,float si,int ni, float sa, int na,float st,int nt,float *vel,
+        int quick, float *travel)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n -  int[3]
+                 Dimensions of elements in velocity cube (3)
+
+       o -  float[3]
+                 First element of velocity cube (3)
+
+       d -  float[3]
+                 Sampling of velocity cube velocity cube (3)
+
+       shot -  float[3]
+                 Location of shot
+
+       aimi -  float
+                 Inclination
+
+       aima -  float
+                 Azimuth
+
+       oi -  float
+                 First aperture angle
+
+       si -  float
+                 Sampling  of aperture
+
+       ni -  int
+                 Number of half aperture angles
+
+       sa -  float
+                 Sampling of radial steps
+
+       na -  int
+                 Number of radial steps
+
+       st -  float
+                 Sampling in time
+
+       nt -  int
+                 Number of time samples
+
+       vel -  float*
+                 Velocity
+
+       quick -  int
+                 Whether or not do quick interpolation
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       travel -  float*
+                 Travel time cube
+
+DDEESSCCRRIIPPTTIIOONN
+       Do Huygens wavefront tracing and then interpolate
+
+SSEEEE AALLSSOO
+       hwt_trace_rays, Hwt3d
+
+LLIIBBRRAARRYY
+       sseeppttrraavveell
+
+
+
+6.0net::koko::src::our::sepTlhiub-F6e.b1:1:2do1c6s::0:8p:o0d8::2s0e0p4lib_base::hwt_travel_cube(3)

@@ -1,0 +1,92 @@
+THPLOT(1)                     SEPlib Manual Pages                    THPLOT(1)
+
+
+
+NNAAMMEE
+       Thplot - Create a hidden line plot
+
+DDEESSCCRRIIPPTTIIOONN
+       Hidden line plotting program.
+
+SSYYNNOOPPSSIISS
+       Thplot par= < Hin | Pen
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS::
+       n3  -    int
+                 [1]  (It erases the screen between frames (for a movie))
+
+       (zc,xc) -   float
+                 position of the lower left hand corner of the plot
+                 from the corner of the page in inches.
+                 xc defaults so as to center the plot.
+
+       sz      -   float
+                 vertical scale.
+
+       alpha   -   float
+                 apparent angle in degrees; |alpha| < 89
+
+       uflag   -   int
+                 [1] - plot upper side of the surface,
+                 0 - do not plot upper side. (yellow).
+
+       dflag   -   int
+                 the same but for the down side. (red).
+
+       clip,gpow,tpow,epow,plot - int
+                 clipping {( data * e**epow*t * t**tpow )**gpow}
+
+       norm    -   char
+                 [n] for no clipping.
+
+       pclip   -   int
+                 percentile to set the clip
+
+       dclip   -   float
+                 change the clip: clip = (clip set by pclip)*dclip
+
+       zmax,zmin-  float
+                 [0],[1] max, min (relative to clip) values to
+                  use in scaling plot
+
+       xlength -   float
+                 Number of inches wide the plot device is; Use 10.24
+                 unless you are using absolute scaling.
+
+       script -    file
+                 Name of a file from which to get the titles in
+                 a Movie, one title per line.
+
+       axis,axis1,axis2,axis3- char
+                 [y] any not-y character will turn off axis
+
+       label1,label2,label3- char*
+                 axis labels
+
+       axissz    -int
+                 [6] size of axis labels
+
+       axisfat    -int
+                 [2] makes axes fat
+
+       title      -char*
+                 ['input file name']
+
+       titlesz    -int
+                 [6] size of title
+
+       titlefat   -int
+                 [2] makes title fat
+
+SSEEEE AALLSSOO
+       Grey,Cubeplot,Contour
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  THPLOT(1)

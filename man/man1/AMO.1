@@ -1,0 +1,71 @@
+AMO(1)                        SEPlib Manual Pages                       AMO(1)
+
+
+
+NNAAMMEE
+       AMO - performs Azimuth moveout
+
+SSYYNNOOPPSSIISS
+       AMO par=parametersfile <in.H >out.H
+
+IINNPPUUTT DDAATTAA
+         [in.H] regularly sampled, common azimuth and offset data cube.
+
+         Axes: (cmp_x, cmp_y, time). Offset vector specified by H1x, H1y
+
+OOUUTTPPUUTT DDAATTAA
+         [out.H] regularly sampled, common azimuth and offset data cube.
+
+         Axes: (cmp_x, cmp_y, time). Offset vector specified by H2x, H2y
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       H1x- float
+               [1.96961558] component of the HALF-offset vector for in.H
+
+       H1y- float
+               [0.347296387] the other component of HALF-offset for in.H
+
+       H2x- float;
+           !$    [1.55884564] component of the HALF-offset vector for out.H
+
+       H2y- float
+               [0.899999976] the other component of HALF-offset for out.H
+
+       t_min_log- float
+              [0.04] minimum cutoff time for logstretch. Must be >0 !
+
+       fk_filter- logical
+               [y] indicates whether fk filtering is desired
+
+       v_min- float
+               [2.] minimum apparent velocity of events (for the fk filter)
+
+               Units should correspond to the distance units in in.H
+
+       f_max- float
+               [100.] maximum frequency (Hz) present in the data (for logstretch
+                antialiasing)
+
+DDEESSCCRRIIPPTTIIOONN
+        Transform data from one offset and azimuth to another.
+
+CCOOMMMMEENNTTSS
+       NOTE: This AMO implementation is discussed in detail in 'Effective
+                         AMO implementation in the log-stretch, frequency-wavenumber
+
+                        domain', by Ioan Vlad and Biondo Biondi, Report SEP-110,
+
+                         Aug. 2001, pp. 63-71
+
+       NOTE: The code uses OpenMP parallelization, it detects the number
+                   of threads itself.
+
+       NOTE: The program has been tried with 0<t_min_log<o1, but it should
+                         work for any t_min_log>0, and any o1>=0 for in.H
+
+CCAATTEEGGOORRYY
+       sseeiiss//iimmaaggee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     AMO(1)

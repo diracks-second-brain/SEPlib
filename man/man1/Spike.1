@@ -1,0 +1,56 @@
+SPIKE(1)                      SEPlib Manual Pages                     SPIKE(1)
+
+
+
+NNAAMMEE
+       Spike - make delta functions and impulsive plane waves.
+
+SSYYNNOOPPSSIISS
+       Spike [n1= n2= n3= k1= k2= k3= mag=1 d1= d2= d3= nsp=1] > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1,n2,n3,n4,n5   -   integer
+                 output cube dimensions.
+
+       k1,k2,k3,k4,k5   -   integer
+                 specify Fortran index of location of delta function
+                 If a kN is absent, the delta function
+                 becomes a constant function in the N-th dimension.
+                 If any kN is -1, no spike will be produced.
+
+       mag        -   real
+                 real     [1.] determines the magnitude of the spike.
+                 Crossing spikes add their magnitudes.
+
+       nsp        -   integer
+                 [1] number of spikes (maximum 15)
+
+       title      -   char*
+                  ' '  get putched into output header file .
+
+       o1,o2,o3,o4,o5   -   real
+                 [0.] standard seplib
+
+       d1,d2,d3,d4,d5   -   real
+                 [.004],[.1],[.1] standard seplib parameters
+
+       label1..3  -   char*
+                  ['sec'],['km],['km']  standard seplib meaning
+
+DDEESSCCRRIIPPTTIIOONN
+       Make delta functions and impulsive plane waves.
+
+CCOOMMMMEENNTTSS
+       Spike n1=8 n2=6 n3=4 nsp=3 k1=6,3,7 k2=5,0,3 k3=1 | Disfil will put a
+       spike at (6,5,1), a plane with n1=3, and n2,n3 variable and a line with
+       n1=7, n2=3, n3 variable).
+
+SSEEEE AALLSSOO
+       Gauss, Vel
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   SPIKE(1)

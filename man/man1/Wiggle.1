@@ -1,0 +1,121 @@
+WIGGLE(1)                     SEPlib Manual Pages                    WIGGLE(1)
+
+
+
+NNAAMMEE
+       Wiggle - plots wiggle traces
+
+SSYYNNOOPPSSIISS
+       Wiggle < in.H > out.v
+
+DDEESSCCRRIIPPTTIIOONN
+       Plotting program; displays data as wiggly traces
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       tpow - float
+                 [0.]  gain(it) = (it*d1+o1)**tpow, it in samples
+
+       pclip- int
+                 [99]  clip percentile
+
+       clip - float
+                 clip value (if not specified defaults to pclip)
+
+       n1,n2,n3 - int
+                 cube dimensions
+
+       xpos  - file
+                 header file containing n2 X values for the n2 traces
+
+       overplot,preder,seeman - char
+                 [0]  (0,1 n,y)
+
+       poly   -    char
+                 [0]   (0,1 n,y) Fills the wiggle trace where it is positive
+
+       fatp, xmask, ymask  - char
+                 see libvplot vp_area.
+
+       pad    - char
+                 (0,1 n,y)  (If user specifies mins or maxes then
+                 padding is turned off unless pad is specified.
+                 pad is useful if you want the length of the plot
+                 to be the same as the length of the graph.
+
+       zplot  -float
+                 [.75]
+
+       transp  - char
+                 [1] whether or not to transpose output (standard vplot)
+
+       xreverse,yreverse -char
+                 standard vplot definitions for output file
+
+       screenht-float
+                 [10.24] height of output medium
+
+       screenwd-float
+                 [13.75] width of output medium
+
+       screeratio-float
+                 [.75] ratio of screen height to width
+
+       xll,yll,xur,yur - float
+                     set B<l>ower B<l>eft and B<u>pper B<r>ight coordinates
+
+       xinch - float
+                 [10.24] standard vplot definition
+
+       yinch - float
+                 [7.5] standard vplot definition
+
+       crowd,crowd1,crowd2 - float
+                 [.75]  crowd1=crowd  crowd2=crowd
+                 (.75< crowd < 1.) crowd labels off the
+                 screen by expanding data on 1 or 2 axis.
+
+       wantframe,wantframenum - char
+                 standard vplot definitions (0,1, n,y)
+
+       wantaxis,wantaxis1,wantaxis2 - char
+                 [1] standard vplot definition (0,1 n,y)
+
+       min1,min2,max1,max - float
+                 standard vplot definitions
+
+       axisor1,axisor2  - float [min1],[min2]
+                 standard vplot definition
+
+       o1num,o2num,d1num,d2num - float
+                 standard vplot definition
+
+       n1tic,n2tic - int
+                 [1] number of tics
+
+       wheretics - char
+                 [f] (f,a) where to put tics (frame, axes)
+
+       wheretitle -char
+                 [t] (t,b,l,r) where to put title
+
+       wherexlabel - char
+                 [b] (t,b) where to put x label
+
+       whereylabel - char
+                 [l] (l,r) where to put y label
+
+       titlefat,labelfat - int
+                 [1] makes title and label fat
+
+SSEEEE AALLSSOO
+       Graph,Grey,xtpen,Thplot,Cubeplot
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  WIGGLE(1)

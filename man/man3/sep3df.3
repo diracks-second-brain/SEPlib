@@ -1,0 +1,48 @@
+net::koko::srnce:t::o:ukro:k:os:e:pslricb:-:6o.u1Sr:E::P:dlsoiecbpsl:Mi:abpn-ou6da.:l1::sP:eadpgolecissb:_:bpaosde::::sseeppl3idbf_(b3a)se::sep3df(3)
+
+
+
+NNAAMMEE
+       sep3df - sep3d f90 structure (superset)
+
+SSYYNNOOPPSSIISS
+       type(sep3d)
+
+DDEESSCCRRIIPPTTIIOONN
+       type sep3d{
+
+               character(len=128) :: tag              #tag to sep3df, MUST  BE SPECIFIED
+
+               integer, dimension(:),pointer  :: n #length of regular axes
+
+               real, dimension(:) ,pointer    :: o,d #initial and sampling  of regular axes
+
+               character(len=128),dimension(:),pointer::label,unit #label and unit for axes
+
+               integer :: nkeys,ndims          #number of keys and regular dimensions
+
+               integer :: drn #data record number (-1 if in same order)
+
+               integer :: ntraces # number of traces in the dataset
+
+         integer :: nsect   # number of sections
+
+         integer :: nmpi   # number of threads
+
+         integer :: impi   # thread number
+
+               character(len=128),pointer,dimension(:) :: keyname,keytype,keyfmt #keyname,type and format
+
+               character(len=128) :: usage #usage (INPUT,OUTPUT,SCRATCH) for dataset
+
+               character(len=128) :: data_format #data format (FLOAT,BYTE,COMPLEX,INTEGER)
+
+               character(len=128) :: file_format #file format (REGULAR,HEADER,GRID)
+
+CCOOMMMMEENNTTSS
+LLIIBBRRAARRYY
+       ssuuppeerrsseettff9900
+
+
+
+6.0         net::koko::src:T:houurF:e:bse1p2li1b6-:60.81::0:8do2c0s0:4:pod::seplib_base::sep3df(3)

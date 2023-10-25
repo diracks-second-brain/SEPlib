@@ -1,0 +1,121 @@
+FDMOD2(1)                     SEPlib Manual Pages                    FDMOD2(1)
+
+
+
+NNAAMMEE
+       Fdmod2 - Finite-Difference MODeling (2nd order) for acoustic wave equa-
+       tion
+
+UUSSAAGGEE
+       Fdmod2 <vfile >wfile nx= nz= tmax= xs= zs= [optional parameters]
+
+PPAARRAAMMEETTEERRSS
+           stdin  - sepfile
+
+                           file containing velocity[nx][nz]
+
+           stdout - sepfile
+
+                           file containing waves[nx][nz] for time steps
+
+           tmax  - float
+
+                                   maximum time
+
+           src_file - sepfile
+
+              file (2,nsrc) containg src locations (z,x)
+
+           xs  - float*
+
+                                   x coordinates of sources
+
+           zs   - float*
+
+               z coordinates of source
+
+           nt  - int
+
+            [1+tmax/dt]  number of time samples (dt determined for stability)
+
+           mt  - int
+
+            [1]            number of time steps (dt) per output time step
+
+           fmax  -float
+
+           [vmin/(10.0*h)]  maximum frequency in source wavelet
+
+           fpeak  -float
+
+           [0.5*fmax]     peak frequency in ricker wavelet
+
+           dfile- sepfile
+
+             input file containing density[nx][nz]
+
+           vsx - float
+
+             [o2] x coordinate of vertical line of seismograms
+
+           hsz - float
+
+              [o1] z coordinate of horizontal line of seismograms
+
+           vsfile -sepfile
+
+             [none]        output file for vertical line of seismograms[nz][nt]
+
+           hsfile -sepfile
+
+             [none]        output file for horizontal line of seismograms[nx][nt]
+
+           ssfile -sepfile
+
+             [none] output file for source point seismograms[nt]
+
+           verb -int
+
+             [0]           =1 for diagnostic messages, =2 for more
+
+           abs - int[4]
+
+             [1,1,1,1]             Absorbing boundary conditions on top,left,bottom,right
+
+                                   sides of the model. 0,1,1,1 for free surface condition on the top
+
+           pml_max - float
+
+             [1000.0]       PML absorption parameter
+
+           pml_thick - int
+
+            [0]           half-thickness of pml layer (0 = do not use PML)
+
+NNOOTTEESS
+       1. This is sufdmod2 for SEPlib
+
+       2. The sources specification order is
+
+         a. src_file - seplib file containing source locations
+
+         b. xs=3,4,5 zs=4,5,6  command list of sources
+
+         c. oxs= dxs= nxs= ozs= dzs nzs - which will increase the dimensionality
+           of the output by 1 ( ., , nxz, nzs)
+
+       Notes:                                        This program uses the
+       traditional explicit second order differencing    method.
+
+
+       Two different absorbing boundary condition schemes are available. The
+       first is a traditional absorbing boundary condition scheme created by
+       Hale, 1990. The second is based on the perfectly matched layer (PML)
+       method of Berenger, 1995.
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  FDMOD2(1)

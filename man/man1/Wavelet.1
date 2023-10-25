@@ -1,0 +1,92 @@
+WAVELET(1)                    SEPlib Manual Pages                   WAVELET(1)
+
+
+
+NNAAMMEE
+       Wavelet - wavelet generation
+
+SSYYNNOOPPSSIISS
+       Wavelet parameters [ < in.H ] > out.H
+
+DDEESSCCRRIIPPTTIIOONN
+       Wavelet generation program usually used for modeling programs
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       nt,n1  - integer
+           dimension of time axis parameter n1wavelet = n1out also output to
+           header
+
+       nx,n2  -integer
+           [1] number of input traces to use (see wavelet=data)
+
+       np,n3  -integer
+           [1]  number of input planes to use (see wavelet=data)
+
+       dt     -real
+           [.004] sample rate (parameter d1wavelet = d1out also output to
+           header)
+
+       domain -char*
+           [time]  domain option: time,ctime,frequency,spectrum time      = nt
+           real values representing the wavelet ctime     = nt complex values
+           representing the wavelet frequency = nt/2+1 complex values repre-
+           senting frequency domain wavelet spectrum  = nt+2 real values,
+           first half are normalized
+                       spectrum, second half are normalized phase
+                       angle which is the phase angle divided by
+                       pi. Usually used for quick check plots.  (parameter
+           domainwavelet = domain also output to header)
+
+       wavelet  -char*
+           [spike]  type of wavelet spike   = spike in time domain equals
+           white spectrum bandpass= butterworth bandpass filter, sharpness of
+                      frequency cutoffs is controlled by the order ricker0 =
+           gaussian curve ricker1 = first derivative of gaussian curve ricker2
+           = second derivative of gaussian curve data    = amplitude spectrum
+           is average of
+                     nx*np input traces from the in file zero    = null
+           wavelet (ie: all zeroes)
+
+       phase -char*
+           [none]      phase options: none,minimum,degrees none    = no modi-
+           fication of phase minimum = minimum phase min2zero = minimum to
+           zero phase conversion degrees = numerical value representing
+           degrees of
+                     constant phase shift from specified wavelet
+
+       fund -real
+           [40]     fundamental frequency of ricker wavelet
+                    (actually relates to gaussian half-width) =item  flow
+           -real
+
+           [10]   low  cutoff frequency of butterworth filter
+
+       fhigh -real
+           [60]   high cutoff frequency of butterworth filter
+
+       order-integer
+           [1]    order of butterworth filter
+                  (1 is average sharpness, > 1 is sharper, < 1 is smoother)
+                  (sets both high and low frequency cutoffs)
+
+       orderlow-integer
+           [1] low  cut order of butterworth filter (overrides order)
+
+       orderhigh-integer
+           [1] high cut order of butterworth filter (overrides order)
+
+       tdelay - real
+           additional time delay
+
+       bell -real
+           [nt/4*dt]    bell window half width, < dt/2 for no bell window
+
+       boxcar -integer
+           [pnt*dt]    boxcar window width
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 WAVELET(1)

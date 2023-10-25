@@ -1,0 +1,47 @@
+MERGE(1)                      SEPlib Manual Pages                     MERGE(1)
+
+
+
+NNAAMMEE
+       Scat3d,Cat3d,Scat,Cat,Merge - Concatenate seplib datasets, 5 names for
+       the same exact code.
+
+SSYYNNOOPPSSIISS
+       Cat3d header.H [header2.H .....] [pars]
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       axis - int
+                   [3] which axis to concatenate along
+
+       max_memory - int
+                   [5] maximum memory in words
+
+       virtual    - int
+                   [0]  (1 if you don't wish to concatenate data just
+                   make a multi-file seplib file
+
+       space    - char
+                   [n] leave space between merged data to make it easy to tell
+                       where one file ends and the next begins in merged movies
+                       default: space=y for Merge, space=n for Cat, Cat3d
+
+       nspace   - int
+                   number of traces in the space
+                   (defaults to something reasonable).
+
+DDEESSCCRRIIPPTTIIOONN
+       Concatenate datasets.  Scat3d and Cat3d are two names for the same
+       code.
+
+CCOOMMMMEENNTTSS
+       Grid files are destroyed
+
+SSEEEE AALLSSOO
+       Cat Merge
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   MERGE(1)

@@ -1,0 +1,42 @@
+HALFINT(1)                    SEPlib Manual Pages                   HALFINT(1)
+
+
+
+NNAAMMEE
+       Halfint - half order integeral filter
+
+SSYYNNOOPPSSIISS
+       Halfint conj=0 inv=0 < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       inv - integer
+                   [0]: half-order integrator .
+                     1: half-order differentiator .
+
+       conj- integer
+                   [0]: causal .
+                     1: anticausal .
+
+       rho - real
+                   [1-2/n1]: constant for leaky integration .
+
+       n1,n2,n3- integer
+                   cube dimensions
+
+DDEESSCCRRIIPPTTIIOONN
+         half-order integral filter on 1-axis with conjugate and inverse.
+         computation in the Fourier domain.
+
+EEXXAAMMPPLLEE
+                       Halfint < in.H conj=0 inv=1 > out.H
+                       computes the causal half-order derivative of the input data
+
+RREEFFEERREENNCCEE
+                       GEE page xxx and PVI page xxxx
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 HALFINT(1)

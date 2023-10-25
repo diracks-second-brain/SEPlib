@@ -1,0 +1,60 @@
+WINDOW3D(1)                   SEPlib Manual Pages                  WINDOW3D(1)
+
+
+
+NNAAMMEE
+       Window3d - Window a SEPlib dataset (3-D or 2-D) by cutting and/or deci-
+       mating samples.
+
+SSYYNNOOPPSSIISS
+       Window3d <in.H [params] >out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       f_ - int
+                 first element to keep along axis specified by a number replacing the '_'.
+
+       j_ - int
+                  sampling of the elements to keep along the specified axis.
+
+       n_ - int
+                  number of elements to keep along the specified axis.
+
+       min_ - float
+                  Minimum sample value to grab from specified axis.
+
+       max_ - float
+                  Maximum sample value to grab from specified axis.
+
+       synch - int
+                  [0]whether or not to sink
+
+       squeeze - int
+                  [1] Wheter to squeeze axes
+
+       max_memory - int
+                  [50] Maximum memory in megabytes to use
+
+       verb - int
+                  [0]  Wheter or not to be verbose
+
+DDEESSCCRRIIPPTTIIOONN
+       Windows dataset by cutting and/or subsampling along specified axes.
+
+EEXXAAMMPPLLEE
+       Window3d <in.H min1=0.3 max1=0.5 j2=3 f2=2 >out.H
+
+          Creates out.H, which is in.H windowed from 0.3 to 0.5 along the 1 axis, and
+          includes only every 3rd sample along the 2 axis, starting with the 2nd.
+          Assuming that the first axis is time (in seconds), and the second axis is offset,
+          out.H will contain times from 0.3 to 0.5 seconds, and every third trace begining
+          with trace number 2.
+
+SSEEEE AALLSSOO
+       Window
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                WINDOW3D(1)

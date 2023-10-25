@@ -1,0 +1,62 @@
+nneett::::kkookkoo::::ssrrcc::::oouurr::::sseepplliibb--66..11S::E::Pddlooiccbss::M::appnooudda::l::ssPeeappglleiisbb__bbaassee::::sseepp__ppuutt__ggrriidd__wwiinnddooww((33))
+
+
+
+NNAAMMEE
+       sep_put_grid_window - write a window of the grid
+
+SSYYNNOOPPSSIISS
+       "int sep_put_grid_window(tag_his-
+       tory,n_dim_grid,n_grid,n_wind,f_wind,j_wind,header_numbers)"
+
+IINNPPUUTT PPAARRAAMMEETTEERR
+       char* - tag_history
+                   tag of History File
+
+       int* - n_dim_grid
+                   Number of Dimensions in the Grid Cube
+
+       int* - n_grid
+                   vector of lenght n_dim_grid-1 length of the axes in the Grid Cube
+
+       int* - n_wind
+                   vector of length n_dim_grid axes length after windowing
+
+       int* - f_wind
+                   vector of length n_dim_grid-1 index of first elements (0<= o < n)
+
+       int* - j_wind
+                   vector of length n_dim_grid-1 sampling rate along axes (1<= j < n)
+
+       int* - header_numbers
+                   array containing Header Record Numbes of dimensions
+                   n_wind[0],n_wind[1],..n_wind[n_dim_grid-2]
+
+RREETTUURRNN VVAALLUUEE
+        -2=if the values in n_wind, f_wind, j_wind are incorrect
+
+        -1=if fails for other reasons
+
+        0=if successful
+
+        +1=if tag_history is a Sep77 History File but has no GFF file
+
+DDEESSCCRRIIPPTTIIOONN
+          Writes gridding information.
+
+CCOOMMMMEENNTTSS
+          Thes routines are based on the sep_window routine that it is the kernel
+          of the new sreed_window and srite_window routines.
+          ATTENTION: Since the first dimension of the grid is the first axis
+                     of the data record only the parameter for dimensions >=2
+                     are specified in n_wind,f_wind,d_wind.
+
+SSEEEE AALLSSOO
+       sep_get_grid_window
+
+LLIIBBRRAARRYY
+       sseepp33dd
+
+
+
+n6e.t0::koko::src::our::seplib-T6h.u1:F:edboc1s2::1p6o:d0:8::s0e8pl2i0b0_4base::sep_put_grid_window(3)

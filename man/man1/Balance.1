@@ -1,0 +1,46 @@
+BALANCE(1)                    SEPlib Manual Pages                   BALANCE(1)
+
+
+
+NNAAMMEE
+       Balance - Perform trace balancing
+
+SSYYNNOOPPSSIISS
+       Balance < in.H bal= oper=0 rms=2000 > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       oper -  integer
+                   [0]:  compute balance factors from input data, and apply them
+                           to create output.
+                     1:  compute balance factors from input data, and output the
+                           balance factors.
+                     2:  read in balance factors from auxiliary dataset (bal=),
+                           apply them to main input, and output the trace-balanced data.
+
+       rms  -  real
+                   [2000]: desired output rms level. If rms=0, balance factors will
+                           be computed to match the rms level of the first live trace.
+
+       n1,n2,n3-integer
+                 input cube dimensions
+
+       bal - char*
+                 name of auxiliary file containing balance factors (if oper==2)
+
+DDEESSCCRRIIPPTTIIOONN
+          Trace balancing of an entire trace (no windowing).
+
+EEXXAAMMPPLLEESS
+               Balance < in.H bal=mybal.txt oper=2 > out.H
+               Apply balance factors contained in file mybal.txt
+
+               Balance < in.H oper=0 rms=2000> out.H
+               Compute balance factors in a 2000 ms window and
+               apply to the data.
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 BALANCE(1)

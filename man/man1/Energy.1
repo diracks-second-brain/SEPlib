@@ -1,0 +1,49 @@
+ENERGY(1)                     SEPlib Manual Pages                    ENERGY(1)
+
+
+
+NNAAMMEE
+       Energy - Calculate energy in running windows
+
+SSYYNNOOPPSSIISS
+           Energy <in.h lwind=21 j1=11 normalize=no average=yes verbose=no > out.h
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       lwind   -  integer
+                 [21]:  number of points in smoothing window
+
+       j1      -  integer
+                 [11]:  increment between window centers;
+                 equal to subsampling factor; j1=1 is no subsampling.
+
+       normalize-char*
+                 [no]:  convert all energy values to range
+                 of 0.0 to 1.0 .  (normalizes each panel separately)
+
+       average - char*
+                 [yes]:  normalizes energy by length of window
+
+       verbose - char*
+                 [no]: gets more loquacious if =yes
+
+       n1,n2,n3- int
+                 standard seplib pars
+
+       o1,d1   - real
+                 standard seplib pars
+
+DDEESSCCRRIIPPTTIIOONN
+       Calculate energy in running windows along fast axis of data
+
+EEXXAAMMPPLLEE
+           Energy < in.H lwind=21 j1=11 normalize=no average=yes verbose=no > out.h
+               Calculates the trace energy in running windowis with 11-sample distance
+               between window centers. The smoothing window is 21 samples long. Normalize
+               energy by window length. No cross-window normalization is applied.
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  ENERGY(1)

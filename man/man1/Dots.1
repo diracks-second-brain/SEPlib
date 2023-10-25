@@ -1,0 +1,116 @@
+DOTS(1)                       SEPlib Manual Pages                      DOTS(1)
+
+
+
+NNAAMMEE
+       Dots - plots data as 'lollipops'
+
+SSYYNNOOPPSSIISS
+       <in.H  Dots  [options]  | Tube
+
+DDEESSCCRRIIPPTTIIOONN
+       Plots a data plane, like 'Wiggle,' but lollipops on strings.  Adapts
+       default data format to values of n1,n2.  Can put a separate label on
+       each trace.  (see labels=) Data area fills screen when title= label1=
+       labels= are undefined.
+
+CCOOMMMMEENNTTSS
+       A program somewhat like Wiggle, but better in some ways because it
+       tries to be smarter. The output style depends on the input n1 and n2.
+       For loosely packed traces with only a few data points Dots plots the
+       data as lollipops on strings, showing each data point clearly. There
+       are also options for separately labeling each trace, omitting dead
+       traces, making bar graphs, etc. As n1 and n2 increase Dots by default
+       simplifies the output and eventually behaves almost the same as Wiggle.
+       Unfortunately Dots does not use the axis drawing and plotting routines
+       shared by Wiggle, Contour, Graph and Ta2vplot, and so Dots' options and
+       ouput plot size, position, and axes are currently incompatible with
+       those for other plot programs.
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       seemean-int
+                 [1] draw axes lines (=0 means don't)
+                 0  default not to when n2>30 to avoid clutter
+
+       strings-int
+                 [1]  draw strings from axis to balloons
+                 0  default not to when n1>400 since too slow
+
+       wantaxis-int
+                 [1]  draw  bottom axis
+
+       dots   -int
+                 [1] draw the balloons
+                 0 default not to when n1>130 since dots are small
+                 2 draw dots only where signal is not zero.
+
+       corners-int
+                 [6] corners on area-filled polygon dots.
+
+       connect-int
+                 1 connect the dots on diagonal lines.
+                 2 connect the dots as a bar graph.
+                 3 bar graph with only horizontal bars.
+                 4 connect dots only where signal is not zero.
+                 0 don't connect adjacent values in any way.
+
+       clip  -float
+                 your chosen clip value.
+
+       overlap-float
+                 [.90]  trace overlap at clip value
+
+       gaineach - int
+                 1 gain each trace independently (=0 gain all together)
+
+       constsep - int
+                 0 trace separations depend on both max and min.
+                 1 trace separation depends on max abs value.
+
+       seedead -  int
+                 0 plot dead traces as zero traces or don't plot them.
+
+       silk    -  int
+                 [0] wiggle traces
+                 1 silk screen variable area(see SEP CD-ROM platter plot)
+
+       title,label1- char*
+                 usual meaning
+
+       labels - char*
+                 trace labels, i.e. labels=in:filt:out
+
+       labelsz -int
+                 [8] label size
+
+       yreverse - int
+                 [0] =1, reverse order of channels.
+
+       transp - int
+                 [0] flip axes.   (Buggy for title and label1).
+
+       xxscale - float
+                 [1.] <1. for smaller plots, narrow plots, etc.
+
+       yyscale - float
+                 [1.] <1. for smaller plots, narrow plots, etc.
+
+       radius  - float
+                 radius of the dot to be plotted. Defaults to
+                 some fraction of the screen width.
+
+SSEEEE AALLSSOO
+       xtpen, Graph, Histogram
+
+BBUUGGSS
+        Needs pclip, you must preprocess for unusual clip needs.
+
+CCOOMMPPIILLEE LLEEVVEELL
+        DISTR
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    DOTS(1)

@@ -1,0 +1,87 @@
+BOX(1)                        SEPlib Manual Pages                       BOX(1)
+
+
+
+NNAAMMEE
+       Box - draws a balloon-style label
+
+SSYYNNOOPPSSIISS
+        Box < in.H > out.V [pars]
+
+DDEESSCCRRIIPPTTIIOONN
+        Box outputs the vplot commands to draw a balloon-style label.
+
+CCOOMMMMEENNTTSS
+        Options let you position the box and pointer, control the
+        size of the labeling, etc. (It is even possible to draw boxes
+        with perspective.) The boxes can be overlayed onto vplot
+        graphics files using the 'erase=once' option of pen filters.
+        For example, 'Tube < Wiggleout.H Boxout.H erase=once' The
+        interact option of pen filters can be used to determine the
+        coordinate of the spot the box's pointer is to point at.
+        (Alas, not all pen filters support the 'interact' capability.)
+        The special pen filter Vppen can be used to combine vplot
+        files.
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       x0,y0-      float
+                   [0],[0]  Position of tip of pointer
+
+       xt,yt-      float
+                   [2],[0]  Relative Position of Text
+
+       size -      float
+                   [.25]    Height of text, in inches
+
+       label-      char*
+                   ' '   Text string for label
+
+       lab_color-  int
+                   [7]     Color of text
+
+       lab_fat-    int
+                   [0]     Whether or not the label should be fat
+
+       pscale -    float
+                   [1.]    scale factor for width of pointer
+
+       lat,long-   int
+                   [0],[90]Latitude and longitude of viewpoint (3-D case)
+
+       angle-      int
+                   [0]     Longitude of floating label(3-D case)
+
+       reverse-    char
+                   [n]     this mirrors the label left-right
+
+       scale0-     float
+                   [1.]    Scale factor for x0, y0.
+
+       scalet-     float
+                   [1.]    Scale factor for xt, yt.
+                   (If 'length' option not set.)
+
+       length-     float
+                   if specified, sets the normalization for xt, yt.
+
+       boxit-     int
+                  [1] Whether (1) or not (0) to create a box arround text
+
+       pointer-     int
+                  [0] Wheter (1)  or not (0) to create arrow
+
+       x_oval-      float
+                  [0.] X axis length oval to create arround pointer location
+
+       y_oval-      float
+                  [0.] Y axis length oval to create arround pointer location
+
+CCOOMMPPIILLEE LLEEVVEELL
+        DISTR
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     BOX(1)

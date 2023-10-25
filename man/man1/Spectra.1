@@ -1,0 +1,47 @@
+SPECTRA(1)                    SEPlib Manual Pages                   SPECTRA(1)
+
+
+
+NNAAMMEE
+       Spectra - Calculate spectrum
+
+SSYYNNOOPPSSIISS
+       Spectra < in.h [in= out= j1= j2= j3= d1= phase=] > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1 - integer
+                  on output (n1=(nearest power of two)/(2*j1)+1)
+
+       n2,n3   - integer
+                  like Window
+
+       esize   - integer
+                  4=default=real input; 8=optional complex input
+
+       j1,j2,j3 -integer
+                   like Window but spectra will be added, not subsampled,
+                   effectively smoothing the spectra
+
+       d1       -real
+                  on output will be replaced by j1/2*dt
+
+       phase    -file
+                  output auxiliary file with phase spectra
+
+       mode     -char
+                  mode=all defaults j2=n2 & j3=n3 to reproduce
+                  functionality of old Spectrum program (not the default)
+
+DDEESSCCRRIIPPTTIIOONN
+       Obtain averaged amplitude spectra.  Spectrum on 1=axis, smoothing on
+       all axes.
+
+SSEEEE AALLSSOO
+       Ftplot
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 SPECTRA(1)

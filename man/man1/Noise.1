@@ -1,0 +1,61 @@
+NOISE(1)                      SEPlib Manual Pages                     NOISE(1)
+
+
+
+NNAAMMEE
+       Noise - Add or create noise
+
+SSYYNNOOPPSSIISS
+       Noise < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       in.H - sepfile
+                 Input dataset to add noise to
+
+       type - integer
+                 [0]: uniform, 1: normal, 2: gamma, 3: chisq, 4: exponential
+                 5: weibul, 6: poisson, 7: binomial
+
+       rep  - integer
+                 [0]: replace traces with noise trace. 1 to output noise only
+
+       seed - integer
+                 [date]: random number initializer
+
+       maxsize- integer
+                 [500000]: maximum memory allocated in bytes
+
+       mean - real
+                 [0.]: mean of noise
+
+       var  - real
+                 [1.]: variance of noise (normal distribution)
+
+       shape  - real
+                 [1.]: shape for gamma distribution
+
+       ndf    - integer
+                 [1]: number of degrees of freedom, chisq
+
+       weib   - real
+                 [1.]: weibul distribution parameter
+
+       trials - integer
+                 [1]:  number of trials [binomial]
+
+       prob   - real
+                 [.5]: probability of success for binomial trial
+
+DDEESSCCRRIIPPTTIIOONN
+        Add noise to traces
+
+EEXXAAMMPPLLEE
+                       Noise < in.H > out.H
+                               XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   NOISE(1)

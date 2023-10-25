@@ -1,0 +1,48 @@
+SCAT(1)                       SEPlib Manual Pages                      SCAT(1)
+
+
+
+NNAAMMEE
+       Scat , Merge , Cat-  Concatenate SEP77 datasets, 3 names for exactly
+       the same code.
+
+SSYYNNOOPPSSIISS
+         Merge axis=3 space=[y/n] Header1 Header2 Header3 ... > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       Header   - files
+                   seplib history header files to merge.
+
+       axis     - int
+                   [3]  axis number to merge (1,2,3)
+
+       space    - char
+                   [y] leave space between merged data to make it easy to tell
+                       where one file ends and the next begins in merged movies
+                       default: space=y for Merge, space=n for Cat
+
+       nspace   - int
+                   number of traces in the space
+                   (defaults to something reasonable).
+
+       n1       - int
+                   if n1=-1 this means that the data is simply read
+                   until EOF for each file; this is like using 'cat' on
+                   the individual data files. Note n1=-1 implies axis=3 space=n
+
+DDEESSCCRRIIPPTTIIOONN
+       Merge seplib header and data file to stdout. Merge is a modified ver-
+       sion of Cat (the same code, but with a perl script on the front end to
+       fix some problems). Scat is the same thing.
+
+CCOOMMMMEENNTTSS
+           Note, a header provided on stdin will be used. This was not true
+           in previous versions. I.e. this will work!
+           Myprog <data.H | Merge axis=2 data2.H > out.H
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    SCAT(1)

@@ -1,0 +1,44 @@
+PAD(1)                        SEPlib Manual Pages                       PAD(1)
+
+
+
+NNAAMMEE
+       Pad - Pad a dataset with traces of zeros or nearest value
+
+SSYYNNOOPPSSIISS
+       Pad  n1= n2= n3= extend=0 < in.H > out.H beg[] end[]
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       nxout      - int
+                  [nx]   Add nxout-nx-begx to the end of the cube dimension
+                           (such that the total dimension along the x axis will be nxout).
+                         [0] will pad to the next power of 2
+
+       begx      - int
+                  [0]    Add begx to the begining of axis x
+
+       endx      - int
+                  [0]    Add endx to the end of axis x (overrides nxout)
+
+       maxsize   - int
+                  [20]   Maximum amount of memory to use
+
+       verb      - int
+                  [0]   Whether (1) or not (0) to be verbose
+
+       extend      - int
+                  [0]   Whether to extend with the nearest point (1) or zeros (0)
+
+DDEESSCCRRIIPPTTIIOONN
+        Pad 3-D data with traces of zeroes or value of nearest point.
+
+SSEEEE AALLSSOO
+       Spike which uses: k1=-1 n1= n2= n3= to create all-zero files from
+       scratch
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     PAD(1)

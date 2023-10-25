@@ -1,0 +1,44 @@
+LOG(1)                        SEPlib Manual Pages                       LOG(1)
+
+
+
+NNAAMMEE
+       Log - Take the log of data
+
+SSYYNNOOPPSSIISS
+       <in.H  Log  [range=3 centered=2] > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       range   -real
+                 defines the smallest allowed value.
+                 Defining max to be the maximum of the logs (best
+                 signal), output values (bad signal) below (max-range)
+                 are set to (max-range). Often you might choose range
+                 to be a small integer, for example, range=3 means
+                 each input handled as max(input, biggest/1000).
+
+       centered -integer
+                   defines method of shifting mean of log.
+                   0-The max is subtracted so all logs are negative.
+                   label2='log base 10' is putched
+                   1- The average of max and (max-range) is subtracted.
+                   (effectively scaling the original data)
+                   pclip=100 is putched.
+                   2-The average value of all the logs is subtracted.
+                   range=2*(max-avg) is putched.
+
+       maxsize  - integer
+                 [10] Maximum memory to use in Megabytes
+
+DDEESSCCRRIIPPTTIIOONN
+       Base ten logarithm of absolute values.
+
+SSEEEE AALLSSOO
+       Math
+
+CCAATTEEGGOORRYY
+       uuttiill//vveeccttoorr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     LOG(1)

@@ -1,0 +1,44 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::rseefpflti(b3_)base::refft(3)
+
+
+
+NNAAMMEE
+       refft - real fft
+
+SSYYNNOOPPSSIISS
+        void refft (x,lx,isign,scale,mode)
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       x   -complex*
+                    input/output array
+
+       lx  -int
+                    length of real array; must be a power of 2
+
+       isign-int
+                    sign of sqrt(-1)
+
+       scale-float
+                    scale factor; sqrt(2./lx) conserves energy
+
+       mode -int
+                    1 for lx real to lx/2 complex
+                    2 for lx real to lx/2+1 complex
+                    -1 for lx/2 complex to lx real
+                    -2 for lx/2+1 complex to lx real
+
+DDEESSCCRRIIPPTTIIOONN
+            Real fast Fourier transform along one trace.
+            C language subroutine for a one-dimensional real to complex or
+            viceversa fast Fourier transform. refft performs transforms
+            between elements of a vector. The arguments are as follows:
+
+SSEEEE AALLSSOO
+       refft,rvfft,cvfft
+
+LLIIBBRRAARRYY
+       sseeppfffftt
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::refft(3)

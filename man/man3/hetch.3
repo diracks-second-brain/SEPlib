@@ -1,0 +1,63 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::hseetpclhi(b3_)base::hetch(3)
+
+
+
+NNAAMMEE
+       hetch - grab parameter from input history file
+
+SSYYNNOOPPSSIISS
+         int hetch(name, format, variable)
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       name -   char*
+                 parameter name
+
+       format -  char*
+                 format of variable (d,f,s)
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       variable  -void *
+                 value of variable
+
+RREETTUURRNN VVAALLUUEE
+       x = number of matches found
+
+DDEESSCCRRIIPPTTIIOONN
+       This function is a seplib extension of the older _g_e_t_p_a_r_(_) that extracts
+       values from input history file expressions of the form `name=value'.
+
+CCOOMMMMEENNTTSS
+       More than one name may be searched by separating the alternatives by
+       blanks or commas.  Possible format conversions are "d" (or "i"), "f"
+       (or "r"), "g" and "s" for integer, floating point, double precision,
+       and strings respectively.  If no match is found, the variable is not
+       altered.
+
+       Hetch returns a count of the number of matches it found.  Also, the
+       input history file is copied to the output history file the first time
+       hetch (or fetch) is invoked.
+
+       Search and copy of the input history file can be supressed using the
+       command line parameter `noheader=y' in which case hetch returns 0.
+
+DDIIAAGGNNOOSSTTIICCSS
+       Program execution is terminated when the command argument list cannot
+       be found.
+
+BBUUGGSS
+       It should be possible to limit the length of retrieved strings and to
+       extract individual characters.  The length of the input header is lim-
+       ited to 30,000 characters when piped into a program.
+
+KKEEYYWWOORRDDSS
+       parameter input header
+
+SSEEEE AALLSSOO
+       fetch, getch
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::hetch(3)

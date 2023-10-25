@@ -1,0 +1,76 @@
+MUTE(1)                       SEPlib Manual Pages                      MUTE(1)
+
+
+
+NNAAMMEE
+       Mute - Mute a SEP77 dataset
+
+SSYYNNOOPPSSIISS
+       Mute par=  < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       vmute    - real
+                   [1.45]: outer mute velocity.
+                   0.0: Special case - Flat mute.
+
+       vfile    - file
+                   [vmute]: vmute as a function of space.
+
+       tmute    - real
+                   [0.0]:  start time of (hyperbolic) outer mute
+
+       tfile    - file
+                   [tmute]: tmute as a function of space.
+
+       tramp    - real
+                   [0.25]: linear mute time ramp in seconds.
+
+       Scale(t<Tmute)- real
+                   [0.0]: Scale(t>Tmute+tramp) = 1.
+
+       tpow   - real
+                   [0]: gain trace data by  t**tpow
+
+       xpow   - real
+                   [0]: scale offset (x) traces by (x/xmin)**xpow
+
+       trcbal - integer
+                   [0]: no trace balancing
+               1: trace balance by sum of absolute values
+                     2: trace balance by rms amplitude value
+                     3: trace balance by trace energy (sum of squared values)
+
+       weight - real
+                   [0]: no weighting
+                     1: Jon's weight by 1/(t+xmax/vmute),
+                                   like dividing by the number of traces:
+                                   radial weight by r / ( 1. + (r*r)**2 )
+                                   r = r0 * x / (t * vmute)
+                                   r0 = sqrt( sqrt( drop - 1. ) )
+
+       drop   - real
+                   [10.]: good till
+
+       tape   - real
+                   [0]: no taper
+                     N: linear taper on the last N traces at either end of gather.
+
+       kill   - integer[]
+                   [list]: list of trace numbers to kill
+                  (first trace no. is 1)
+
+       emute  - real
+                  end of trace  ; start time for end of data mute
+
+       eramp  - real
+                   [0.25]: ramp length at end of trace
+
+DDEESSCCRRIIPPTTIIOONN
+          Apply linear outer mute to gather + preprocess for velocity analysis
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    MUTE(1)

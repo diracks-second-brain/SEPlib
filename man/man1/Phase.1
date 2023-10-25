@@ -1,0 +1,130 @@
+PHASE(1)                      SEPlib Manual Pages                     PHASE(1)
+
+
+
+NNAAMMEE
+       Phase - Phaseshift migration (possibly split-step)
+
+SSYYNNOOPPSSIISS
+       Phase par=parfile.P D=input.H  R=output.H S=slow.H
+
+CCOOOORRDDIINNAATTEE SSYYSSTTEEMM FFOORR DDOOWWNNWWAARRDD CCOONNTTIINNUUAATTIIOONN DDEESSCCRRIIPPTTIIOONN PPAARRAAMMEETTEERRSS
+       amx_n (integer)
+             Number of CMP in X (axis 1 of D,R and S)
+
+       amx_d (integer)
+             Sampling of CMP in X
+
+       amx_o (integer)
+             First CMP  X location
+
+       amy__n (integer)
+             Number of CMP in X (axis 2 of D,R and S)
+
+       amy_d (integer)
+             Sampling of CMP in Y
+
+       amy_o (integer)
+             First CMP  Y location
+
+       ahx__n (integer)
+             Number of half offsets in X (axis 3 of D and possibly R  )
+
+       ahx_d (integer)
+             Sampling of half offsets in X
+
+       ahx_o (integer)
+             First half offset  X location
+
+       ahy__n (integer)
+             Number of half offsets in Y (axis 4 of D and possibly R)
+
+       ahy_d (integer)
+             Sampling of half offset in Y
+
+       ahy_o (integer)
+             First CMP  Y location
+
+RR//SS  DDEESSCCRRIIPPTTIIOONN PPAARRAAMMEETTEERRSS
+       az__n (integer) (axis 3 of S, axis 5 of R)
+             Number of depth steps
+
+       az__d (integer)
+             Sampling of depths
+
+       az__o (integer)
+             First depth of model
+
+       image_real (logcal)
+             Whether or not make the image real
+
+DDAATTAA DDEESSCCRRIIPPTTIIOONN PPAARRAAMMEETTEERRSS
+       aw__n (integer) (axis 5 of D)
+             Number of frequencies
+
+       aw__d (integer)
+             Sampling of frequencies
+
+       aw__o (integer)
+             First frequency of data
+
+SSLLOOWWNNEESSSS PPAARRAAMMEETTEERRSS
+       velocity  (logical)
+            [.false.] whether or not S is velocity
+
+       nref  (integer)
+            [1] number of velocities for each depth step
+
+PPHH GGAATTHHEERRSS
+       pCIG (logical)
+            [.false.] whether (.true.) or not (.false.) to create PH gathers
+
+       apx__n (integer)
+             Number of PH in X (axis 3 of R)
+
+       apx_d (integer)
+             Sampling of PH in X
+
+       apx_o (integer)
+             First PH X location
+
+       apy__n (integer)
+             Number of PH in Y (axis 4 of R)
+
+       apy_d (integer)
+             Sampling of PH in Y
+
+       apy_o (integer)
+             First PH  Y location
+
+       pcigeps (float)
+             [.1] Epsilon parameter for Phgather construction
+
+MMEEMMOORRYY MMAANNAAGGEEMMEETT
+       nzs (integer)
+           Number of Z steps to do in memory
+
+       nws (integer)
+           Number of W to hold in memory
+
+DDEESSCCRRIIPPTTIIOONN
+        Perform split step phase shift migration/modeling
+
+CCOOMMMMEENNTTSS
+       anx_n,ahx_d,ahx_o and axis 1 of D and R  must be the same
+       any_n,ahy_d,ahy_o and axis 2 of D and R  must be the same
+       Slowness must contain entire  span of X and Y
+       az__n,az__d,az__o , axis 3 of S and axis 5 of R  must be the same
+       When doing ph gathers apx_n = ahx_n = n3 of D
+       When doing ph gathers apy_n = ahy_n = n4 of D
+       When doing offset gathers  ahx_n,ahx_d,ahx_o = axis 3 of D and R
+       When doing offset gathers  ahy_n,ahy_d,ahy_o = axis 4 of D and R
+       nzs must be a multiple of az__n
+       nws*nmpi_threads*nomp_threads must be a multiple of aw__n
+
+CCAATTEEGGOORRYY
+       sseeiiss//iimmaaggee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   PHASE(1)

@@ -1,0 +1,37 @@
+PLAS(1)                       SEPlib Manual Pages                      PLAS(1)
+
+
+
+NNAAMMEE
+       plas - (PLot ASsembler) deformat vector plot commands
+
+SSYYNNOOPPSSIISS
+       plas < asciifile > binaryfile
+
+DDEESSCCRRIIPPTTIIOONN
+               Reads stdin; writes stdout.  Complement to 'pldb'.
+               Converts vplot-language files in ascii (human-readable) form
+               into the hybrid ascii/binary form that the 'pen' filters understand.
+
+          A backslash at the end of a line of text allows multi-line text strings.
+
+OOPPTTIIOONNSS
+       "-v": Use vplot units (the default)
+       "-i": Use inches
+       "-c": Use centimeters
+
+         Note that these options apply to ALL geometric attributes,
+         including line width and character height scale factors.
+
+       The default may be set within the file by having as the first line
+       "#plas: X" where X is one of V, C, or I for Vplot, Cm, or Inches
+
+SSEEEE AALLSSOO
+       vplot,pen,pldb
+
+CCAATTEEGGOORRYY
+       ggrraapphhiiccss//vvpplloott
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    PLAS(1)

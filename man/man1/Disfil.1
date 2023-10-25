@@ -1,0 +1,52 @@
+DISFIL(1)                     SEPlib Manual Pages                    DISFIL(1)
+
+
+
+NNAAMMEE
+       Disfil - Display data values
+
+SSYYNNOOPPSSIISS
+       Disfil [ type=f,c,d,l,s,b,n col= format=(printf format) number=y ] <
+       in.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       type - char
+                 f or r-  4-byte FLOAT    (default if esize=4)
+                 n -4-byte NATIVE FLOAT   (doesn't use sreed)
+                 c -8-byte COMPLEX  (default if esize=8)
+                 d -8-byte FLOAT
+                 i-  4-byte INT
+                 s- 2-byte INT    (default if esize=2)
+                 b- 1-byte INT    (default if esize=1)
+
+       col - int
+                 number of columns in output.
+                 defaults 3,5, or 10 depending on type.
+
+       format-char*
+                 printf-style format for output.
+                 defaults '%13.4g ' for float and double.
+                 '%4d ' for int, short and byte.
+                 '%10.4g,%10.4gi  ' for complex.
+
+       number-int
+                 y  -do not number elements.
+
+       skip  -int
+                 [0]  skip this many BYTES before starting processing.
+
+       count -int
+                 Only print out this many ELEMENTS.
+
+DDEESSCCRRIIPPTTIIOONN
+       Formatted display of a binary data file
+
+SSEEEE AALLSSOO
+       Dd, Dis3dhead
+
+CCAATTEEGGOORRYY
+       uuttiill//iinnffoo
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  DISFIL(1)

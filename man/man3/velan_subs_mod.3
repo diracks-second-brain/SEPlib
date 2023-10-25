@@ -1,0 +1,71 @@
+net::nkeotk:o::k:oskroc::::sorucr::::osuerp:l:isbe-p6l.i1Sb:E-:P6dl.oi1cb:s::Md:aopncousda::l::psPoeadpg:le:issbe_pblaisbe_:b:avseel:a:nv_esluabns__smuobds(_3m)od(3)
+
+
+
+NNAAMMEE
+       velan_subs_mod - Do semblance analsysis
+
+SSYYNNOOPPSSIISS
+       "call init_velan(vel0,delv,numv,o_1,d_1,d_tout,sm,mu)"
+
+       "call velan_exe(input,output,offsq)"
+
+IINNIITTIIAALLIIZZEERR iinniitt__vveellaann
+       IINNPPUUTT PPAARRAAMMEETTEERRSS
+
+
+       vel0 -  real
+                   initial velocity
+
+       delv -  real
+                   sampling in velocity
+
+       numv -  integer
+                   number of velocities
+
+       o_1  -  real
+                   first time
+
+       d_1  -  real
+                   sampling in time
+
+       d_tout -real
+                   sampling of output times
+
+       sm    - real
+                   smoothing window
+
+       mu    - real
+                   muting parameter to apply
+
+OOPPEERRAATTOORR
+       IINNPPUUTT PPAARRAAMMEETTEERRSS
+
+
+       input - " real(:,:)"
+                   input  traces
+
+       offsq -  real(:)
+                   Offset for traces
+
+       OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+
+
+       output - "real(:,:)"
+                    output velocity
+
+DDEESSCCRRIIPPTTIIOONN
+       Module to make semblance panels given irregular traces
+
+CCOOMMMMEENNTTSS
+       Used by Velan90
+
+SSEEEE AALLSSOO
+       nmo_mod,Nmo3d
+
+LLIIBBRRAARRYY
+       sseeppvveellaannff9900
+
+
+
+6.0 net::koko::src::our::seTphluibF-e6b.11:2:d1o6c:s0:8::p0o8d:2:0s0e4plib_base::velan_subs_mod(3)

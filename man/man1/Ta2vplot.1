@@ -1,0 +1,190 @@
+TA2VPLOT(1)                   SEPlib Manual Pages                  TA2VPLOT(1)
+
+
+
+NNAAMMEE
+       Ta2vplot - Convert from bytes to vplot
+
+SSYYNNOOPPSSIISS
+       Ta2vplot < in.T > out.v
+
+DDEESSCCRRIIPPTTIIOONN
+       Reads in a Taplot/Movie format file and outputs a vplot raster file.
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1 - int
+                 REQUIRED
+
+       esize - int
+                 REQUIRED 1=Taplot format  3=RGB triplets
+
+       n2,n3  - int
+                 standard seplib files
+
+       d1,d2,d3  -float
+                 standard seplib files
+
+       o1,o2,o3  -float
+                 standard seplib files
+
+       wantframe,wantframenum - char
+                 standard vplot definitions (0,1, n,y)
+
+       wantaxis,wantaxis1,wantaxis2 -char
+                 [1] standard vplot definition (0,1 n,y)
+
+       transp  - char
+                 [1] whether or not to transpose output (standard vplot)
+
+       xreverse,yreverse -char
+                 standard vplot definitions for output file
+
+       screenht-float
+                 [10.24] height of output medium
+
+       screenwd-float
+                 [13.75] width of output medium
+
+       screeratio-float
+                 [.75] ratio of screen height to width
+
+       min1,min2,max1,max - float
+                 standard vplot definitions
+
+       axisor1,axisor2  - float
+                 [min1],[min2] standard vplot definition
+
+       o1num,o2num,d1num,d2num - float
+                 spacing for tics
+
+       n1tic,n2tic - int
+                 [1] number of tics
+
+       wheretics - char
+                 [f] (f,a) where to put tics (frame, axes)
+
+       wheretitle -char
+                 [t] (t,b,l,r) where to put title
+
+       wherexlabel - char
+                 [b] (t,b) where to put x label
+
+       whereylabel - char
+                 [l] (l,r) where to put y label
+
+       titlefat,labelfat - int
+                 [1] makes title and labels fat
+
+       label1,label2 - char*
+                 label for axes
+
+       title - char*
+                 title for plot
+
+       labelsz - int
+                 [8] size of labels
+
+       titlesz - int
+                 [10] size of title
+
+       labelrot - char
+                 [y] (0,1 n,y) rotates labels 90 degrees
+
+       grid,grid1,grid2 - char
+                 [0] (0,1 n,y) turns on grid
+
+       g1num,g2num - float
+                 [d1num],[d2num] grid spacing
+
+       crowd,crowd1,crowd2 - float
+                 [.75]  crowd1=crowd  crowd2=crowd
+                 (.75< crowd < 1.) crowd labels off the
+                 screen by expanding data on 1 or 2 axis.
+
+       gridcol - int
+                 [axiscol] color of grid
+
+       backcol  - float*
+                 [0,0,0] background color (R,G,B) between 0 and 1
+
+       fillcol  - float*
+                 [backcol(0,0,0)] fill color (R,G,B) between 0 and 1
+
+       plotcol  - int*
+                 [6,5,4,3,2,1,...] color for each plotted line
+
+       axiscol  - int*
+                 [7,7,7,7,...] color for each axis
+
+       plotfat  - int*
+                 [0,0,0,...] makes the lines fat
+
+       axisfat  - int*
+                 [0,0,0,...] makes the axes fat
+
+       gridfat  - int
+                 [1] grid is fat
+
+       polarity - int
+                 [-1] white is high by default
+
+       nreserve - int
+                 [8] number of colors to preserve
+
+       movish   - char
+                 [n] if y, halves the color table like movie does (0,1 n,y)
+
+       hurry    - char
+                 [0]   (0,1,n,y)
+
+       wantscalebar - char
+                 [0] (0,1,n,y) makes scale bar
+
+       bartype      - char
+                 [h]  (v)   horizontaly or verticaly aligned bar
+
+       barwidth     - float
+                 [.4] width of scale bar (inches)
+
+       barreverse   - int
+                 [0]   (0,1,n,y)  reverse the scale
+
+       barlabel     - char
+                 labels scale bar
+
+       minval       - float
+                 minimum scale bar value
+
+       maxval       - float
+                 maximum scale bar value
+
+CCOOMMMMEENNTTSS
+           color= one of {I,i,F,R,W,G} for the canned Movie-style color tables. You
+           may also append a 'C' to make clipped values show up Red (ie color=IC is
+           like color=I but with clipped values flagged). You will need to have
+           nreserve at least 3 for this option to work, since you have to leave the
+           normal vplot 'Red' (vplot default color 2) as a possibility.
+           Alternatively, you may also specify a color of the format RGB,
+           (i.e. color=332) where each of R,G, and B is the integer number of bits
+           to allot to that primary. This is meant for esize=3, but it also makes
+           funky color tables when esize=1.
+           Finally, if 'color' is a text string longer than 2 characters and
+           does not begin with a digit, it will be taken as the name of a color
+           table. (Color tables have lines of the form 'color_number red green blue',
+           where 0 <= color_number <= 255 and 0. <= red, green, and blue <= 1.
+           Anything not set will be black. Odd-numbered color table entries between
+           1 and 253, inclusive, will be the first lost if the output device doesn't
+           have enough allocatable colors.)
+
+SSEEEE AALLSSOO
+       Grey
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                TA2VPLOT(1)

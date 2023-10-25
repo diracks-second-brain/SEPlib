@@ -1,0 +1,47 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::rsvefpflti(b3_)base::rvfft(3)
+
+
+
+NNAAMMEE
+       rvfft - real vector fft
+
+SSYYNNOOPPSSIISS
+            void rvfft (x,lx,nx,isign,scale,mode)
+
+PPAARRAAMMEETTEERRSS
+       x      -complex
+                  input/output array
+
+       lx     -int
+                  length of real vectors
+
+       nx     -int
+                  number of vectors; must be a power of 2
+
+       isign  -int
+                  sign of sqrt(-1)
+
+       scale  -double
+                  scale factor; sqrt(2./lx) conserves energy
+
+       mode   -int
+                  1 for nx real to nx/2 complex
+                  2 for nx real to nx/2+1 complex
+                  -1 for nx/2 complex to nx real
+                  -2 for nx/2+1 complex to nx real
+
+DDEESSCCRRIIPPTTIIOONN
+            Real fast Fourier transform between vectors of an array.
+            Rvfft takes a 2D panel and does a real to complex or
+            viceversa fast fourier transform across the second dimension,
+            of all the time samples. The arguments are as follows:
+
+SSEEEE AALLSSOO
+       refft,rvfft,cvfft
+
+LLIIBBRRAARRYY
+       sseeppfffftt
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::rvfft(3)

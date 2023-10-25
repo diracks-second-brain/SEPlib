@@ -1,0 +1,38 @@
+PLDB(1)                       SEPlib Manual Pages                      PLDB(1)
+
+
+
+NNAAMMEE
+       pldb - - (PLot DeBugger)
+
+SSYYNNOOPPSSIISS
+                      pldb < binaryfile > asciifile
+
+DDEESSCCRRIIPPTTIIOONN
+               Reads the standard input stream, writes standard out
+
+               Input:  vplot metafile format (mixed ASCII and binary)
+               Output: Human-readable representations of vplot vector plot
+                       commands
+
+               plas returns pldb output to vplot format.
+               Useful with pen output filters.
+
+OOPPTTIIOONNSS
+       "-v": use vplot units (default)
+       "-i": use inches
+       "-c": use centimeters
+
+CCOOMMMMEENNTTSS
+         Note that these options apply to ALL geometric attributes,
+         including line width and character height.
+
+SSEEEE AALLSSOO
+       vplot,pen,plas
+
+CCAATTEEGGOORRYY
+       ggrraapphhiiccss//vvpplloott
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    PLDB(1)

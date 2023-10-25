@@ -1,0 +1,230 @@
+GREY(1)                       SEPlib Manual Pages                      GREY(1)
+
+
+
+NNAAMMEE
+       Grey - creates raster  vplot
+
+SSYYNNOOPPSSIISS
+       Grey par= <in.H >out.[V H]
+
+DDEESSCCRRIIPPTTIIOONN
+       Convert data to [raster - vplot] from [float, triplets, or byte] PLOT =
+       clip{ [ (DATA - bias)*(it*d1+o1)**tpow ]**gpow }
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       esize  int
+                  [4]   4-float,3-triplets,1-byte
+
+       eout-  int
+                  [-1]  Create vplot [-1] or byte [1] data
+
+       tpow - float
+                  [0.]  gain(it) = (it*d1+o1)**tpow, it in samples
+
+       pclip- float
+                  [99.]  clip percentile
+
+       clip - float
+                  clip value (if not specified defaults to pclip)
+
+       phalf -int
+                  [85]  gpow percentile
+
+       gpow  -float
+                  [1]  if given gpow<=0,
+                  sample gain power computed at phalf percentile
+
+       bias  -float
+                  [0.0] plot = data - bias
+
+       gainpanel - char*
+                  [1]-plane(s) where gpow and clip are estimated
+                  i - ith plane is used ( i is integer )
+                  all - all the planes are used
+                  every - calculate gain parameters for every panel
+
+       gainstep - float
+                  the subsampling rate used in estimating gpow and clip
+                  default = max(1,nt/256) (>=1)
+
+       allpos   - char
+                  [n]/y  if yes, map only positive values to 0-255
+
+       n1,n2,n3 - int
+                  cube dimensions
+
+       d1,d2,d3  -float
+                  standard seplib files
+
+       o1,o2,o3  -float
+                  standard seplib files
+
+       wantframe,wantframenum char
+                  standard vplot definitions (0,1, n,y)
+
+       wantaxis,wantaxis1,wantaxis2 - char
+                  [1] standard vplot definition(0,1 n,y)
+
+       transp  - char
+                  [y] whether or not to transpose output (standard vplot)
+
+       xreverse,yreverse -char
+                  standard vplot definitions for output file
+
+       min1,min2,max1,max - float
+                  standard vplot definitions
+
+       axisor1,axisor2  - float [min1],[min2]
+                  standard vplot definition
+
+       o1num,o2num,d1num,d2num - float
+                  set origin and spacing for tics
+
+       n1tic,n2tic - int
+                  [1] set number of tics
+
+       wheretics - char
+                  [f] (f,a) where to put tics (frame, axes)
+
+       wheretitle -char
+                  [t] (t,b,l,r) where to put title (top, bottom, left, right)
+
+       wherexlabel - char
+                  [b] (t,b) where to put x label (top, bottom)
+
+       whereylabel - char
+                  [l] (l,r) where to put y label (left, right)
+
+       titlefat,labelfat - int
+                  [1] makes title and labels fat
+
+       label1,label2 - char*
+                  label for axes
+
+       title - char*
+                  title for plot
+
+       titles - char*
+                  title for different planes separated by colons
+                  first:second:third
+
+       labelsz - int
+                  [8] font size for labels
+
+       titlesz - int
+                  [10] font size for titles
+
+       labelrot - char
+                  [y] (0,1 n,y) rotates the labels 90 degrees
+
+       grid,grid1,grid2 - char
+                  [0]   (0,1 n,y) turns on a grid
+
+       g1num,g2num - float
+                  [d1num],[d2num] grid spacing
+
+       crowd,crowd1,crowd2 - float
+                  [.75]  crowd1=crowd  crowd2=crowd
+                  (.75< crowd < 1.) crowd labels off the
+                  screen by expanding data on 1 or 2 axis.
+
+       gridcol - int
+                  [axiscol] sets color of grid
+
+       xll,yll,xur,yur - float
+                 set Lower Left and Upper Right coordinates
+
+       backcol  - float*
+                  [0,0,0] background color (R,G,B) between 0 and 1
+
+       fillcol  - float*
+                  [backcol(0,0,0)] sets fill color (R,G,B) between 0 and 1
+
+       plotcol  - int*
+                  [6,5,4,3,2,1,...] sets color for each line plotted
+
+       axiscol  - int*
+                  [7,7,7,7,...] sets color for axes
+
+       axisfat  - int*
+                  [0,0,0,...] makes axes fat
+
+       gridfat  - int
+                  [1] makes grid fat
+
+       polarity - int
+                  [-1] white is high by default
+
+       nreserve - int
+                  [8] colors to reserve
+
+       movish   - char
+                  [n] if y,halves the color table like movie does (0,1 n,y)
+
+       wantscalebar - char
+                  [0] (0,1,n,y) turns on scale bar
+
+       bartype      - char
+                  [v]  (h)   horizontaly or verticaly aligned bar
+
+       barwidth     - float
+                  [.4]     (inches)
+
+       barreverse   - int
+                  [0]   (0,1,n,y)  reverse the scale
+
+       barlabel     - char
+                  label for the scale bar
+
+       minval       - float
+                  minimum on scale bar
+
+       maxval       - float
+                  maximum on scale bar
+
+       bar.xll,bar.xur,bar.yll,bar.yur - float
+                  coordinates for the bar (only used when xll,xur,yll, or yur specified)
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       esize    - int
+                  [1]  raster data (if eout =1)
+                  [2]  short data (if eout =2)
+
+       maxval, minval -float
+                  maximum and minimum value of data to be displayed
+                  by Ta2vplot. For use by Ta2vplot's wantscalebar
+                  option. (if eout=1)
+
+CCOOMMMMEENNTTSS
+           This replaces the functionality of Taplot and Ta2vplot
+
+           color= one of {I,i,F,R,W,G} for the canned Movie-style color tables. You
+           may also append a 'C' to make clipped values show up Red (ie color=IC is
+           like color=I but with clipped values flagged). You will need to have
+           nreserve at least 3 for this option to work, since you have to leave the
+           normal vplot 'Red' (vplot default color 2) as a possibility.
+           Alternatively, you may also specify a color of the format RGB,
+           (i.e. color=332) where each of R,G, and B is the integer number of bits
+           to allot to that primary. This is meant for esize=3, but it also makes
+           funky color tables when esize=1.
+           Finally, if 'color' is a text string longer than 2 characters and
+           does not begin with a digit, it will be taken as the name of a color;
+           table. (Color tables have lines of the form 'color_number red green blue',
+           where 0 <= color_number <= 255 and 0. <= red, green, and blue <= 1.
+           Anything not set will be black. Odd-numbered color table entries between
+           1 and 253, inclusive, will be the first lost if the output device doesn't
+           have enough allocatable colors.)
+
+SSEEEE AALLSSOO
+       xtpen, Thplot, Contour
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    GREY(1)

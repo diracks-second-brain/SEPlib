@@ -1,0 +1,36 @@
+INTERLEAVE(1)                 SEPlib Manual Pages                INTERLEAVE(1)
+
+
+
+NNAAMMEE
+       Interleave - Interleave 2 seplib datasets
+
+SSYYNNOOPPSSIISS
+         Interleave < in.H other=other.H  > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       other - sepfile
+                  second file to interleave with stdin, must be of same dimension.
+
+       axis  - integer
+                  [2] Axis to interleave on
+
+DDEESSCCRRIIPPTTIIOONN
+       Merge two SEP history files along specified axis by interleaving
+       (alternating) traces.
+
+EEXXAAMMPPLLEE
+               Given equally-dimensioned input files 'file1.H' and 'file2.H'
+
+               Interleave <file1.H other=file2.H > out.H
+
+               creates out.H, which contains all traces from each input file
+               in alternating sequence (trace 1 from file1.H, then trace 1 from file2.H
+               then trace 2 from file1.H, etc).
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004              INTERLEAVE(1)

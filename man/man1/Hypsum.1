@@ -1,0 +1,59 @@
+HYPSUM(1)                     SEPlib Manual Pages                    HYPSUM(1)
+
+
+
+NNAAMMEE
+       Hypsum - Velociy space transform
+
+SSYYNNOOPPSSIISS
+       < in.H Hypsum conj=0 inv=0 vmin=1.4 vmax=3.0 n2= > out.H
+
+DDEESSCCRRIIPPTTIIOONN
+       Velocity space transformation.  The conjugate operator is hyperbola
+       superposition.  pseudo-unitary weighting with offset and velocity.
+       includes causal filter sqrt(i omega) intervals of slowness.  neighbor
+       interpolation.
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       conj   - integer
+                   [0]   Adjoint
+
+       inv    - integer
+                   [0]  Inverse
+
+       vmin   - real
+                   [1.4]  minimum velocity
+
+       vmax   - real
+                   [3.0]  maximum velocity
+
+       nv,nx - integer
+                   If conj=0, specify nv (default=nx)
+                   If conj=1, specify nx (default=nv)
+
+       n1,n2  - integer
+                   seplib parameters
+
+       o1,o2  - real
+                   seplib parameters
+
+       d1,d2  - real
+                   seplib parameters
+
+CCOOMMMMEENNTTSS
+       conj=0 & inv=0 operator itself conj=1 & inv=0 conjugate transpose
+       conj=0 & inv=1 pseudoinverse conj=1 & inv=1 conjugate-transpose-pseu-
+       doinverse
+
+SSEEEE AALLSSOO
+       Hypint,Hypmovie
+
+RREEMMAARRKKSS
+       should integrate instead of sum.
+
+CCAATTEEGGOORRYY
+       sseeiiss//vveellaann
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  HYPSUM(1)

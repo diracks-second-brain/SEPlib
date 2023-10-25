@@ -1,0 +1,36 @@
+net::koko::srnce:t::o:ukro:k:os:e:pslricb:-:6o.u1Sr:E::P:dlsoiecbpsl:Mi:abpn-ou6da.:l1::sP:eadpgolecissb:_:bpaosde::::shecplloisbe_(b3a)se::hclose(3)
+
+
+
+NNAAMMEE
+       hclose - close the seplib output history file
+
+SSYYNNOOPPSSIISS
+               void hclose ()
+
+DDEESSCCRRIIPPTTIIOONN
+       Closes the stdout SEPLIB history file
+
+CCOOMMMMEENNTTSS
+       The end of a history file is delimited by a ctrl D (octal 004) so that
+       seismic data can be placed in back of it e.g. when passing data down a
+       pipe.  Hclose does this and must be called after all additions to the
+       output header and before writing output data.
+
+DDIIAAGGNNOOSSTTIICCSS
+       One of the functions of the include file <sep.wrapup> is to check that
+       the header has been closed before the program finishes.
+
+BBUUGGSS
+       The seplib I/O routines, such as rite, srite, do not check to make sure
+       hclose has been called before writing to output.
+
+KKEEYYWWOORRDDSS
+       seplib close
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0         net::koko::src:T:houurF:e:bse1p2li1b6-:60.81::0:8do2c0s0:4:pod::seplib_base::hclose(3)

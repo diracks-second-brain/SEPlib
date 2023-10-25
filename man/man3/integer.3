@@ -1,0 +1,57 @@
+net::koko::snrect::::okuork:o::s:esprlci:b:-o6u.r1S::E::Psdleoipcblsi:Mb:a-pn6ou.da1:l:::sPdeaopgclesis:b:_pboads:e::s:eipnltiebg_ebra(s3e)::integer(3)
+
+
+
+NNAAMMEE
+         integer function weicam_init() result(st)
+           integer :: er
+       #ifdef DEBUG
+           character(len=128), parameter :: unit='weicam_init'
+           if(run%debug) call in(unit)
+       #endif
+
+           !! init SSR
+           call from_param("nkxko",nkxko,2001)
+           call from_param( "kxko", kxko,2.)
+           call dsr_init(kxko,nkxko,kzko,tkzko,exp_kzko,ikzko,dkxko,nkxko,idkzko,rdkzko)
+           call  comaz_init(kxko,nkxko)
+
+       #ifdef DEBUG
+           if(run%debug) call out(unit) #endif
+           st=OK
+         end function weicam_init
+
+NNAAMMEE
+       weicam - one depth step of common azimuth migration
+
+SSYYNNOOPPSSIISS
+        ierr=weicam(iws,izs,ifk,ith,wfld)
+
+PPAARRAAMMEETTEERRSS
+       iws - integer
+             current frequency slice
+
+       izs - integer
+             current depth slice
+
+       ifk - integer
+             current fk operation
+
+       ith - integer
+             current thread
+
+       wfld - complex(:,:,:,:,:)
+             wavefield
+
+DDEESSCCRRIIPPTTIIOONN
+       Common Azimuth Migration  operator
+
+LLIIBBRRAARRYY
+       sepweif90
+
+SSEEEE AALLSSOO
+        L<wei_caminit> L<weiwem>
+
+
+
+6.0        net::koko::src::Tohuur:F:esbep1l2ib1-66:.018:::0d8oc2s0:0:4pod::seplib_base::integer(3)

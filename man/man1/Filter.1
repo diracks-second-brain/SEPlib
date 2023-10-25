@@ -1,0 +1,39 @@
+FILTER(1)                     SEPlib Manual Pages                    FILTER(1)
+
+
+
+NNAAMMEE
+       Filter - filter a dataset
+
+SSYYNNOOPPSSIISS
+       Filter <in.H filter=filter.H pad=zero > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1,n2,n3 - integer
+                  cube dimensions (n1<4096)
+
+       n1       - integer
+                  length of the filter(from auxilary file)
+
+       pad      - string
+                  zero: pad data with zeros
+                  duplicate: pad with samples at ends of data
+
+       filter       - char*
+                  name of the auxiliary history file containing the filter coefficients
+
+DDEESSCCRRIIPPTTIIOONN
+         Filtering over 1 dimension performed in the frequency domain
+               The filter is input as the history file
+
+CCOOMMMMEENNTTSS
+               The length of the data when performing the filtering is zero padded
+               to be the next power of 2 greater than or equal to
+               max(5/4*n1,n1wavelet).  This avoids wraparound artifacts.
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  FILTER(1)

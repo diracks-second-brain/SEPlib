@@ -1,0 +1,74 @@
+DIP_AZIM(1)                   SEPlib Manual Pages                  DIP_AZIM(1)
+
+
+
+NNAAMMEE
+       Dip_azim - Display dip and azimuth information
+
+UUssaaggee
+        Dip_azim dip1=p.H dip2=q.H  >dip_azim_plot.H fn_color=color
+
+PPAARRAAMMEETTEERRSS
+       dip1  - sepfile
+              dip in direction 1
+
+       dip2  - sepfile
+              dip in direction 2
+
+       stdout - sepfile
+              color coding file
+
+       fn_color - sepfile
+               color table for Grey
+
+       ndim  -  integer
+              [16] Number of dips (saturation)
+
+       nazim  -  integer
+              [8] Number of azimuths (hue)
+
+       lightness  -  real
+              [.5] Lighness
+
+       mirror  -  integer
+              [0]  Mirror effect on color scheme
+
+       turn  -  real
+              [0.0]  Turn hue clockwise sirection in degrees
+
+       max_dip  -  real
+              [30.0]  Value of maximum dip will be displayed
+
+DDEESSCCRRIIPPTTIIOONN
+        Composing apparent dips (p and q components) to form a the true
+           dip and azimuth composite data for color display
+
+EEXXAAMMPPLLEESS
+        Dip_azim dip1=dipx.H dip2=dipy.H >out.H fn_color=color
+
+        Grey  color=color  color16=y  bclip=0 eclip=1024. < out.H |Tube
+
+CCOOMMMMEENNTTSS
+        COLOR DESIGN: A constant lightness hue-saturation color palette
+                      Total number of colors = nhue*nsaturation
+
+        COLOR MAPPING SCHEME: Azimuth (=arctan(q,p)) modulates the hue
+                              Dip (=sqrt(p^2+q^2)) modulates the saturation
+
+        KEY OPERATION: dip(:,:)=MIN(max_dip,dip(:,:))
+
+AAUUTTHHOORR
+         Lin, I-Ching 'Michael'
+
+         Allied Geophysics Laboratories
+
+         Department of Computer Science
+
+         University of Houston
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                DIP_AZIM(1)

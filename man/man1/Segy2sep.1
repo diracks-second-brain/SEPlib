@@ -1,0 +1,126 @@
+SEGY2SEP(1)                   SEPlib Manual Pages                  SEGY2SEP(1)
+
+
+
+NNAAMMEE
+       Segy2sep - Convert from Segy to  SEPlib3d
+
+SSYYNNOOPPSSIISS
+       Segy2sep > stdout tape=   [pars]
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       tape    -file
+                  input tape device or seg-y filename (see notes)
+
+       buff    -int
+                  [1]  for buffered device (9-track reel tape drive)
+                  =0 possibly useful for 8mm EXABYTE drives
+
+       verb -int
+                  [0]  silent operation
+
+       vblock - int
+                  [50] ; echo every '50' traces
+
+       hfile   -file
+                  [tape.header]  file to store ebcdic block (as ascii)
+
+       bfile   -file
+                  [tape.binary]  file to store binary block
+                  specify full paths to ease conversion back to segy
+
+       ns      -int
+                  [bh.hns]  number of samples (use if bhed ns wrong)
+
+       trmin   -int
+                  [1]    first trace to read
+
+       trmax   -int
+                  [INT_MAX]  last trace to read
+
+       errmax  -int
+                  [0]  allowable number of consecutive tape IO errors
+
+       nmem-int
+                  [100] how many traces to look for non zero header keys
+
+       nkeep-  -int
+                  number of keys we will force to be transfered
+
+       keep_   -char*
+                  name of the key to keep (size of nkeep)
+
+       keeplist-char*
+                  name of keys to keep (separated by :)
+
+       nextra_keys  -int
+                  number of extra keys not in SEG-Y standard
+
+       extra_name_  -char*
+                  name of extra key
+
+       extra_type_  -char*
+                  type of extra key (int, unsigned int, short, unsigned
+                  short, long, unsigned long, float, double)
+
+       extra_offset -int*
+                  index of extra key (0-238)
+
+       nignore -int
+                  number of keys to ignore when converting
+
+       ignore_ -char*
+                  name of the key to ignore (size of nignore)
+
+       ignorelist-char*
+                  list, separated by :, of keys to ignore
+
+       dump_all     -int
+                  [0], 1-dump all keys
+
+       only_list    -int
+                  [0], dump only keys listed by keep and extra
+
+       ns           -int
+                 number of samples in the dataset
+
+       format       -int
+                 [5]  Float data
+
+       ntraces     - int
+                  If you want to pipe out  provide the number
+                  of traces in the dataset, otherwise unpipable.
+
+       nsamp_max   - int
+                  By default each trace is assumed to be SU_NFLTS (1,000,000+)
+                  in size and a copy of that length is done for each trace.
+                  Set this to something more reasonalbe (2000) for a massive speed up.
+
+DDEESSCCRRIIPPTTIIOONN
+       Read in a segy tape
+
+CCOOMMMMEENNTTSS
+          Notes: Traditionally tape=/dev/rmt0.   However, in the modern world
+          tape device names are much less uniform.  The magic name can
+          often be deduced by 'ls /dev'.  Likely man pages with the
+          names of the tape devices are: 'mt', 'sd' 'st'.  Also
+          try 'man -k scsi', ' man mt', etc.  Sometimes 'mt status'
+          will tell the device name.
+
+          For a seg-y diskfile use tape=filename.
+          Remark: a seg-y file is not the same as an su file.
+          A seg-y file consists of three parts: an ebcdic header,
+          a binary reel header, and the traces.  The traces are (usually)
+          in 32 bit IBM floating point format.  An SU file consists only
+          of the trace portion written in the native binary floats.
+
+            type:    sudoc segyread   for further information
+
+         ARRAY(INVALID)=(/ns,delrt,d1,f1,f2,d1,d2/)
+
+CCAATTEEGGOORRYY
+       ccoonnvveerrtteerrss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                SEGY2SEP(1)

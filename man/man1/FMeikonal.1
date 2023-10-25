@@ -1,0 +1,52 @@
+FMEIKONAL(1)                  SEPlib Manual Pages                 FMEIKONAL(1)
+
+
+
+NNAAMMEE
+       FMeikonal - Fast marching eikonal solver
+
+SSYYNNOOPPSSIISS
+       FMeikonal < VelocityCube.H >TTCube.H  pars
+
+IINNPPUUTT  PPAARRAAMMEETTEERRSS
+       shotfile          - sepfile
+                 file with multiple shots (n2 - number of shots, n1=3)
+
+       zshot,yshot,xshot - real
+                 [0., o2 + 0.5*(n2-1)*d2, o3 + 0.5*(n3-1)*d3 shot location
+
+       b1,b2,b3          - integer
+                 [1,1,1] constant-velocity box around the source
+
+       br1,br2,br3       - real
+                 [d1,d2,d3] constant-velocity box around the source
+
+       vel               - integer
+                 [1]  velocity (1) or slowness (0)
+
+       vel0   - real
+                 velocity (or slowness) at the source [vel[0]]
+
+       order             - integer
+                 [2]  first (1), second (2) or third (3) order
+
+DDEESSCCRRIIPPTTIIOONN
+       Fast marching eikonal solver
+
+SSEEEE AALLSSOO
+       Hwt3d, fastmarch, Gfgradz
+
+CCOOMMMMEENNTTSS
+       Be careful with sources outside the domain.  You should smooth the
+       velocity field if you want high-order accuracy.  Stability problems
+       *may* occur if traveltime accuracy is beyond
+           machine precision.  The program uses constant velocity ray-tracing
+       inside an initial box,
+           and until it detects a velocity variation, whichever is greater.
+
+CCAATTEEGGOORRYY
+       sseeiiss//ttrraavveell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004               FMEIKONAL(1)

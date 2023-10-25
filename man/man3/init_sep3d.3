@@ -1,0 +1,77 @@
+net::kokon:e:ts:r:ck:o:koou:r::s:rsce:p:loiubr-:6:.s1Se:Ep:Pldlioibcb-s6:M.:a1pn:ou:dad:lo:csPsea:pg:lepisobd_:b:asseep:l:iibn_ibta_ssee:p:3idn(i3t)_sep3d(3)
+
+
+
+NNAAMMEE
+       init_sep3d - initialize a SEP3d type
+
+SSYYNNOOPPSSIISS
+       "call init_sep3d(instruct, outstruct, usage)"
+
+       "call init_sep3d(intag,outstruct,usage)"
+
+       "call init_sep3d(outstruct,usage,data_format,file_for-
+       mat,n,o,d,label,unit,ntraces,keyname,keytype,keyfmt,nh)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       IMPORTANT FOR FORTRAN USERS include "ctag="out"" as an argument when
+       initializing output. (have you noticed a f90 file mysteriously in your
+       directory?)
+       instruct  -  sep3d
+                 Sep3d to structure to copy from
+
+       usage     -  char*
+                 Usage of the output tag
+
+       tag       -  char*
+                 Tag to initilize from
+
+       data_format- char*
+                 Data format (FLOAT,INTEGER,BYTE,COMPLEX)
+
+       file_format- char*
+                 File format (GRID,HEADER,REGULAR)
+
+       n-  int*
+                 (optional) axis dimensions
+
+       o-  float*
+                (optional)  first sample axis
+
+       d-  float*
+                 (optional)  sampling of axis
+
+       label-  char*
+                 (optional)  label for axis
+
+       unit-  char*
+                 (optional)  unit for axis
+
+       ntraces   -  int
+                 (optional)  number of trac3es
+
+       keyname  - char**
+                 (optional)  keyname for dataset
+
+       keytype  -  char**
+                 (optional)  keytype for dataset
+
+       keyfmt -  char**
+                 (optional)  keyfmt for dataset
+
+       nh-  int
+                 (optional)  number of headers to store
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       outstruct -  sep3d
+                 sep3d structure to create
+
+DDEESSCCRRIIPPTTIIOONN
+       Initialize structure
+
+LLIIBBRRAARRYY
+       ssuuppeerrsseettff9900
+
+
+
+6.0     net::koko::src::ourT:h:useFpelbib1-26.116:::0d8o:c0s8::2p0o0d4::seplib_base::init_sep3d(3)

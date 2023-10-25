@@ -1,0 +1,66 @@
+net::koko::snrect::::okuork:o::s:esprlci:b:-o6u.r1S::E::Psdleoipcblsi:Mb:a-pn6ou.da1:l:::sPdeaopgclesis:b:_pboads:e::s:enpmloi_bm_obda(s3e)::nmo_mod(3)
+
+
+
+NNAAMMEE
+       nmo_mod - Perform nmo
+
+SSYYNNOOPPSSIISS
+       Initializer-"call nmo_init(slowness,offset,o1,d1)"
+
+       operator-"call nmo_nearest(adj,tt,zz)"
+
+       operator-"call nmo_linear(adj,tt,zz)"
+
+IINNIITTIIAALLIIZZEERR
+       IINNPPUUTT PPAARRAAMMEETTEERRSS
+
+
+       slowness - real(:)
+                      Slowness(t)
+
+       offset   - real(:)
+                      Offset
+
+       o1       - real
+                      First sample in time
+
+       d1       - real
+                      Sampling in time
+
+       inverse  - logical
+                      Wheter or not to do inverse
+
+OOPPEERRAATTOORRSS
+       adj   - logical
+                   Whether or not do adjoint
+
+       tt    - "real(:,:)"
+                   Input
+
+       zz    - "real(:,:)"
+                   Output
+
+DDEESSCCRRIIPPTTIIOONN
+       Nmo by nearest or linear interpolation neighbor for a gather
+
+CCOOMMMMEENNTTSS
+       NMO, its transpose, inverse, and inverse transpose by nearest neighbor.
+
+       adj=.false. inv=.false.: zz(iz) = [NMO]                   tt(it)
+
+       adj=.true. inv=.false.:  tt(it) = [NMO adj]         zz(iz)
+
+       adj=.false. inv=.true.:  tt(it) = [NMO inverse]           zz(iz)
+
+       adj=.true. inv=.true.:   zz(iz) = [NMO inverse transpose] tt(it)
+
+SSEEEE AALLSSOO
+       Nmo3d
+
+LLIIBBRRAARRYY
+       sseeppvveellaannff9900
+
+
+
+6.0        net::koko::src::Tohuur:F:esbep1l2ib1-66:.018:::0d8oc2s0:0:4pod::seplib_base::nmo_mod(3)

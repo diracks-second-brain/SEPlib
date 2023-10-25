@@ -1,0 +1,229 @@
+CONTOUR(1)                    SEPlib Manual Pages                   CONTOUR(1)
+
+
+
+NNAAMMEE
+       Contour - makes a contour plot
+
+SSYYNNOOPPSSIISS
+       Contour [par=] [< In.H] | Tube
+
+DDEESSCCRRIIPPTTIIOONN
+       Make a contour plot of a seplib file
+
+CCOOMMMMEENNTTSS
+         Input a real-valued (esize=4) dataset and output vplot commands
+         for a two-dimensional contour plot of the data. (The vplot
+         output can be viewed on a screen using the program Tube, or
+         plotted on a postscript printer using Pspen.) Contour has
+         many, many options to specify at what values to draw contours,
+         where to position the plot on the page, how big to make the
+         plot, which way to draw the axes, where to place tick marks
+         and labels, etc. All of these parameters attempt to default
+         reasonably. Contour also allows auxiliary input files which
+         can be used to annotate the contour plot with symbols,
+         curves or arrows. You may find the utility programs Window
+         and Reverse useful pre-processing data to be plotted with
+         Contour. See also Vppen and Box for a crude way of adding
+         annotation, and pls and pldb for a crude way of editing.
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1 - int
+                 standard seplib n1 parameter
+
+       c  - float
+                 value to contour; if not specified calculated from nc c0 and dc
+
+       nc  - int
+                 [5] number of countours
+
+       c0  - float
+                 [calculated] first value to contour
+
+       dc  - float
+                 [calculated from c0 and nc]  contour interval
+
+       n2  - int
+                 determined from file size and n1 and n3
+
+       n3  - int
+                 [1]
+
+       d1,d2,d3 - float
+                 [1.]standard sampling sampleing parameter
+
+       o1,o2,o3 - float
+                 [0.]standard seplib axis origin parameter
+
+       pad    - char
+                 (0,1 n,y)  (If user specifies mins or maxes then
+                 padding is turned off unless pad is specified.
+                 pad is useful if you want the length of the plot
+                 to be the same as the length of the graph.
+
+       transp  -char
+                 [1] whether or not to transpose output (standard vplot)
+
+       xreverse,yreverse -char
+                 standard vplot definitions four output file
+
+       screenht-float
+                 [10.24] height of output medium
+
+       screenwd-float
+                 [13.75] width of output medium
+
+       screeratio-float
+                 [.75] ratio of screen height to width
+
+       xll,yll,xur,yur - float
+                     set Lower Left and Upper Right coordinates
+
+       xinch - float
+                 [10.24] standard vplot definition
+
+       yinch - float
+                 [7.5] standard vplot definition
+
+       crowd,crowd1,crowd2 - float
+                 [.75]  crowd1=crowd  crowd2=crowd
+                 (.75< crowd < 1.) crowds labels off the
+                 screen by expanding data on 1 or 2 axis.
+
+       wantframe,wantframenum -char
+                 standard vplot definitions (0,1, n,y)
+
+       wantaxis,wantaxis1,wantaxis2 - char
+                 [1] standard vplot definition(0,1 n,y)
+
+       min1,min2,max1,max - float
+                 standard vplot definitions
+
+       axisor1,axisor2  - float
+                 [min1],[min2] standard vplot definition
+
+       o1num,o2num,d1num,d2num - float
+                 tic placement
+
+       n1tic,n2tic - int
+                 [1] number of tics
+
+       wheretics - char
+                 [f] (f,a) where to put tics (frame, axes)
+
+       wheretitle -char
+                 [t] (t,b,l,r) where to put title
+
+       wherexlabel - char
+                 [b] (t,b) where to put x label
+
+       whereylabel - char
+                 [l] (l,r) where to put y label
+
+       titlefat,labelfat - int
+                 [1] title and label fat
+
+       label1,label2 - char*
+                 label for axes
+
+       title - char*
+                 title for plot
+
+       labelsz - int
+                 [8] label size
+
+       titlesz - int
+                 [10] label size
+
+       labelrot - char
+                 [y] (0,1 n,y) rotates labels 90 degrees
+
+       grid,grid1,grid2 - char
+                 [0]   (0,1 n,y) turns on grid
+
+       g1num,g2num - float
+                 [d1num],[d2num] grid spacing
+
+       gridcol - int
+                 [axiscol] grid color
+
+       backcol  - float*
+                 [0,0,0] background color (R,G,B) between 0 and 1
+
+       fillcol  - float*
+                 [backcol(0,0,0)] fill color (R,G,B) between 0 and 1
+
+       plotcol  - int*
+                 [6,5,4,3,2,1,...] color for each line plotted
+
+       axiscol  - int*
+                 [7,7,7,7,...] color of each axis
+
+       plotfat  - int*
+                 [0,0,0,...] each line fat
+
+       axisfat  - int*
+                 [0,0,0,...] each axis fat
+
+       arrow    -  char
+                 [0] (0,1 n,y) for complex data, plots arrows rather than lines
+
+       dash     -  int*
+                 [0]
+                 0 default is continuous.
+                 1 fine dash
+                 2 fine dot
+                 3 dash
+                 4 large dash
+                 5 dot dash
+                 6 large dash smalldash
+                 7 double dot
+                 8 double dash
+                 9 loose dash  The part after the decimal point determines
+                               the pattern repetition interval
+
+       curve   -file
+                 header file for curves to be overlayed over
+                 the contours. n1=Npoints n2=Ncurves n3=Nframes
+                 esize=2*sizeof(float). The format of the data
+                 file should be: x1,y1,x2,y2,...
+
+       curvecol- int*
+                 [6,5,4,3,2,1,...] color for each contour
+
+       curvefat- int
+                 [2] makes each contour fat
+
+       pick    - file
+                 header file for picks to be overlayed over
+                 the contours. n1=Npoints n2=Npicks n3=Nframes
+                 esize=2*sizeof(float) The format of the data
+                 file should be: x1,y1,x2,y2,...
+
+       pickcol - int*
+                 [6,5,4,3,2,1]  color for each pick
+
+       picksize- int
+                 [15] size of each pick
+
+       picksymbl-int
+                 [5] symbol for each pick (2,3,4,5,20,21,22,23)  (see vp_umark)
+
+       pickw    -file
+                [pickweights] header file for the weight of the picks;
+                the size of the symbol will be proportional to
+                the weights. n1=Npoints n2=Npicks n3=Nframes
+                esize=sizeof(float)
+
+SSEEEE AALLSSOO
+       Grey,Thplot,xtpen
+
+CCOOMMPPIILLEE LLEEVVEELL
+        DISTR
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 CONTOUR(1)

@@ -1,0 +1,70 @@
+OPERPLOT(1)                   SEPlib Manual Pages                  OPERPLOT(1)
+
+
+
+NNAAMMEE
+       Operplot - plots set of samples
+
+DDEESSCCRRIIPPTTIIOONN
+       Plots a one-, two- or, three-dimensional set of samples.  The samples
+       are represented as shaded boxes and plotted numerical values.  The
+       input is a float dataset, not the output of Taplot or Byte.
+
+SSYYNNOOPPSSIISS
+       <in.H  Operplot  [options]  | Tube
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       outline - int
+                 [0] =plot outlines on boxes with pure 1.0 and 0.0 values
+                 1=do not plot outlines
+                 If outline=0, pure 0.0 values are plotted transparently.
+                 This option is used for displaying fixed values of
+                 calculated filters.
+
+       numbers   - int
+                 [0] -plot the values of the samples on the tops of the box
+                 1 - do not plot the sample values
+
+       boxes     - int
+                 [0]-plot the boxes with the sample values indicated with
+                 shading.
+                 1-plot only the sample values without the shaded box.
+
+       title     - char*
+                 plot title
+
+       label1,label2,label3 -char*
+                 axes labels
+
+       labelsz- int
+                 [8]  label size
+
+       hival  - float
+                 highest amplitude to plot, defaults to highest value
+                 on the input
+
+       loval  - float
+                 lowest amplitude to plot, defaults to lowest value
+                 on the input
+
+       xscale  - float
+                 [1.]  <1. for smaller plots, narrow plots, etc.
+
+       yscale - float
+                 [1.]  <1. for smaller plots, narrow plots, etc.
+
+CCOOMMMMEENNTTSS
+          Convert to postscript with color=y force=y to maintain the shading of
+          the boxes.  While this routine used Ta2vplot's raster color set, it
+          does not use the raster calls that are converted to PostScript rasters,
+          thus the color=y is required.
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                OPERPLOT(1)

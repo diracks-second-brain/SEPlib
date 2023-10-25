@@ -1,0 +1,109 @@
+MATH(1)                       SEPlib Manual Pages                      MATH(1)
+
+
+
+NNAAMMEE
+       Math - Perform mathematical operations on data
+
+SSYYNNOOPPSSIISS
+       Math  pars >out.H    [pars]        Generic math routine
+
+       Rtoc  <in.H >out.H   [pars]        Real to complex
+
+       Cmplx  real.H imag.H >out.H [pars] Form complex from two files
+
+       Real  <in.H  >out.H  [pars]        Output just real part of complex
+       file
+
+       Imag  <in.H  >out.H  [pars]        Output just imaginary part of com-
+       plex file
+
+       Conj  <in.H  >out.H  [pars]        Form the conjugate of a complex num-
+       ber
+
+       Cabs  <in.H  >out.H  [pars]        Output absolute value of complex
+       number
+
+       Cabs2 <in.H  >out.H  [pars]        Output absolute value^2 of complex
+       number
+
+       Pow   <in.H  >out.H pow=  [pars]   Data raised to power, sign preserved
+
+       Gpow <in.H >out.H gpow= [pars]  Data raised to power gpow
+
+       Add   file1.H file2.H file3.H mode=[sum],prod,div > out.H Add, multi-
+       ply, or divide  datasets
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       MMaatthh
+
+
+       exp      - char*
+                 [file1] Expression to perfom on history files
+
+       file[1..10] - sepfile
+                 [in]  Name of this history file
+
+       exp_real - char*
+                 [exp]   If complex function for the real values
+
+       exp_imag - char*
+                 [exp]   If complex function for the imaginary values
+
+       PPooww
+
+
+       pow      -  float
+                 Power to raise data to
+
+       GGppooww
+
+
+           gpow      -  float
+                     Power to raise data to
+
+           GGeenneerriicc ppaarraammeetteerrss
+
+
+           maxsize  -    int
+                     [20]   Maximum amount of memory to consume
+
+           verb     -    int
+                     [0]    Whether or not to be verbose
+
+DDEESSCCRRIIPPTTIIOONN
+       Performs mathematical operation of seplib files
+
+       Supported Functions (specified by @ at begining):
+
+       COS SIN TAN ACOS  ASIN  ATAN COSH  SINH  INT EXP LOG SQRT ABS SGN
+
+       Example 1:  Add two real files Math  file1=in file2=out2.H
+       exp=file1+file2 >out.H
+
+       Example 2: Tpow (2.) on one file Math exp='file1^2' >out.H
+
+       Example 3: Multiply two complex files Math  file1=a.H file2=b.H
+       exp_real='file1.re*file2.re-file1.im*file2.im'
+         exp_imag='file1.re*file2.im+file1.im*file2.re'
+
+       NOTES
+           Math is not automatically complex aware.  If you are doing addi-
+           tion,subtraction with files it will do the right thing. If you are
+           trying to multiplication or division you need to code the exp_real
+           and exp_imag yourself.  If you are using it with the old 'Add'
+           functionality it will do the correct thing.
+
+           For most cases you can just go Math exp='a.H+b.H' >c.H
+
+           Math is just a script interface Math_base the real workhorse
+
+SSEEEE AALLSSOO
+       Clip,Add
+
+CCAATTEEGGOORRYY
+       uuttiill//vveeccttoorr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    MATH(1)

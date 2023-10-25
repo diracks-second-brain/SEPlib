@@ -1,0 +1,51 @@
+FT3D(1)                       SEPlib Manual Pages                      FT3D(1)
+
+
+
+NNAAMMEE
+       Ft3d - incore Fourier tranform
+
+SSYYNNOOPPSSIISS
+       Ft3d < in.H sign{1,2,3}=0. center{1,2,3}=0. > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       sign{1,2,3} -integer
+                   [0]: means omit Fourier transform
+                    +1,-1: sign of sqrt(-1) on dimension {1,2,3}
+
+       center{1,2,3}-integer
+                   [0]: don't multiply
+                    +1: multiply by 1,-1,1,-1,... before transform
+                    (centers axis in transform space)
+                    -1: multiply by 1,-1,1,-1,... after transform
+                   (allows centered transforms to be inverted)
+
+       n1,n2,n3 -integer
+                  standard seplib params
+                  dimensions transformed must be of size 2**N
+                  scaling is 1/sqrt(n) all direction
+
+       o1,o2,o3 -real
+                   standard seplib params
+
+       d1,d2,d3 -real
+                  standard seplib params
+
+       maxsize - int
+                 [20] Amount of memory to use in megabytes
+
+DDEESSCCRRIIPPTTIIOONN
+       Ft3d - in core 1,2, or 3 dimensional Fourier transform
+
+CCOOMMMMEENNTTSS
+       Assumes in= contains COMPLEX-VALUED data.
+
+SSEEEE AALLSSOO
+       Cfft
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    FT3D(1)

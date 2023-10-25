@@ -1,0 +1,54 @@
+FTPLOT(1)                     SEPlib Manual Pages                    FTPLOT(1)
+
+
+
+NNAAMMEE
+       Ftplot - plots the input time-series and output FT
+
+SSYYNNOOPPSSIISS
+       Ftplot par= < in.H | Xtpen
+
+DDEESSCCRRIIPPTTIIOONN
+       Outputs vplot commands to plot an input time-series and its Fourier
+       amplitude or phase spectrum.
+
+IINNPPUUTT  PPAARRAAMMEETTEERRSS
+       f2 - int
+                 [0]  number of traces to skip before reading from in
+
+       fmin -float
+                 [0.] minimum frequencies to plot
+
+       fmax- int
+                 [1/2dt] maximum frequencies to plot
+
+       plot- char*
+                 [amp ] -to plot AMPLITUDE (NORMALIZED) spectrum.
+                 db     - to plot AMPLITUDE (DB) spectrum.
+                 pha    - to plot PHASE (DEGREES) spectrum.
+                 upha   - to plot unwrapped PHASE (DEGREES) spectrum.
+
+       lfft-int
+                 length of fft used to compute spectrum
+                 input padded with zeros if lfft > nt
+
+       wate-char*
+                 [no] -weighting to apply to input before Fourier
+                 transforming for rectangular weighting
+                 ham -for Hamming weighting
+
+       n1,n2  -int
+                 standard seplib parameters
+
+       o1,d2  -float
+                 cube dimensions
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  FTPLOT(1)

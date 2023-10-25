@@ -1,0 +1,111 @@
+VEL(1)                        SEPlib Manual Pages                       VEL(1)
+
+
+
+NNAAMMEE
+       Vel - Make velocity model
+
+SSYYNNOOPPSSIISS
+               Vel  >out.H pars
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1,n2,n3,o1,o2,o3
+                    Standard SEPlib
+
+       vc -       real
+                 [2000.] Background velocity
+
+       hgrad-     real
+                  [0.] Horizontal velocity gradient
+
+       slow -  integer
+                 [0] velocity, 1-slowness
+
+       transp-    integer
+                 [0] regular, 1-transpose axis 1 and 2
+
+       xa_   -    real
+                 [o2] left edge of plane reflector
+
+       xb_   -    real
+                 [o2+(n2-1)*d2] left edge of plane reflector
+
+       alfa_ -    real
+                 [0.] dip in degress
+
+       z_    -    real
+                 [o1+(n1-1)*d1] depth at xa
+
+       vr_   -    real
+                 velocity below reflector
+
+       const_-    integer
+                 [0] grad, 1= velocity is constant below reflector
+
+       smooth-    real
+                 linear velocity under reflector from vr_ to smooth_
+
+       sin_period-real
+                  [10*d2] period of sinusoid
+
+       sin_amp-   real
+                 amplitude of sinusoid
+
+       sin_vel_up-real
+                 [0.] velocity perturbation above reflector
+
+       sin_vel_down-real
+                 [0.] velocity perturbation below reflectr
+
+       sin_z_x0-   real
+                 [o2] zero crossing of sine
+
+       sinz  -    real
+                 [-o1] depth at sin_z_x0
+
+       xan   -    real
+                 [0.] coordinate center of anomaly
+
+       zan   -    real
+                  [0.] coordinate center of anomaly
+
+       ranx  -    real
+                 [-1.] coordinate center of anomaly
+
+       ranz  -    real
+                  [-1.] coordinate center of anomaly
+
+       exan  -    real
+                 [1] sharpness of anomaly
+
+       rankx -    real
+                  [-1.]  differential sharpness of in x
+
+       rankz -    real
+                [-1.]  differential sharpness of in z
+
+       exank -    real
+                  [exan] differential sharpness of anomaly
+
+       widthan-   real
+                 [1] scale width of anomaly
+
+       dvan   -   real
+                 [0] Maximum value of anomaly at (xan,zan)
+
+       dvank  -   real
+                 [dvan] For flat-topped anomalies
+
+DDEESSCCRRIIPPTTIIOONN
+               Makes velocity models in  2-D and 2.5-D
+        (i.e. 2-D models replicated alonb the 3rd axis)
+
+SSEEEE AALLSSOO
+       Gauss, Spike
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     VEL(1)

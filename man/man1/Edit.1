@@ -1,0 +1,40 @@
+EDIT(1)                       SEPlib Manual Pages                      EDIT(1)
+
+
+
+NNAAMMEE
+       Edit - patching driver
+
+SSYYNNOOPPSSIISS
+         <in.H Edit.x [options] > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       w1,w2,w3- integer
+                 window sizes
+
+       nfactor - integer
+                 factor to mulitiply the median of the residuals
+                 to produce a tolerance above which samples
+                 will be removed, default is 5
+
+       htrc    - integer
+                 number of traces on either side of a trace
+                 to be used in predicting the trace, htrc=1
+                 means one trace on either side, or a two trace
+                 prediction
+
+       n1,n2,n3-integer
+                 wall sizes, defaults to the input
+
+DDEESSCCRRIIPPTTIIOONN
+        Patching driver
+
+RREEFFEERREENNCCEE
+             see SEP88 (Ray Abma's thesis) for more information on data editing.
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    EDIT(1)

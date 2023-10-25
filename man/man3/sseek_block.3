@@ -1,0 +1,67 @@
+net::koknoe:t::s:rkco:k:oo:u:rs:r:cs:e:poluirb:-:6s.e1Sp:El:Pidlboi-cb6s.:M1:a:pn:ouddao:lc:ssP:ea:pgpleoisdb:_:bsaespel:i:bs_sbeaeske_:b:lsosceke(k3_)block(3)
+
+
+
+NNAAMMEE
+       sseek_block - seek to a position in a SEPlib dataset by blocks
+
+SSYYNNOOPPSSIISS
+       int sseek_block (tag,offset,blocksize, whence)
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       char* - tag
+                 name of history file;
+
+       int - offset
+                 offset from whence given in machine types size for file i/o;
+
+       int   - block
+                 size
+
+       int   - whence
+                 from where
+
+RREETTUURRNN VVAALLUUEESS
+        -1 =  if fails
+
+        x = current position if successful
+
+DDEESSCCRRIIPPTTIIOONN
+       Moves file pointers inside a given SEPLIB dataset by blocks. Has the
+       advantage of handling file sizes bigger than 2 GB
+
+CCOOMMMMEENNTTSS
+       The tag argument is either the string "in","out", or any tag appropri-
+       ate for use with _a_u_x_i_n_(_) or _a_u_x_o_u_t_(_).  This means either an explicit
+       filename or a command line redirect parameter tag=filename.
+
+       _s_s_e_e_k_(_) sets the seek pointer associated with the open seplib dataset
+       or  device referred to by the tag according to the value supplied for
+       whence.  whence must be one of  the  following constants defined in
+       <unistd.h>:
+
+                      SEEK_SET
+                      SEEK_CUR
+                      SEEK_END
+
+       If whence is SEEK_SET, the seek pointer  is  set  to  offset bytes.
+       If  whence  is SEEK_CUR, the seek pointer is set to its current loca-
+       tion plus offset.  If  whence  is  SEEK_END, the seek pointer is set to
+       the size of the file plus offset.
+
+SSEEEE AALLSSOO
+       seplib, sreed, srite, auxclose, sseek
+
+DDIIAAGGNNOOSSTTIICCSS
+       If an error occurs the return value will be -1. A diagnostic error
+       should be printed.
+
+KKEEYYWWOORRDDSS
+       seek position
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0    net::koko::src::our:T:hsuepFleibb-162.11:6::d0o8c:s0:8:p2o0d0:4:seplib_base::sseek_block(3)

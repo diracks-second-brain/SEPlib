@@ -1,0 +1,87 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::fseetpclhi(b3_)base::fetch(3)
+
+
+
+NNAAMMEE
+       fetch - grab a parameter from the command line or history file
+
+SSYYNNOOPPSSIISS
+       "int fetch(name, format, variable)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       char* - name
+                 parameter name
+
+       char* - format
+                 format of variable (d,f,s)
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       variable - void*
+                  variable value of variable
+
+RREETTUURRNN VVAALLUUEE
+       x = number of matches found
+
+DDEESSCCRRIIPPTTIIOONN
+       This function extracts values from input history file and command line
+       expressions of the form `name=value'.
+
+CCOOMMMMEENNTTSS
+       More than one name may be searched by separating the alternatives by
+       blanks or commas.  Possible format conversions are "d" (or "i"), "f"
+       (or "r"), "g", "s" and "1" for integer, floating point, double preci-
+       sion, strings, and boolean respectively.  (For boolean, y, Y, or 1 are
+       returned as integer 1 and n, N, or 0 are returned as integer 0.)  If no
+       match is found, the variable is not altered.
+
+       When a keyword `par=filename' is encountered on the command line, that
+       file (and any that it might in turn point to) is scanned as well.
+       Fetch returns a count of the number of matches it found.  It also
+       copies the input history file to the output history file if this has
+       not already been done.
+
+       Search and copy of the input history file can be supressed using the
+       command line parameter `noheader=y'.
+
+EEXXAAMMPPLLEESS
+       Some examples of how this routine works: Com-
+       mand             Input          Result
+
+       "fetch("nx","d",&nx)"nx=100        nx is set to 100, 1 argument found
+
+       "fetch("nx","d",&nx)"nx=      0 arguments found
+
+       "fetch("nx nxx","d",&nx)"nxx=30         nx is set to 30, 1 argument
+       found
+
+       "fetch("nx","d",&nx)"nx=50 nx=60   nx is set to 60, 2 arguments found
+
+       "fetch("nt","d",&nx)"    nx=80          0 arguments found
+
+       "fetch("nt ntt","d", &nt)" ntt=30 nt=40 nt is set to 40, 2 arguments
+       found
+
+       "fetch("nt ntt","d", &nt)" nt=30 ntt=40 nt is set to 40, 2 arguments
+       found
+
+SSEEEE AALLSSOO
+       getch, hetch, putch, auxpar
+
+DDIIAAGGNNOOSSTTIICCSS
+       Program execution is terminated with extreme prejudice if a par file
+       cannot be opened or the command argument list cannot be found.
+
+BBUUGGSS
+       It should be possible to limit the length of retrieved strings and to
+       extract individual characters.  It is also not presently possible to
+       redirect search to an internal argument list.
+
+KKEEYYWWOORRDDSS
+       parameter input fetch
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::fetch(3)

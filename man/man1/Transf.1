@@ -1,0 +1,48 @@
+TRANSF(1)                     SEPlib Manual Pages                    TRANSF(1)
+
+
+
+NNAAMMEE
+       Transf - Transposes and FFTs a dataset
+
+       !#$=head1 SYNOPSIS
+
+       Transf  <in.H >out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+           !#$=item f_min - float
+
+                   [0]: Minimum frequency (only needed for forward op)
+
+       f_min1 - float
+                   [f_min]: Minimum frequency with 100% pass (only needed for forward op)
+
+       f_max - float
+                   [.5/d1]: Maximum frequency  (only needed for forward op)
+
+       f_max1 - float
+                   [f_max]: Maximum frequency with 100% pass (only needed for forward op)
+
+       shift2 - integer
+                   [0]: How many n=1 axes to introduce or remove after the frequency axis
+
+       maxsize - integer
+                   [50]: Maximum megabytes to use
+
+       verb  - logical
+                   [n]: Whether or not to be verbose
+
+       wei  - logical
+                   [false]: Do WEI style transforms
+
+DDEESSCCRRIIPPTTIIOONN
+       Transforms a dataset (and its inverse) from (nt,nx,...) to (nx ...,nt)
+
+NNOOTTEESS
+        Forward/Inverse determined from esize (4-forward, 8-inverse)
+
+        WARNING WARNING WARNING: Unpipable
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  TRANSF(1)

@@ -1,0 +1,46 @@
+SRM(1)                        SEPlib Manual Pages                       SRM(1)
+
+
+
+NNAAMMEE
+       SRM - Stolt Residual Migration
+
+SSYYNNOOPPSSIISS
+       SRM par=parfile.P < input.H > output.H
+
+SSCCAANN PPAARRAAMMEETTEERRSS
+       or=1. - (real)
+            first residual slowness to scan over
+
+       dr=1. - (real)
+            sampling of the residual slowness to scan over
+
+       nr - (integer)
+            number of residual slowness to scan over
+
+SSTTRREETTCCHH PPAARRAAMMEETTEERRSS
+       push=.true. - (logical)
+            whether to do a push or pull operation in stretch
+
+       scale=.false. - (logical)
+            whether to scale
+
+       eps=.5 - (real)
+            fitting parameter for push/pull operation
+
+RRUUNN PPAARRAAMMEETTEERRSS
+       maxmem=100. - (real)
+            memory to use in MB
+
+       verb=.false. - (logical)
+            verbosity
+
+DDEESSCCRRIIPPTTIIOONN
+       Perform Stolt residual migration (See Paul Sava SEP-100,SEP-102)
+
+CCAATTEEGGOORRYY
+       sseeiiss//iimmaaggee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                     SRM(1)

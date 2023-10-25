@@ -1,0 +1,55 @@
+net::konkeot::::skrock:o::o:usrr:c::s:eopulri:b:-s6e.p1Sl:Ei:Pbdl-oi6cb.s1:M::a:pndouodac:ls::sP:eappgoledis:b:_sbeapslei:b:_sbraistee:_:wsirnidtoew_(w3i)ndow(3)
+
+
+
+NNAAMMEE
+       srite_window - write a seplib window
+
+SSYYNNOOPPSSIISS
+       "int srite_window(tag_his-
+       tory,n_dim_cube,n_cube,n_wind,f_wind,j_wind,esize,values)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       char* - tag_history
+                    tag of History File
+
+       int*  - n_dim_cube
+                     Number of Dimensions in the cube
+
+       int*  - n_cube
+                    Vector of lenght n_dim_cube length of the axes in the cube
+
+       int*  - n_wind
+                    Vctor of lenght n_dim_cube axes length after windowing
+
+       int*  - f_wind
+                    Vector of lenght n_dim_cube index of first elements C<(0<= o < n)>
+
+       int*  - j_wind
+                    Vector of lenght n_dim_cube sampling rate along axes C<(1<= j < n)>
+
+       int   - esize
+                    number of bytes per element
+
+       void* - values
+                    array of values to be written.
+
+RREETTUURRNN VVAALLUUEE
+        0 = if successful
+
+        -1 = if fails for other reasons
+
+        -2 = if the values in n_wind, f_wind, j_wind are incorrect
+
+DDEESSCCRRIIPPTTIIOONN
+       It writes a subset (window) of a Seplib cube
+
+SSEEEE AALLSSOO
+       srite_window
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0   net::koko::src::our::TsheuplFiebb-61.21:1:6d:o0c8s::0:8po2d0:0:4seplib_base::srite_window(3)

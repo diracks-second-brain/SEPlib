@@ -1,0 +1,58 @@
+GFGRADZ(1)                    SEPlib Manual Pages                   GFGRADZ(1)
+
+
+
+NNAAMMEE
+       Gfgradz - Calculate green functions for v(z) medium
+
+SSYYNNOOPPSSIISS
+       Gfgradz   par=  >  times.H
+
+IINNPPUUTT     PPAARRAAMMEETTEERRSS
+       n1-int
+                 source-receiver depth axis:  z >= 0
+
+       o1-real
+                 source-receiver depth axis:  z >= 0
+
+       d1-real
+                 source-receiver depth axis:  z >= 0
+
+       n2-int
+                 source-receiver offset axis: x >= 0
+
+       d2-real
+                 source-receiver offset axis: x >= 0
+
+       o2-real
+                 source-receiver offset axis: x >= 0
+
+       n3-int
+                 [1] 1 = traveltime map
+                 2 = traveltime and amplitude map
+                 6 = traveltime, amplitudes and propagation angles
+
+       v0-real
+                 velocity at z=0  : v0 >= 0
+
+       vgrad-real
+                 constant velocity gradient  : vgrad >= 0
+
+       intime-int
+                 output domain : intime=1 for time axis, 0 for depth axis
+
+DDEESSCCRRIIPPTTIIOONN
+               Code to calculate Green's function traveltime and
+               ~amplitude for a 1-D constant gradient velocity model:
+
+                               V(z) = Vo + vgrad*z     ;  z >= 0,  vgrad >= 0
+
+SSEEEE AALLSSOO
+       Kirmod3d, Marine_geom3d, Scat3d, FMeikonal, Hwt3d
+
+CCAATTEEGGOORRYY
+       sseeiiss//ttrraavveell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 GFGRADZ(1)

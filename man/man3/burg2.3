@@ -1,0 +1,61 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::bsuerpgl2i(b3_)base::burg2(3)
+
+
+
+NNAAMMEE
+       burg2 - Burg 2D convolution
+
+SSYYNNOOPPSSIISS
+       "call burg2(adj,add,lag1,lag2,data,n1,n2,aa,a1,a2,residual)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       adj - integer
+                 adjoint=1, forward=0
+
+       add  - integer
+                 add=0 add to current values, 0=erase
+
+       lag1 - integer
+                 lag in first dimension
+
+       lag2 - integer
+                 lag in second dimension
+
+       data - real(n1,n2)
+                 data
+
+       n1   - integer
+                 data length along axis=1
+
+       n2 - integer
+                 data length along axis=2
+
+       aa - real(a1,a2)
+                 filter
+
+       a1 - integer
+                 filter length axis=1
+
+       a2 - integer
+                 filter length axis=2
+
+       residual - real(n1,n2*2)
+                 residual
+
+DDEESSCCRRIIPPTTIIOONN
+        Burg 2-D conv with (a1,a2) filter (monoplane annihilator if a2=2)
+
+CCOOMMMMEENNTTSS
+              output residual partitioned into normal and backward parts.
+              output adjoint to FILTER.
+              output residual(,) aligns with data(,) at filter coef aa(lag1,lag2)
+
+SSEEEE AALLSSOO
+       bbuurrgg
+
+LLIIBBRRAARRYY
+       sseeppffiilltteerrff9900
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::burg2(3)

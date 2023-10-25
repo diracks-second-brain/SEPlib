@@ -1,0 +1,43 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::csheapilni(b3_)base::chain(3)
+
+
+
+NNAAMMEE
+       chain - create a chain of 2,3, or 4 operators
+
+SSYYNNOOPPSSIISS
+       "call chain(oper1,oper2,adj,add,model,data,temp1)"
+
+       "call chain(oper1,oper2,oper3,adj,add,model,data,temp1,temp2)"
+
+       "call
+       chain(oper1,oper2,oper3,oper4,adj,add,model,data,temp1,temp2,temp3)"
+
+PPAARRAAMMEETTEERRSS
+       oper1,oper2,oper3,oper4 - func
+                 standard operators
+
+       adj,add,model,data      -
+                 standard operator interface
+
+       temp1,temp2,temp3       - real(:)
+                 temporary arrays
+
+DDEESSCCRRIIPPTTIIOONN
+       Create a chain of multiple operators
+
+       head1 COMMENTS
+
+       temp1 should be the output of oper1(model) temp2 should be the output
+       of oper2(oper1(model)) temp3 should be the output of
+       oper3(oper2(oper1(model)))
+
+SSEEEE AALLSSOO
+       array,solver
+
+LLIIBBRRAARRYY
+       ggeeeeff9900
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::chain(3)

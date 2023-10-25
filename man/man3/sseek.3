@@ -1,0 +1,63 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::ssseepelki(b3_)base::sseek(3)
+
+
+
+NNAAMMEE
+       sseek - seek to a position in a SEPlib dataset
+
+SSYYNNOOPPSSIISS
+               int sseek (tag,offset,whence)
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       char* - tag
+                 name of history file;
+
+       int - offset
+                 offset from whence given in machine types size for file i/o;
+
+       int   - whence
+                 from where
+
+RREETTUURRNN VVAALLUUEESS
+        -1 =  if fails
+
+        x = current position if successful
+
+DDEESSCCRRIIPPTTIIOONN
+       Moves file pointers inside a given SEPLIB dataset
+
+CCOOMMMMEENNTTSS
+       The tag argument is either the string "in","out", or any tag appropri-
+       ate for use with _a_u_x_i_n_(_) or _a_u_x_o_u_t_(_).  This means either an explicit
+       filename or a command line redirect parameter tag=filename.
+
+       _s_s_e_e_k_(_) sets the seek pointer associated with the open seplib dataset
+       or  device referred to by the tag according to the value supplied for
+       whence.  whence must be one of  the  following constants defined in
+       <unistd.h>:
+
+                      SEEK_SET
+                      SEEK_CUR
+                      SEEK_END
+
+       If whence is SEEK_SET, the seek pointer  is  set  to  offset bytes.
+       If  whence  is SEEK_CUR, the seek pointer is set to its current loca-
+       tion plus offset.  If  whence  is  SEEK_END, the seek pointer is set to
+       the size of the file plus offset.
+
+SSEEEE AALLSSOO
+       seplib, sreed, srite, auxclose, sseek_block
+
+DDIIAAGGNNOOSSTTIICCSS
+       If an error occurs the return value will be -1. A diagnostic error
+       should be printed.
+
+KKEEYYWWOORRDDSS
+       seek position
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::sseek(3)

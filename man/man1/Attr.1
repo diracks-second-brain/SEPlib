@@ -1,0 +1,73 @@
+ATTR(1)                       SEPlib Manual Pages                      ATTR(1)
+
+
+
+NNAAMMEE
+       Attr - display attributes of a dataset
+
+SSYYNNOOPPSSIISS
+       Attr <in want=all
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       want  -  char*
+                  {all,min,max,mean,rms,norm}
+                  want=all, prints a summary of all info
+                  want=min, prints just the minimum value
+                  want=max, prints just the maximum value
+                  want=mean, prints just the mean value
+                  want=rms, prints just the rms value
+                  want=norm, prints just the L2 norm value
+                  want=short, prints ratio of 0 samples,minimum,maximum
+
+       maxsize - integer
+                  [50] maximum memory that will be used (in megabytes).
+                  Blocks of maxsize/esize elements read and analyzed
+                  sequentially.
+
+       param - integer
+                  [0] Output style. Default (param=0) is 'verbose' style
+                  (see below).  param=1 formats output in SEP history
+                  file parameter style.  Useful for grabbing the data
+                  statistics for batch processing (see example below).
+
+DDEESSCCRRIIPPTTIIOONN
+        Displays various attributes of a dataset
+
+CCOOMMMMEENNTTSS
+         sample output for want=all, param=0 is
+
+           *******************************************
+           mean value = 0.010000
+           rms = 0.100000
+           norm = 7.07106
+           maximum value = 1.000000 at 10 1 1
+           minimum value = 0.000000 at 1 1 1
+           number of nonzero samples = 50
+           total number of samples = 5000
+           *******************************************
+
+         and for want=all, param=1:
+
+           meanval=0.010000
+           rms=0.100000
+           norm=7.07106
+           maxval=1.000000
+           minval=0.000000
+           nonzero=50
+           totsamp=5000
+
+         Say that we wanted to use the maximum value in one dataset
+         as a clip value for displaying another dataset.  We could
+         use Attr and Get as follows.
+
+               < data2.H  Grey clip=`Attr < data1.H | Get parform=n maxval` | Tube
+
+SSEEEE AALLSSOO
+       Attr3dhead, In
+
+CCAATTEEGGOORRYY
+       uuttiill//iinnffoo
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    ATTR(1)

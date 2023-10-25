@@ -1,0 +1,68 @@
+SMOOTH(1)                     SEPlib Manual Pages                    SMOOTH(1)
+
+
+
+NNAAMMEE
+       Smooth - 2-D smoothing
+
+SSYYNNOOPPSSIISS
+               Smooth < in.h [options] > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+          Halfwidth is the width in sample points of a rectangle which
+                    when convolved with itself gives a triangle:
+
+       rect1,rect2,rect3     - integer
+                   [1]: halfwidth on 1- 2- and 3-axis respectively (=1 means no smoothing)
+
+                   NOTE: 3-axis smoothing is done by direct
+                    convolution, not by integration - so
+                    may be slower for large rect3. If in
+                     doubt, Transp and Smooth with rect2.
+
+       tridiag  - integer
+                   [1]: =1 to smooth with tridiagonal solver. (NOT 3-axis)
+
+       repeat- integer
+                   [1]: number of times to repeat filtering, good for
+                  Gaussian smoothing. (NOT 3-axis)
+
+       sum3  - integer
+                   [0]: =0  to repeat over n3 axis.
+                            =1  to sum over n3 axis
+
+       agc - integer
+                   [0]: =1 to use smoothed data as divisor gain for data.
+
+       absval    - integer
+                   [0]: =1 means smooth absolute values of input.
+
+       scaleup   - integer
+                   [0]: =1 means scale up to compensate for bandwidth reduction.
+                    =0 to preserve scale of zero frequency component.
+
+       Difference stencils applied after smoothing:
+       diff1  - integer
+                   [0]:  =1  apply 2-pt difference stencil on 1-axis:
+                   data(i1+1,i2)=data(i1+1,i2)-data(i1,i2)
+
+       diff2- integer
+                   [0]:  =1  apply 2-pt difference stencil on 2-axis:
+                   data(i1,i2+1)=data(i1,i2+1)-data(i1,i2)
+
+       maxmem - integer
+             [100000000]: Maximum memory to allocate.
+
+DDEESSCCRRIIPPTTIIOONN
+        Smooth 2-D with triangle or 1/(Dxx - const), and/or SUM_n3, or AGC
+
+CCOOMMMMEENNTTSS
+              Dip enhancement: use options='rect1=100 tridiag=1 diff1=1 diff2=1'
+              To reduce memory usage: Try smaller data/filter, repeat>1, tridiag=1.
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  SMOOTH(1)

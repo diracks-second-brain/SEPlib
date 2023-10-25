@@ -1,0 +1,68 @@
+MARINE_GEOM3D(1)              SEPlib Manual Pages             MARINE_GEOM3D(1)
+
+
+
+NNAAMMEE
+       Marine_geom3d - Create marine geometries
+
+SSYYNNOOPPSSIISS
+               Marine_geom3d < in.H  par=   > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS::
+       itype -int
+                  1 = shot gathers
+                  2 = CMP gathers
+
+       nx3,ox3,dx3-sep_standard
+                  length, origin, and sampling of
+                  shots axis along x
+                  (if itype =2 reversed with ny3)
+
+       ny3,oy3,dy3-sep_standard
+                  length, origin, and
+                  sampling of shots axis along y
+                  (if itype =2 reversed with nx3)
+
+       nx2,ox2,dx2-sep_standard
+                  length, origin, and sampling of
+                  receiver axis along x
+
+       ny2,oy2,dy2-sep_standard
+                  length, origin, and sampling of
+                  receiver axis along y
+
+       azi         -real
+                  azimuth of the receiver axis with respect
+                  to the source axis
+                  azi=0 (same grid )
+                  azi=90.  xgeo=yshot,ygeo=-xshot
+                  az=-90.  xgeo=-yshot,ygeo=xshot
+
+       stagger-int
+                 [0] stagger every other line by half in-line
+                 shot spacing
+
+       na2,oa2,da2 -sep_standard
+                 offset_azimuth in decimal degrees  (itype==2)
+
+       nr2,or2,dr2 -sep_standard
+                 offset_radius in km (itype==2)
+                 (positive values)
+                 ( xshot = xcmp - r*cos(a)
+                 ( yshot = ycmp - r*sin(a)
+                 ( xgeo  = xcmp + r*cos(a)
+                 ( ygeo  = ycmp + r*cos(a)
+
+DDEESSCCRRIIPPTTIIOONN
+               Make TRACE HEADERS for simple Marine Geometries
+               both in  CMP and SHOT GATHERs sorts
+
+SSEEEE AALLSSOO
+       Kirmod3d, Gfgradz, Scat3d
+
+CCAATTEEGGOORRYY
+       sseeiiss//mmooddeell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004           MARINE_GEOM3D(1)

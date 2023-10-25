@@ -1,0 +1,40 @@
+CFFT(1)                       SEPlib Manual Pages                      CFFT(1)
+
+
+
+NNAAMMEE
+       Cfft - complex fft
+
+DDEESSCCRRIIPPTTIIOONN
+       Complex fast fourier transform
+
+SSYYNNOOPPSSIISS
+       Cfft < in.h > out.h
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       sign      - integer
+                 [1]: forward transform
+                 -1 : reverse transform (FDGP sign convention)
+
+       n1,n2,n3  - integer
+                  input cube dimensions (complex data).
+                  (n1 = 2*(ntime1/2+1) if in frequency domain)
+
+       esize     - integer   [8]
+
+EEXXAAMMPPLLEESS
+                       Cfft < in.h sign=1 esize=8 > fft.h
+                       Compute complex forward fft of input dataset in.H
+
+                       Cfft < fft.h sign=-1 esize=8 > out.h
+                       Compute complex inverse fft of input dataset fft.H
+
+SSEEEE AALLSSOO
+       Ft3d
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                    CFFT(1)

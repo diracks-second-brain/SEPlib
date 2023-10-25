@@ -1,0 +1,43 @@
+5DFFT(1)                      SEPlib Manual Pages                     5DFFT(1)
+
+
+
+NNAAMMEE
+       5dFFT - 5-D in core FFT
+
+IINNPPUUTT
+       axis1
+           Depth/kz
+
+       axis2
+           hx/khx
+
+       axis3
+           hy/khy
+
+       axis4
+           mx/kmx
+
+       axis5
+           my/kmy
+
+       axis6
+           Loop over
+
+RRUUNN TTIIMMEE PPAARRAAMMEETTEERRSS
+       verb - logical
+           [.false.] verbosity level
+
+       adj - logical
+           [.false.] forward or reverse
+
+DDEESSCCRRIIPPTTIIOONN
+        5 Dimensional in core FFT.  Used to transform to
+
+        and from fourier space for Stolt migration.
+
+        Forward - z,hx,hy,mx,my -> kz,khx,khy,kmx,kmy
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   5DFFT(1)

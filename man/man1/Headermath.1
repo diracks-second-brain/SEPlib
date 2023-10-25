@@ -1,0 +1,55 @@
+HEADERMATH(1)                 SEPlib Manual Pages                HEADERMATH(1)
+
+
+
+NNAAMMEE
+       Headermath - Do mathematical operations on header keys
+
+SSYYNNOOPPSSIISS
+       Headermath <input.H pars  >output.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       keyi- char*
+                 keyname
+
+       eqni- char*
+                 function recognizes header names and a number of
+                 functions, written in mathematical equation form
+
+       typei- char*
+                 [scalar_float] type of output
+
+       maxsize - int
+                 maximum size of temporary (in MB) defaults to 10 MB
+
+       verb   -  int
+                 [0] whether or not to be verbose[1]
+
+       delete_keys-int*
+                 [NULL] key indexes to delete
+
+       rotate-float
+                 [optional] rotate using (s_x,s_y,g_x,g_y,cmp_x,cmp_y) the
+                 coordinates of the dataset  (degrees)
+
+DDEESSCCRRIIPPTTIIOONN
+       Create new keys for a SEP3d dataset
+
+CCOOMMMMEENNTTSS
+       Example: To calculate cmp_x,cmp_y,azimuth key1=cmp_x eqn1=(sx+gx)/2
+       type1=scalar_float key2=cmp_y eqn2=(sy+gy)/2 type2=scalar_float
+       key3=azimuth eqn3=@ATAN((gy-sy)/(gx-sx)) type3=scalar_float
+
+       Supported Functions (specified by @ at begining):
+
+       COS  SIN  TAN ACOS ASIN ATAN COSH SINH INT EXP  LOG  SQRT ABS
+
+SSEEEE AALLSSOO
+       Math,evaluate_expression
+
+CCAATTEEGGOORRYY
+       uuttiill//hheeaaddeerrss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004              HEADERMATH(1)

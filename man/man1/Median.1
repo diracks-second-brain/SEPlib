@@ -1,0 +1,33 @@
+MEDIAN(1)                     SEPlib Manual Pages                    MEDIAN(1)
+
+
+
+NNAAMMEE
+       Median - median filter
+
+SSYYNNOOPPSSIISS
+       Median < in.H > out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       wind1 - integer
+                 [0]: median window distance in n1 direction
+
+       wind2 - integer
+                 [0]: median window distance in n2 direction
+
+       wind3 - integer
+                 [0]: median window distance in n3 direction
+
+DDEESSCCRRIIPPTTIIOONN
+        Median smoother.  Window size is (2*wind1+1)*(2*wind2+1)*(2*wind3+1)
+
+EEXXAAMMPPLLEE
+                       Median < in.H wind1=10 wind2=5 wind3=2 > out.H
+                                       ??????????????????????????????
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                  MEDIAN(1)

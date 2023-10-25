@@ -1,0 +1,77 @@
+net::koko::srcn:e:to:u:rk:o:ksoe:p:lsirbc-:6:.o1Su:Er:P:dl:oiscbesp:Ml:aipnbou-da6:l.:1sP:ea:pgdleoiscbs_:b:apsoed::::ssleipclei(b3_)base::slice(3)
+
+
+
+NNAAMMEE
+       snap,slice - write to the screen an array (through Grey etc)
+
+SSYYNNOOPPSSIISS
+       "int snap(name,n1,n2,matrix)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       char* - name
+                 tag of desired output file
+
+       int   - n1
+                 size of slice in fast dimension
+
+       int   - n2
+                 size of slice along slow axess
+
+       void* -  matrix
+                 matrix value of slice
+
+RREETTUURRNN VVAALLUUEESS
+               0 = if successful
+
+DDEESSCCRRIIPPTTIIOONN
+       Slice, and snap provide a convenient method of output for snapshots of
+       intermediate computations or iterations in a form suitable for process-
+       ing by other seplib functions (such as Window, Movie, etc.)  None of
+       the inputs is modified.
+
+CCOOMMMMEENNTTSS
+       The input tag name is used to locate and update an associated auxiliary
+       history file.  The name of the output header is "name".  This may be
+       modified by specifying `name=newtag' on the command line when a program
+       is invoked.  Input is an n1 by n2 matrix of floating point values con-
+       taining the snapshot.
+
+       If more than one call to these subroutines is made, the snapshot is
+       appended to the file and n3 is updated in the history file.  (This
+       frees the user from the chore of counting the number of output frames,
+       a special convenience while debugging.)
+
+       The subroutine _d_a_t_a_p_a_t_h_(_) is used to generate a name for an output data
+       file.
+
+       _s_l_i_c_e_(_) only: esize is the element size, typically 1 or 4.
+
+       _s_n_a_p_(_) only: If the output header does not exist no snapshots are writ-
+       ten.  This allows the user to decide whether or not to create snapshots
+       on a given run.
+
+FFIILLEESS
+       name auxiliary header
+
+SSEEEE AALLSSOO
+       seplib, datapath, srite
+
+DDIIAAGGNNOOSSTTIICCSS
+       Program execution is terminated with an appropriate error message if
+       the program attempts to change the snapshot size along the way.  Also
+       for appropriate I/O related errors.
+
+BBUUGGSS
+       Prexisting snapshot files with the same name are overwritten without
+       qualms.
+
+KKEEYYWWOORRDDSS
+       snapshot slice output
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0          net::koko::srcT:h:uouFre:b:s1e2pl1i6b:-068.:10:8:d2o0c0s4::pod::seplib_base::slice(3)

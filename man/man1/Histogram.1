@@ -1,0 +1,61 @@
+HISTOGRAM(1)                  SEPlib Manual Pages                 HISTOGRAM(1)
+
+
+
+NNAAMMEE
+       Histogram - Create a histogram
+
+DDEESSCCRRIIPPTTIIOONN
+       Data frequency distribution
+
+SSYYNNOOPPSSIISS
+       Histogram < in.H ninterv=50 | Graph | Tube
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       ninterv - integer
+                 [50,...] :    Number of intervals (default equals 50)
+
+       dinterv - real
+                 interval step
+
+       min     - real
+                 minimum data value
+
+       max     - real
+                 maximum data value
+
+       dim     - integer
+                 [1] or 2(or 3(...))): computes histogram for every trace
+                                       (or plane(or cube(...)))
+
+CCOOMMMMEENNTTSS
+               dinterv = (max - min)/ninterv
+
+         Histogram computes automatically the maximum and minimum values
+         of your dataset, but you can choose to overwrite these values,
+               specifying min and max. Cube may be up to 4-dimensions.
+
+         The default value for the parameter dim is the highest dimension
+         of your dataset. The parameters ninterv, dinterv, min, and max
+         accept multiple entries separated with commas.
+
+         For example, for the dataset in.H with n1=3, n2=4, n3=2 n4=2:
+
+         Histogram < in.H ninterv=10,11,12,10 dinterv=20,30,35,40 dim=2
+         | Graph movie=y | Tube
+
+         will display 4 histograms. Each histogram will have a different
+         number of intervals, and a different number of interval step.
+
+SSEEEE AALLSSOO
+       Graph, xtpen
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004               HISTOGRAM(1)

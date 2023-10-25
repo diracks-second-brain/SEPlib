@@ -1,0 +1,216 @@
+GRAPH(1)                      SEPlib Manual Pages                     GRAPH(1)
+
+
+
+NNAAMMEE
+       Graph - line plot
+
+SSYYNNOOPPSSIISS
+       Graph [par=] [<in.H] | Tube
+
+DDEESSCCRRIIPPTTIIOONN
+       Line plot of a seplib file
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       n1 - int
+                 REQUIRED
+
+       n2,n3 - int
+                 defaults to the number of different values of n1
+
+       d1,d2,d3 - float
+                 [1.],[1.],[1.] float standard seplib
+
+       o1,o2,o3 - float
+                 [0.],[0.],[0.] float standard seplib
+
+       esize    - int
+                 [4]  (4,8)
+
+       pad       -char
+                 [1] (0,1 n,y)  (If user specifies mins or maxes then
+                 padding is turned off unless pad is specified.
+                 pad is useful if you want the length of the plot
+                 to be the same as the length of the graph.
+
+       transp    -char
+                 [0] =1 flips the first and second axes
+
+       xreverse  -char
+                 [0] =1 reverses the x axis
+
+       yreverse  -char
+                 [0]   (0,1 n.y) =1 reverses the y axis
+
+       screenht  -float
+                 [10.24] sets screen height
+
+       screenwd  -float
+                 [13.75] sets screen width
+
+       screenratio -float
+                 [.75] sets height vs. width ratio
+
+       xinch,yinch -float
+                 [10.24],[7.5]
+
+       crowd,crowd1,crowd2 -float
+                 [.75] [crowd1=crowd][crowd2=crowd]
+                 (.75< crowd < 1.) crowd labels off the
+                 screen by expanding data on 1 or 2 axis.
+
+       xll,yll,xur,yur - float
+                 set Lower Left and Upper Right coordinates
+
+       wantframe - char
+                 [1] makes a box around the graph
+
+       wantframenum -char
+                 [1] (0,1, n,y) gives number of the current frame in a movie
+
+       wantaxis,wantaxis1,wantaxis2 - char
+                 [1] turns on axes
+
+       min1, min2, max1, max2- float
+                 sets minimum and maximum values for the graph
+
+       axisor1, axisor2 - float
+                 [min1],[min2] sets the minimum value on the axes
+
+       o1num, o2num, d1num, d2num- float
+                 set tic spacing on axes
+
+       n1tic,n2tic - int
+                 [1] set number of tics
+
+       wheretics - char
+                 [f] (f,a) where to put tics (frame, axes)
+
+       wheretitle -char
+                 [t] (t,b,l,r) where to put title (top,bottom,left,right)
+
+       wherexlabel - char
+                 [b] (t,b) where to put x axis label (top,bottom)
+
+       whereylabel - char
+                 [l] (l,r) where to put y axis label (left, right)
+
+       titlefat,labelfat - int
+                 [1] makes the text fat
+
+       label1,label2 - char*
+                 label for axes
+
+       title - char*
+                 title for plot
+
+       titles - char*
+                 title for different planes separated by colons
+                 first:second:third
+
+       labelsz - int
+                 [8] font size for labels
+
+       titlesz - int
+                 [10] font size for titles
+
+       labelrot - char
+                 [y] (0,1 n,y) rotate labels 90 degrees
+
+       grid,grid1,grid2 - char
+                 [0]   (0,1 n,y) turns on grid
+
+       g1num,g2num - float
+                 [d1num],[d2num] grid spacing
+
+       gridcol - int
+                 [axiscol] color of grid
+
+       backcol  - float*
+                 [0,0,0] background color (R,G,B) between 0 and 1
+
+       fillcol  - float*
+                 [backcol(0,0,0)] fill color (R,G,B) between 0 and 1
+
+       plotcol  - int*
+                 [6,5,4,3,2,1,...] color for each line plotted
+
+       axiscol  - int*
+                 [7,7,7,7,...] color for each axis
+
+       plotfat  - int*
+                 [0,0,0,...] makes plotted line fat
+
+       axisfat  - int*
+                 [0,0,0,...] makes axes fat
+
+       legend   - char
+                 [n] whether or not you want a legend
+
+       legendtitle-char*
+                 ['Legend'] Title for legend
+
+       legendloc -char*
+                 [br, bottom right] Location for legend
+
+       legendpos -float[2]
+                 Legend location.  Specifiy screen coordinates (e.g 10.2,6.1)
+
+       legendsz  -int
+                 [7] Legend text size
+
+       curvelabel-char*
+                 [curve number] : list of curve labels
+
+       legendfat -int
+                 [0] makes legend fat
+
+       plot_amp -  sepfile
+                [none]   file containg amplitudes to use instead of base color
+
+       color -  char*
+                [I]    colortable when using plotamp
+
+       arrow    -  char
+                 [0] (0,1 n,y) for complex data, makes arrows rather than lines
+
+       dash     -  int*  [0]
+                 0 default is continuous.
+                 1 fine dash
+                 2 fine dot
+                 3 dash
+                 4 large dash
+                 5 dot dash
+                 6 large dash smalldash
+                 7 double dot
+                 8 double dash
+                 9 loose dash  The  part  after  the decimal point
+                   determines the pattern repetition interval
+
+EEXXAAMMPPLLEESS
+          Graph n1=50,100,20 d1=2.5,1,0.33 in=datafile | Tube
+            plots three curves  in  one  plot  frame  on  the  screen  horiz
+            coordinates are t(i)  =  o1+i*d1  for  i=0  to  n1-1  (o1=0  by  default)
+            vert coordinates are read sequentially from datafile--50 vert-coordinates
+            for  the  1st plot, 100 for the 2nd, 20 for the 3rd.
+
+            Graph n1=100 esize=8 n2=4 n3=10 symbol='*x%$'<datafile >Hplotfile
+            This reads n1=100 x,y pairs sequentially from datafile for each of
+            n2=4 plots, All on the same Graph.  This is repeated for each of the
+            10 Movie frames; The plot axes, etc, are determined for each frame.
+            Hplotfile will be a SEPLIB header file pointing to a file containing
+            vplot commands to plot the character '*' at each of the 1st 100 points,
+             'x'  at each of the 2nd 100 points, etc, for each Movie frame.
+
+SSEEEE AALLSSOO
+       Dots,Histogram,xtpen
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+CCOOMMPPIILLEE LLEEVVEELL
+       DISTR
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   GRAPH(1)

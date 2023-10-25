@@ -1,0 +1,44 @@
+net::koko::srnce:t::o:ukro:k:os:e:pslricb:-:6o.u1Sr:E::P:dlsoiecbpsl:Mi:abpn-ou6da.:l1::sP:eadpgolecissb:_:bpaosde::::sfeuplllinbm_(b3a)se::fullnm(3)
+
+
+
+NNAAMMEE
+       fullnm - expand filename to a fully qualified name with all path pre-
+       fixes
+
+SSYYNNOOPPSSIISS
+       "int fullnm(filename,maxlen)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       filename - char*
+                 filename
+
+       maxlen   -  int
+                 maximum length
+
+DDEESSCCRRIIPPTTIIOONN
+       Fullnm is a utility function that filename expands a string.  This
+       includes generating the pwd (1) prefix for unqualified names as well as
+       metacharacters a la csh (1).  Up to the first 'maxlen' characters of
+       the output will replace the input and a count of any remaining charac-
+       ters will be returned. It also attempts to strip autoumounter paths
+       from the directory name.
+
+SSEEEE AALLSSOO
+       _c_s_h(1), _p_w_d(1), _s_h(1), _f_i_n_d(1), _b_a_s_e_n_a_m_e(1)
+
+DDIIAAGGNNOOSSTTIICCSS
+       Fullnm returns the value -1 in case of error.
+
+BBUUGGSS
+       Only csh metacharacters are recognized.
+
+KKEEYYWWOORRDDSS
+       expand filename
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0         net::koko::src:T:houurF:e:bse1p2li1b6-:60.81::0:8do2c0s0:4:pod::seplib_base::fullnm(3)

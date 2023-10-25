@@ -1,0 +1,74 @@
+net::knoekto::::ksorkco::::osurrc::::soeuprl:i:bs-e6p.l1Si:Eb:P-dl6oi.cb1s::M::adpnooucdas:l:::sPpeaopgdle:is:bs_ebpalsieb:_:bnaosnel:i:nn_osnollivne_rs(o3l)ver(3)
+
+
+
+NNAAMMEE
+       nonlin_solver - generic non-linear solver program
+
+SSYYNNOOPPSSIISS
+       "call  nonlin_solver(oper,solv,x, dat, niter,x0,err,res,xmov,rmov)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       RREEQQUUIIRREEDD PPAARRAAMMEETTEERRSS
+
+
+       oper   - function
+                 operator (standard interface)
+
+       solv   - func
+                 Step calculation routine
+
+       dat    - real(:)
+                 data
+
+       niter  - integer
+                 number of iterations
+
+       OOPPTTIIOONNAALL PPAARRAAMMEETTEERRSS
+
+
+       x0    - real(:)
+                  Initial model
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       RREEQQUUIIRREEDD PPAARRAAMMEETTEERRSS
+
+
+       x      - real(:)
+                 model
+
+       OOPPTTIIOONNAALL PPAARRAAMMEETTEERRSS
+
+
+       err    - real(niter)
+                 Error sum((d-d~)**2)
+
+       res    - real(:)
+                 Final residual (size of data)
+
+       xmov   - "real(:,niter)"
+                 Movie of model values as a function of iter
+
+       rmov   - "real(:,niter)"
+                 Movie of data residual
+
+DDEESSCCRRIIPPTTIIOONN
+        Generic non-linear solver.
+
+CCOOMMMMEENNTTSS
+       All operators must follow convetion
+
+       integer function (logical adj, logical add, real(:) model, real(:)data)
+
+       All solv routines must follow the convention
+
+       "integer function(logical forget,real(:) x,real(:) g) "
+
+       solver_reg,solver_prec,lsqr,solver
+
+LLIIBBRRAARRYY
+       ggeeeeff9900
+
+
+
+6.0  net::koko::src::our::sTehpuliFbe-b6.112::1d6o:c0s8:::0p8od2:0:0s4eplib_base::nonlin_solver(3)

@@ -1,0 +1,73 @@
+net::koko::nsertc::::kooukro::::sserpcl:i:bo-u6r.:1S::Es:Pedlpoilcbisb:M-:a6pn.ou1da::l::dsPoeacpgsle:is:bp_obda:s:es:e:pdlaitba_pbaatshe(:3:)datapath(3)
+
+
+
+NNAAMMEE
+       datapath - The datapath to put a seplib binaries
+
+SSYYNNOOPPSSIISS
+       #include <seplib.h> char *datapath(prefix) char *prefix
+
+DDEESSCCRRIIPPTTIIOONN
+       Datapath outputs an intelligent prefix character string that can be
+       used to generate output file names.  This prefix is generated according
+       to the following priorities:
+
+CCOOMMMMEENNTTSS
+       1) Look for datapath= on the command line.
+
+       2) Look for the environmental variable DATAPATH
+
+       3) Look for datapath= in a file named `.datapath' in the current direc-
+       tory.
+
+       4) Look for datapath= in a file named `.datapath' in the user's home
+       directory.
+
+       5) Use the default datapath `DEFAULT_DATA_DIR/login_name/' .
+       DEFAULT_DATA_DIR dir is defined when seplib is compiled. The default
+       value is often "/scr".
+
+       A ".datapath" file has the following format. An entry consists of an
+       (optional) host name followed by datapath=path, where path is the data-
+       path you wish to use. If you wish to place files in a directory you
+       should terminate the path component with a /.  The first entry should
+       contain no hostname, it is the default datapath for all hosts. If an
+       entry is founds with a hostname that matches the initial part of the
+       current hostname (without the domainname) then that datapath will be
+       used instead.
+
+       e.g.  datapath=/scr/dave/ oas datapath=/scr4/dave/ robson datap-
+       ath=/scrx/dave
+
+       This will result in a datapath of "/scr/dave/" except on machines oas
+       and robson.
+
+       If a datapath starts with a $ (e.g. datapath=$SCR/dave/ ) then the
+       value of the environment variable will be used to start the datapath.
+       See "output" for a description of how environment variables are handled
+       in the information written to the header file.
+
+       The value returned by datapath is the address of the input string.
+
+SSEEEE AALLSSOO
+       output, input, slice, seplib
+
+DDIIAAGGNNOOSSTTIICCSS
+       Datapath terminates program execution with an appropriate error message
+       if it has trouble reading a .datapath file.
+
+BBUUGGSS
+       The long list of rules is not easily remembered.  It is an attempt,
+       however, to mimic standard UNIX conventions such as  csh  or ex use to
+       establish defaults.
+
+KKEEYYWWOORRDDSS
+       datapath output file binary
+
+LLIIBBRRAARRYY
+       sseepp
+
+
+
+6.0       net::koko::src::oTuhru::Fseebpl1i2b-166.:10:8::d0o8cs2:0:0p4od::seplib_base::datapath(3)

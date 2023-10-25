@@ -1,0 +1,50 @@
+STACK3D(1)                    SEPlib Manual Pages                   STACK3D(1)
+
+
+
+NNAAMMEE
+       Stack3d - Stack a SEPlib dataset
+
+       Infill  - Infill  a SEP3D dataset
+
+       Stack - Stack a SEP regular dataset
+
+SSYYNNOOPPSSIISS
+       Stack3d  <in.H >out.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       axes- integer
+                 [2]  Compress axes 2 through ....
+
+                  Defaults to 2 for Stack and Stack3d, no compression for infill
+
+       maxsize- integer
+                 [10] Maximum memory in megabytes
+
+       verb- logical
+                 [n]  Whether (y) or not (n) to be verbose
+
+       normalize- logical
+                 [y]  Whether (y) or not (n) to normalize by the
+                 number of traces in bin
+
+DDEESSCCRRIIPPTTIIOONN
+        Stack3d a sep3d dataset producing a normalized sep77 cube compressing grid axes
+
+        Infill3d a sep3d dataset producing a normalized sep77 cube
+
+        Stack - Compress axis 2 of regular. This is only for backward compatibility
+
+            Stack's options are a subset of Stack3d option
+
+NNOOTTEESS
+        axes is the last axis that you want to stack over.
+
+        axes=2 mean stack over the 2nd axis, axes=3 mean the second and third axis
+
+CCAATTEEGGOORRYY
+       uuttiill//ccuubbee
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 STACK3D(1)

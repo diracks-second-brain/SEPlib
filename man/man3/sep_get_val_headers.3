@@ -1,0 +1,49 @@
+nneett::::kkookkoo::::ssrrcc::::oouurr::::sseepplliibb--66..11S::E::Pddlooiccbss::M::appnooudda::l::ssPeeappglleiisbb__bbaassee::::sseepp__ggeett__vvaall__hheeaaddeerrss((33))
+
+
+
+NNAAMMEE
+       sep_get_val_headers - get header values
+
+SSYYNNOOPPSSIISS
+       "ierr=sep_get_val_headers (tag_history,record_number,n_head-
+       ers,header_values)"
+
+IINNPPUUTT PPAARRAAMMEETTEERR
+       char*-  tag_history
+                   tag of History File
+
+       int* -  record_number
+                   Header Record Number computed using sep_get_grid_window
+
+       int* -  n_headers
+                   number of headers to be retrieved
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERR
+       void *header_values
+                   Header values for n_headers
+
+RREETTUURRNN VVAALLUUEE
+        -1 = if fails for other reasons
+
+        0 = if successful
+
+        +1 = if tag_history is a Sep77 History File
+
+        +2 = if n_headers is too large
+
+DDEESSCCRRIIPPTTIIOONN
+          The values of the headers are read from the Header Values File and stored in header_values array.
+
+CCOOMMMMEENNTTSS
+          return=sep_get_header_bytes(char *tag_history, int *n_bytes)
+          i_byte=(record_number-1)*n_bytes
+          sseek into the Header Format File at position i_byte
+          sreed n_headers from Header Format File into value
+
+LLIIBBRRAARRYY
+       sseepp33dd
+
+
+
+n6e.t0::koko::src::our::seplib-T6h.u1:F:edboc1s2::1p6o:d0:8::s0e8pl2i0b0_4base::sep_get_val_headers(3)

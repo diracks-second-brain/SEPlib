@@ -1,0 +1,103 @@
+net::koko::srnce:t::o:ukro:k:os:e:pslricb:-:6o.u1Sr:E::P:dlsoiecbpsl:Mi:abpn-ou6da.:l1::sP:eadpgolecissb:_:bpaosde::::sseopllviebr_(b3a)se::solver(3)
+
+
+
+NNAAMMEE
+       solver - solve system of equation
+
+SSYYNNOOPPSSIISS
+       "call solver(oper, solv, x, dat, niter, eps,x0,nmem,nfreq,
+         err,res,nloper,xmov,rmov,nort,mres,mdiag,wght,verb,known,wt)"
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       RREEQQUUIIRREEDD PPAARRAAMMEETTEERRSS
+
+
+       oper   - function
+                 operator (standard interface)
+
+       solv   - step
+                 step mecanism
+
+       dat    - real(:)
+                 data
+
+       niter  - integer
+                 number of iterations
+
+       OOPPTTIIOONNAALL PPAARRAAMMEETTEERRSS
+
+
+       x0    -
+                  C<real(:)> Initial model
+
+       nmem   - integer
+                 Change behavior after nmem itterations
+                 use in conjunction with nfreq and/or wght
+
+       nfreq  - integer
+                 Restart step function every nfreq itterations
+                 after nmem steps
+
+       nloper - func
+                 Non-linear operator to use for forward operator
+
+       wght   - func(res,m)
+                 Weighting funtion operator
+
+       verb   - logical
+                 Wheter or not to be verbose
+
+       known  - logical(:)
+                 Specify (.true.) model values that are knonw
+
+       wt     - real(:)
+                 Weighting operator to apply to residuals
+
+       nort   - integer
+                 Number of steps to keep when doing model
+                 model resolution (mdiag,mres)
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       RREEQQUUIIRREEDD PPAARRAAMMEETTEERRSS
+
+
+       x      - real(:)
+                 model
+
+       OOPPTTIIOONNAALL PPAARRAAMMEETTEERRSS
+
+
+       err    - real(niter)
+                 Error sum((d-d~)**2)
+
+       res    - real(:)
+                 Final residual (size of data)
+
+       xmov   - "real(:,niter)" !1$ Movie of model values as a function of
+       iter
+       rmov   - "real(:,niter)"
+                 Movie of data residual
+
+DDEESSCCRRIIPPTTIIOONN
+       Generic  solver.
+
+CCOOMMMMEENNTTSS
+       All operators must follow convetion
+
+       integer function (logical adj, logical add, real(:) model, real(:)data)
+
+       All solv routines must follow the convention
+
+       "integer function(logical forget,real(:) x,real(:) g,real(:) rr,
+       real(:) gg)"
+
+SSEEEE AALLSSOO
+       solver_reg,solver_prec,nonlin_solver,lsqr
+
+LLIIBBRRAARRYY
+       ggeeeeff9900
+
+
+
+6.0         net::koko::src:T:houurF:e:bse1p2li1b6-:60.81::0:8do2c0s0:4:pod::seplib_base::solver(3)

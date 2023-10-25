@@ -1,0 +1,73 @@
+SCALE(1)                      SEPlib Manual Pages                     SCALE(1)
+
+
+
+NNAAMMEE
+       Clip,Scale - compute clip on a dataset and apply it if requested
+
+SSYYNNOOPPSSIISS
+         Clip pclip=98 dclip=1 retry=y chop=no to=zero clip= <  in.H > out.H
+
+         Scale  <  in.H > out.H axis=12
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       pclip      -   int
+                  [98]: clip percentile  [98] for Clip, [100] for Scale
+
+       dclip    -   float
+                  [1.]: scale on clip (the maximum value of the data will be dclip)
+
+       scale_to    -   float
+                  [1.]: scale  the data so the maximum value is this
+
+       rscale,dscale       -   float
+                  Set the scale value yourself
+
+       clip       -   float
+                  Set the clip value yourself
+
+       retry      -   char
+                  [y]: If the clip turns out zero, the program will try again with
+                                   a higher pclip if the input file is not all zeroes. Defaults
+                 to no for Scale, yes for Clip.
+
+       chop       -   char*
+                  [no]:     values are not cliped.
+                  less:     all values less than or equal to the clip value will be changed.
+                  greater:  all values greater than the clip value will be changed.
+                  to:       What the above values are changed to a value, or 'clip'.
+                  clip:     if chop=g
+                           (The original sign is multiplied by this value,
+                           so a positive value of to preserves the original sign)
+                  Defaults to [no] for Clip, [yes] for Scale
+
+       n1,n2,n3,n4,n5,n6   -   int
+                 standard SEP cube dimensions.
+
+       axis - int
+                 Sub cube to do individual clip/scale operations on. Defaults to
+                 the entire dataset
+
+       max_size - int
+                  [50] Maximum memory to use  in megabytes
+
+       j  - int
+                  [nsize/esize/max_size]  - Subsamples the dataset to calculate
+                   clip values. For Scale option the entire dataset is used.
+
+DDEESSCCRRIIPPTTIIOONN
+         Clip - compute clip value based on all the data and put it on the header,
+                      and do various sorts of clipping if requested.
+
+         Scale - compute maximum on a given sub-cube and standardize
+                 the entire dataset to maximum of dclip
+
+NNOOTTEESS
+          Only Scale option available on complex data
+
+CCAATTEEGGOORRYY
+       sseeiiss//ffiilltteerr
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                   SCALE(1)

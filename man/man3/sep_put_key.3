@@ -1,0 +1,48 @@
+net::koknoe:t::s:rkco:k:oo:u:rs:r:cs:e:poluirb:-:6s.e1Sp:El:Pidlboi-cb6s.:M1:a:pn:ouddao:lc:ssP:ea:pgpleoisdb:_:bsaespel:i:bs_ebpa_speu:t:_skeepy_(p3u)t_key(3)
+
+
+
+NNAAMMEE
+       sep_put_key - write key info to a tag
+
+SSYYNNOOPPSSIISS
+          int sep_put_key (tag_history,key_name,key_type,key_fmt,key_index)
+
+IINNPPUUTT PPAARRAAMMEETTEERR
+       char* - tag_history
+                   tag of History File
+
+       char* - key_name
+                   Key Name of Header Key
+
+       char* - key_type
+                   Key Type of Header Key
+
+       char* - key_fmt
+                   Key Format of Header Key
+
+       int*  - key_index
+                   Key Index of Header Key
+
+RREETTUURRNN VVAALLUUEE
+        -1= if fails for other reasons
+
+        0= if successful
+
+        +1= if tag_history is an Sep77 History File
+
+        +2= if tag_history is a Sep3d History File but
+
+DDEESSCCRRIIPPTTIIOONN
+          auxputch into the Header Format File the key key_index"#"
+          hdrkey"#" with hdrtype"#" and hdrfmt"#"
+
+SSEEEE AALLSSOO
+       sep_get_key_index, sep_get_key_fmt, sep_get_key_name
+
+LLIIBBRRAARRYY
+       sseepp33dd
+
+
+
+6.0    net::koko::src::our:T:hsuepFleibb-162.11:6::d0o8c:s0:8:p2o0d0:4:seplib_base::sep_put_key(3)

@@ -1,0 +1,112 @@
+MTTMAPS(1)                    SEPlib Manual Pages                   MTTMAPS(1)
+
+
+
+NNAAMMEE
+       MTTmaps - Band-limited maximum-energey Green's function maps
+
+SSYYNNOOPPSSIISS
+       MTTmaps <slowmodel.H x_shot= mode=0 >maps.H
+
+IINNPPUUTT PPAARRAAMMEETTEERRSS
+       stdin  - sepfile
+                  slow(nz,nx) = slowness model
+
+       z_shot - real
+                   [0.] shot Z coordinate
+
+       x_shot -real
+                  [0.] first shot X coordinate
+
+       dx_shot-real
+                  [dxo] increment in shot X coordinate
+
+       n_shot -integer
+                  [1] number of shots
+
+       mode   -integer
+                  [0]  grid is stationary the shot moves across the grid
+                  the second output axis coordinates are absolute.
+                  1=grid moves with the shot, the second output axis
+                  coordinates are relative to the shot location.
+
+       oxo    -real
+                  [o2] initial surface coordinate (mode=0)
+
+       dxo    -real
+                  [d2] increment in surface coordinate (mode=0)
+
+       nxo    -integer
+                  [n2] number of surface coordinates (mode=0)
+
+       ozo    -real
+                  [o1] first depth level  (mode=0)
+
+       dzo    -real
+                  [d1] depth increments (mode=0)
+
+       nzo    -integer
+                  [n1] number of depth levels on the grid  (mode=0)
+
+       oxo    -real
+                  [(o2-x_shot)] first offset from shot coordinate  (mode=1)
+
+       dxo    -real
+                  [d2] increment in offset (mode=1)
+
+       nxo    -integer
+                  [n2] number of offsets (mode=1)
+
+       ozo    -real
+                  [o1] first depth level  (mode=1)
+
+       dzo    -real
+                  [d1] depth increments (mode=1)
+
+       nzo    -integer
+                  [n1] number of depth levels on the grid
+
+       n_theta-integer
+                  [nxo]  number of angles for the polar grid
+
+       nr     -integer
+                  [nzo] number of radius increments for the polar grid
+
+       fmin   -real
+                  [10] minimum frequency in estimation band
+
+       fmax   -real
+                  [60] maximum frequency in estimation band
+
+       nf     -integer
+                  [16] number of frequencies to use in estimation.
+
+       dt     -real
+                  [.008] sampling to use for initial traveltime estimation
+
+OOUUTTPPUUTT PPAARRAAMMEETTEERRSS
+       stdout - sepfile
+                 maps(nzo,nxo,3,n_shot) = output
+                 Green's function maps, tt/amp/phase
+
+DDEESSCCRRIIPPTTIIOONN
+         Band-limited maximum-energy Green's function maps
+
+CCOOMMMMEENNTTSS
+        Default parameters calculate one shot at user specified output location.
+        x_shot must be specified! The output grid will be the same as the input grid.
+
+        When calculating multiple maps you may want to specify the other
+        parameters that control the output grid relative to each shot.
+        There are two modes, if mode=0 the output grid is absolute.
+        If mode=1 the output grid is relative to the shot location.
+
+SSEEEE AALLSSOO
+       Hwt3d, FMeikonal, Gfgradz, Hwt3d;
+
+CCAATTEEGGOORRYY
+       sseeiiss//ttrraavveell
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                 MTTMAPS(1)

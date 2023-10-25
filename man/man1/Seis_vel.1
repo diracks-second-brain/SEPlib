@@ -1,0 +1,92 @@
+SEIS_VEL(1)                   SEPlib Manual Pages                  SEIS_VEL(1)
+
+
+
+NNAAMMEE
+       Seis_vel - Display Seismic and velocity simutaneously
+
+UUSSAAGGEE
+        Seis_vel vel=vel.H data=data.H fn_color=color.file  >out.H bg_min= bg_max
+
+PPAARRAAMMEETTEERRSS
+vel - sepfile
+ Velocity file
+
+data - sepfile
+ Data file
+
+data2 - sepfile
+ Second data file (optional)
+
+stdout - sepfile
+  Datafile to use with Grey
+
+color - sepcolor
+  Color file to use with Grey
+
+fg_linear_or_log - integer
+  [1]   forground color display mode
+
+fg_clip_linear- real
+  [.5] (0.-1., percentage of max value of each snapshot
+
+         above which data will be clipped dfor linear mode
+
+fg_modulate_log- integer
+  [10000]  modulate data for log mode, a large integer > 100
+
+bg_min,bg_max - real
+ clip bacground values
+
+fg_nhue - integer
+ [18]  number of hues
+
+fg_nlightness - integer
+ [12]  number of lightness regions
+
+fg_min_lightness,fg_max_lightness - real
+ [.3,.8]  range of lightness
+
+fg_saturation - real
+ [1.]  foreground saturation
+
+bg_nhue - integer
+ [20]  number of background hues
+
+bg_lightness - real
+ [.3]  bacground lightness
+
+bg_saturation - real
+ [.3]  bacground saturation
+
+DDEESSCCRRIIPPTTIIOONN
+            Composing two components (x and y, e.g., p wave and s wave) as
+
+             the foreground with a velocity model as the background
+
+CCOOMMMMEENNTTSS
+        COLOR SCHEME:
+             Forground   H: atan2(y,x) (i.e. 360 degree)
+                         L: sqrt(x^2+y^2)*clip (range e.g. 0.8-0.3)
+                         S: constant (e.g. 1.0)
+                         Number of fg colors = fg_nhue * fg_nlightness
+             Background  H: blue -> magenta (i.e. slow to fast)
+                         L: constant (e.g. 0.3)
+                         S: constant (e.g. 0.3)
+                         Number of bg colors = bg_nhue
+             Total colors = fg_nhue * fg_nlightness + bg_nhue (default 18*12+20=236)
+
+        NOTE: The log mode displays more data using higher lightness colors.
+
+AAUUTTHHOORR
+                 Lin, I-Ching 'Michael'
+                Allied Geophysics Laboratories
+                Department of Computer Science
+                University of Houston
+
+CCAATTEEGGOORRYY
+       sseepp__ggrraapphhiiccss
+
+
+
+6.0                        Thu Feb 12 16:08:08 2004                SEIS_VEL(1)
